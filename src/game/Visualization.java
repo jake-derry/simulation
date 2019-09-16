@@ -4,7 +4,6 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 
@@ -32,10 +31,11 @@ public class Visualization{
     }
 
     /**
-     * setUp the group to be displayed in CAApp
+     * setUp the rectangles to be displayed in CAApp
      */
-    public Group setUp(Node root){
+    public Group setUpRectangles(Node root, ){
         Group group = new Group();
+
         return group;
     }
 
