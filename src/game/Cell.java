@@ -1,5 +1,6 @@
 package game;
 
+import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -18,6 +19,27 @@ public class Cell {
     private int myState;
     private int myNextState;
     private Rectangle myRectangle;
+
+    /**
+     * Constructor for Cell. Initializes the state of the
+     * cell and create the rectangle object with its
+     * position, size, and color chosen from a palette of
+     * colors.
+     *
+     * @param state     Initial state of the Cell
+     * @param palette   Palette of colors where state i's
+     *                  color is at index i
+     * @param position  Point of the top left corner of the
+     *                  Cell
+     * @param size      Point that represents the size of the
+     *                  Cell
+     */
+    Cell(int state, Color[] palette, Point2D position, Point2D size) {
+        myState = state;
+        myRectangle = new Rectangle(position.getX(), position.getY(),
+                size.getX(), size.getY());
+        myRectangle.setFill(palette[myState]);
+    }
 
     /**
      * Sets the next state to the parameter next. To change
