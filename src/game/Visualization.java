@@ -15,12 +15,14 @@ import java.util.Map;
 public class Visualization{
     private Cell[][] cellArray;
     private Color[] colorList;
+    private int WINDOW_SIZE;
 
     /**
      * Constructor for Visualization
      */
-    public Visualization(Cell[][] groupOfCells, Map<String, Object> configVals){
+    public Visualization(Cell[][] groupOfCells, Map<String, Object> configVals, int windowDimension){
         cellArray = groupOfCells;
+        WINDOW_SIZE = windowDimension;
 
         //This can all be changed once we know a bit better how we want to instantiate our color list
         colorList = new Color[4];
@@ -33,10 +35,16 @@ public class Visualization{
     /**
      * setUp the rectangles to be displayed in CAApp
      */
-    public Group setUpRectangles(Node root, ){
-        Group group = new Group();
-
-        return group;
+    public void setUpRectangles(){
+        for (Cell[] cellRow : cellArray){
+            for (Cell cell : cellRow){
+                // TODO: Fill this stuff out
+                cell.getRectangle().setHeight(WINDOW_SIZE);
+                cell.getRectangle().setWidth(WINDOW_SIZE);
+                cell.getRectangle().setX(WINDOW_SIZE);
+                cell.getRectangle().setY(WINDOW_SIZE);
+            }
+        }
     }
 
     /**

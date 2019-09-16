@@ -24,7 +24,10 @@ public class CAApp extends Application {
         3. call configuration.createGrid (takes gathered info and creates a "grid" of Cells with proper grid dimensions, initial states, but no rectangle info)
         4. call configuration.createSimulation (takes type information and created grid to make a new simulation)
         5. call visualization.setUpRectangles when simulation is created (takes grid dimensions and fills in rectangle info)
+        6. call createMenu to create menu items
+        7. add rectangles from simulation  and menu items from createMenu to display group
          */
+
 
         this.myStage = stage;
     }
