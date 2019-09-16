@@ -1,4 +1,6 @@
-package game;
+package game.simulation;
+
+import game.Cell;
 
 /**
  * This abstract class runs a simulation of any
