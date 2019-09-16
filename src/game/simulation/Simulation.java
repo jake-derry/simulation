@@ -1,6 +1,9 @@
 package game.simulation;
 
 import game.Cell;
+import game.Visualization;
+
+import java.util.Map;
 
 /**
  * This abstract class runs a simulation of any
@@ -15,8 +18,12 @@ import game.Cell;
 abstract public class Simulation {
     private Cell[][] grid;
     private boolean running;
+    private Visualization myVisualization;
 
-    Simulation() { }
+
+    Simulation() {
+        running = true;
+    }
 
     /**
      * Sets the next state of all cells in the grid
@@ -29,16 +36,16 @@ abstract public class Simulation {
      * Sets the running variable to false which stops
      * the {link #update update} method from running.
      */
-    public void stop() {
-
+    public void pause() {
+        running = false;
     }
 
     /**
      * Sets the running variable to true which resumes
      * the {link #update update} method to run.
      */
-    public void start() {
-
+    public void play() {
+        running = true;
     }
 
     /**
@@ -47,6 +54,15 @@ abstract public class Simulation {
      * @return  grid of Cells
      */
     public Cell[][] getGrid() {
-        return null;
+        return grid;
+    }
+
+    /**
+     * Gets the visualization of the simulation.
+     *
+     * @return  Visualization object of the simulation
+     */
+    public Visualization getVisualization() {
+        return myVisualization;
     }
 }
