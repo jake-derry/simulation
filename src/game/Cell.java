@@ -28,7 +28,7 @@ public class Cell {
      * @param next  sets the next state
      */
     public void setNextState(int next) {
-
+        myNextState = next;
     }
 
     /**
@@ -43,7 +43,8 @@ public class Cell {
      *                  simulation
      */
     public void stepState(Color[] palette) {
-
+        myState = myNextState;
+        myRectangle.setFill(palette[myState]);
     }
 
     /**
@@ -54,7 +55,7 @@ public class Cell {
      * @return      the cell's rectangle
      */
     public Rectangle getRectangle() {
-        return null;
+        return myRectangle;
     }
 
 }
