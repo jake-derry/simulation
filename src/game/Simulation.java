@@ -1,6 +1,6 @@
 package game;
 
-public class Simulation {
+abstract public class Simulation {
     private Cell[][] grid;
     private boolean running;
 
@@ -8,9 +8,7 @@ public class Simulation {
      * Steps the simulation if the
      * running variable is true
      */
-    public void update() {
-
-    }
+    abstract public void update();
 
     /**
      * Sets the running variable
