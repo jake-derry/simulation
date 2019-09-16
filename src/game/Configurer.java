@@ -1,5 +1,7 @@
 package game;
 
+import game.simulation.Simulation;
+
 /**
  * The purpose of the Configurer class is to take an XML file as an input and return a simulation
  * as its output. This simulation will be based on the contents of the XML file.

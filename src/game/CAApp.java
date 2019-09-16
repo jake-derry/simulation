@@ -1,7 +1,7 @@
 package game;
 
+import game.simulation.Simulation;
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
