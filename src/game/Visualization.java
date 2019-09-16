@@ -2,6 +2,11 @@ package game;
 
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
+import java.util.Map;
+
 
 /**
  * Visualization section of our CAApp.
@@ -9,11 +14,21 @@ import javafx.scene.Node;
  * @author Matt Harris
  */
 public class Visualization{
+    private Cell[][] cellArray;
+    private Color[] colorList;
 
     /**
      * Constructor for Visualization
      */
-    public Visualization(){
+    public Visualization(Cell[][] groupOfCells, Map<String, Object> configVals){
+        cellArray = groupOfCells;
+
+        //This can all be changed once we know a bit better how we want to instantiate our color list
+        colorList = new Color[4];
+        colorList[0] = Color.BLACK;
+        colorList[1] = Color.BLUE;
+        colorList[2] = Color.RED;
+        colorList[3] = Color.WHITE;
     }
 
     /**
@@ -27,7 +42,11 @@ public class Visualization{
     /**
      * visualize: step through cells and update colors accordingly
      */
-    public void visualize(){
-
+    public void visualize(Color[] colors){
+        for (Cell[] cellRow : cellArray){
+            for (Cell cell : cellRow){
+                cell.stepState(colors);
+            }
+        }
     }
 }
