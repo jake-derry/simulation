@@ -58,6 +58,16 @@ abstract public class Simulation {
     }
 
     /**
+     * Gets the cell at x, y in the 2D array (grid) of cells.
+     * @param x     x index of grid
+     * @param y     y index of grid
+     * @return      Cell at x, y
+     */
+    public Cell getCell(int x, int y) {
+        return grid[x][y];
+    }
+
+    /**
      * Gets the visualization of the simulation.
      *
      * @return  Visualization object of the simulation
