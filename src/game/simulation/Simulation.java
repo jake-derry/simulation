@@ -26,11 +26,19 @@ abstract public class Simulation {
     }
 
     /**
-     * Sets the next state of all cells in the grid
-     * implemented based on type of simulation. Only
-     * does this when the running variable is set to true.
+     * Calls the update() method when the running
+     * variable is set to true.
      */
-    public abstract void update();
+    public void step() {
+        if (running) update();
+    }
+
+    /**
+     * Sets the next state of all cells in the
+     * grid. Only runs when the running variable is set
+     * to true.
+     */
+    protected abstract void update();
 
     /**
      * Sets the running variable to false which stops
@@ -55,16 +63,6 @@ abstract public class Simulation {
      */
     public Cell[][] getGrid() {
         return grid;
-    }
-
-    /**
-     * Gets the cell at x, y in the 2D array (grid) of cells.
-     * @param x     x index of grid
-     * @param y     y index of grid
-     * @return      Cell at x, y
-     */
-    public Cell getCell(int x, int y) {
-        return grid[x][y];
     }
 
     /**
@@ -94,5 +92,15 @@ abstract public class Simulation {
      */
     public Visualization getVisualization() {
         return myVisualization;
+    }
+
+    /**
+     * Gets the cell at x, y in the 2D array (grid) of cells.
+     * @param x     x index of grid
+     * @param y     y index of grid
+     * @return      Cell at x, y
+     */
+    protected Cell getCell(int x, int y) {
+        return grid[x][y];
     }
 }
