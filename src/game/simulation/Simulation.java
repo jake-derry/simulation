@@ -68,6 +68,26 @@ abstract public class Simulation {
     }
 
     /**
+     * Gets the row count of the grid in cell.s
+     *
+     * @return      grid height
+     */
+    public int getGridRowCount() {
+        return grid.length;
+    }
+
+    /**
+     * Gets the column count of the grid in cells.
+     *
+     * Assumes that the grid has at least 1 row.
+     *
+     * @return      grid width
+     */
+    public int getGridColumnCount() {
+        return grid[0].length;
+    }
+
+    /**
      * Gets the visualization of the simulation.
      *
      * @return  Visualization object of the simulation
