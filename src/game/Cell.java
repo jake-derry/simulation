@@ -86,4 +86,15 @@ public class Cell {
         return myRectangle;
     }
 
+    /**
+     * Gets the cell's state. The Simulation will use this method
+     * to retrieve the cell's state to determine the state of neighboring
+     * cells.
+     *
+     * @return      the cell's state
+     */
+    public int getState() {
+        return myState;
+    }
+
 }
