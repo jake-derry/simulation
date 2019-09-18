@@ -24,6 +24,14 @@ public class Configurer{
     private static final String CELL_COLUMN_TAG = "col";
     private static final String CELL_ROW_TAG = "row";
     private static final String CELL_STATE_TAG = "state";
+    private static final String TYPE_TAG = "type";
+
+    //Simulations Supported
+    private static final String LIFE = "gameOfLife";
+    private static final String SEGREGATION = "segregation";
+    private static final String PREDATOR_PREY = "predatorPrey";
+    private static final String FIRE = "fire";
+    private static final String PERCOLATION = "percolation";
 
     /**Reads XML file. Creates a document using the DocumentBuilder class. Uses this information to create a
      * cellular array and ultimately passes this information to the Simulation class.
@@ -36,6 +44,19 @@ public class Configurer{
         Cell[][] cellArray = initializeCellArray(Integer.parseInt(getFirstElement((Element) simDoc, ROW_TAG)),
                 Integer.parseInt(getFirstElement((Element) simDoc, COLUMN_TAG)));
         updateActiveCells(simDoc, cellArray);
+        switch (getFirstElement((Element) simDoc, TYPE_TAG)){
+            case LIFE:
+                //Determine game-specific parameters
+                //Create and return game-specific simulation
+            case SEGREGATION:
+
+            case PREDATOR_PREY:
+
+            case FIRE:
+
+            case PERCOLATION:
+
+        }
         return null;
     }
 
