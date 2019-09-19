@@ -43,18 +43,14 @@ public class Configurer{
      */
     public static Simulation getSimulation(String myFile){
         Document simDoc = readFile(myFile);
-        System.out.println(simDoc.getElementsByTagName(ROW_TAG).item(0).getTextContent());
-        System.out.println(simDoc.getElementsByTagName(COLUMN_TAG).item(0).getTextContent());
         int totalColumns = Integer.parseInt(simDoc.getElementsByTagName(COLUMN_TAG).item(0).getTextContent());
         int totalRows = Integer.parseInt(simDoc.getElementsByTagName(ROW_TAG).item(0).getTextContent());
-        System.out.println(simDoc.getElementsByTagName(ROW_TAG).item(0).getTextContent());
         Cell[][] myCellArray = new Cell[totalRows][totalColumns];
         List<Integer> activeCells = initializeActiveCells(simDoc, totalColumns, myCellArray);
         initializeInactiveCells(totalRows, totalColumns, activeCells, myCellArray);
         switch (simDoc.getElementsByTagName(TYPE_TAG).item(0).getTextContent()){
             case LIFE:
-                //Determine game-specific parameters
-                //Create and return game-specific simulation
+                return new GameOfLifeSimulation(LIFE, myCellArray);
             case SEGREGATION:
 
             case PREDATOR_PREY:
@@ -90,7 +86,7 @@ public class Configurer{
             int myRow = Integer.parseInt(getFirstElement(myCell, CELL_ROW_TAG));
             int myColumn = Integer.parseInt(getFirstElement(myCell, CELL_COLUMN_TAG));
             int myState = Integer.parseInt(getFirstElement(myCell, CELL_STATE_TAG));
-            //myArray[myRow][myColumn] = new Cell(myState);
+            myArray[myRow][myColumn] = new Cell(myState);
             activeCells.add(myRow * totalCols + myColumn);
             System.out.println("Added");
         }
@@ -101,7 +97,7 @@ public class Configurer{
         for(int i = 0; i< Rows; i++){
             for(int j = 0; j<Cols; j++){
                 if(!(activeCells.contains(i*Cols + j))){
-                    //myArray[i][j] = new Cell(0);
+                    myArray[i][j] = new Cell(0);
                     System.out.println("Yes");
                 }
             }

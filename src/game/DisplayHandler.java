@@ -1,9 +1,16 @@
 package game;
 
+import game.simulation.Simulation;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 
 public class DisplayHandler {
@@ -19,8 +26,14 @@ public class DisplayHandler {
     private final int SIM_SPEED_X;
     private final int BUTTON_TEXT_Y;
     private final int BUTTON_TEXT_SIZE;
+    private final int BUTTON_Y;
+    private final int BUTTON_DIMENSION;
+    private Simulation mySim;
+    private Configurer myConfig;
 
-    public DisplayHandler(int windowDimension){
+    public DisplayHandler(Configurer config, Simulation sim, Group group, int windowDimension){
+        myConfig = config;
+        mySim = sim;
         // Menu Item Positions
         WINDOW_SIZE = windowDimension;
         MENU_HEIGHT = WINDOW_SIZE/4;
@@ -33,13 +46,15 @@ public class DisplayHandler {
         SIM_SPEED_X = WINDOW_SIZE*4/5;
         BUTTON_TEXT_SIZE = TITLE_SIZE/2;
         BUTTON_TEXT_Y = MENU_HEIGHT*3/4;
+        BUTTON_Y = MENU_HEIGHT/2;
+        BUTTON_DIMENSION = WINDOW_SIZE / 10;
     }
 
     /**
      * setUpMenuItems: sets up title and position/size of menu items.
      */
-    public void setUpMenuItems(String simTitle, ArrayList<Node> menuItems){
-        Text titleText = createText(TITLE_X, TITLE_Y, simTitle, TITLE_SIZE);
+    public void setUpMenuText(ArrayList<Node> menuItems){
+        Text titleText = createText(TITLE_X, TITLE_Y, mySim.getSimTitle(), TITLE_SIZE);
         menuItems.add(titleText);
         Text newSimButtonText = createText(NEW_SIM_X, BUTTON_TEXT_Y, "New Simulation", BUTTON_TEXT_SIZE);
         menuItems.add(newSimButtonText);
@@ -49,6 +64,21 @@ public class DisplayHandler {
         menuItems.add(stepButtonText);
         Text simSpeedButtonText = createText(SIM_SPEED_X, BUTTON_TEXT_Y, "Simulation Speed", BUTTON_TEXT_SIZE);
         menuItems.add(simSpeedButtonText);
+    }
+
+    public void setUpMenuButtons(){
+        // Can almost certainly make some subclasses for these buttons
+        Button newSimButton = new Button("newSimButton", new ImageView("plus.png"));
+        newSimButton.setLayoutX(NEW_SIM_X);
+        newSimButton.setLayoutY(BUTTON_Y);
+        newSimButton.setPrefHeight(BUTTON_DIMENSION);
+        newSimButton.setPrefWidth(BUTTON_DIMENSION);
+        newSimButton.setOnAction(new EventHandler<ActionEvent>(){
+            // TODO: FIGURE OUT HOW TO DO THIS BUTTON'S BEHAVIOR
+            @Override
+            public void handle(ActionEvent event) {
+            }
+        });
     }
 
     /**
