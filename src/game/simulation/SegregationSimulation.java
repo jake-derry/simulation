@@ -69,7 +69,7 @@ public class SegregationSimulation extends Simulation{
         Random random = new Random();
         int switchState = unsatisfiedCell.getState();
         Cell randomEmptyCell = emptyCells.get(random.nextInt(emptyCells.size()));
-        randomEmptyCell.setNextState(switchState);
+        randomEmptyCell.setNextState(switchState);      // TODO: This might be able to be cleaned up
         emptyCells.remove(randomEmptyCell);
         unsatisfiedCell.setNextState(EMPTY);
         emptyCells.add(unsatisfiedCell);
@@ -77,8 +77,18 @@ public class SegregationSimulation extends Simulation{
 
     private boolean satisfied(int i, int j) {
         int[] neighborStates = getNeighborStates(i, j);
-        // TODO: Implement satisfied
+        double percentSame = getSameStateNeighbors(neighborStates, getCell(i, j).getState()) /
+                (double) neighborStates.length;
+        return percentSame >= satisfactionPercent;
+    }
 
-        return true;
+    private int getSameStateNeighbors(int[] neighborStates, int state) {
+        int count = 0;
+        for (int neighborState: neighborStates) {
+            if (neighborState == state) {
+                count++;
+            }
+        }
+        return count;
     }
 }
