@@ -1,9 +1,12 @@
 package game;
 
-import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 
@@ -17,17 +20,22 @@ public class Visualization{
     private Color[] colorList;
     private int WINDOW_SIZE;
     private int MENU_HEIGHT;
+
     // Stuff for calculating rectangle position / size
-    private final int CELL_WIDTH = WINDOW_SIZE / cellArray[0].length;
-    private final int CELL_HEIGHT = (WINDOW_SIZE - MENU_HEIGHT) / cellArray.length;
+    private final int CELL_WIDTH;
+    private final int CELL_HEIGHT;
 
     /**
      * Constructor for Visualization
      */
-    public Visualization(Cell[][] groupOfCells, Map<String, Object> configVals, int windowDimension){
-        cellArray = groupOfCells;
+    public Visualization(Cell[][] gridOfCells, Map<String, Object> configVals, int windowDimension){
+        cellArray = gridOfCells;
         WINDOW_SIZE = windowDimension;
+
+        // Cell dimensions
         MENU_HEIGHT = WINDOW_SIZE/4;
+        CELL_WIDTH = WINDOW_SIZE / cellArray[0].length;
+        CELL_HEIGHT = (WINDOW_SIZE - MENU_HEIGHT) / cellArray.length;
 
         //This can all be changed once we know a bit better how we want to instantiate our color list
         colorList = new Color[4];
@@ -38,7 +46,7 @@ public class Visualization{
     }
 
     /**
-     * setUp the rectangles to be displayed in CAApp
+     * setUpRectangles: sets width, height, x, and y coordinates of rectangles for cells
      */
     public void setUpRectangles(){
         for (int i = 0; i < cellArray.length; i++){
@@ -51,9 +59,7 @@ public class Visualization{
         }
     }
 
-    /**
-     *
-     */
+
 
     /**
      * visualize: step through cells and update colors accordingly

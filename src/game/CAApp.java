@@ -2,6 +2,9 @@ package game;
 
 import game.simulation.Simulation;
 import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
@@ -11,6 +14,7 @@ import javafx.stage.Stage;
 public class CAApp extends Application {
     private Stage myStage;
     private Simulation mySim;
+    private Group displayGroup;
 
     /**
      *
@@ -61,6 +65,21 @@ public class CAApp extends Application {
      * @param code KeyCode of key pressed by user
      */
     private void handleKeyInput(KeyCode code){
+
+    }
+
+    /**
+     * addAssetsToDisplayGroup: adds menu items and cell rectangles to the group to be displayed
+     */
+    public void addAssetsToDisplayGroup(Simulation sim){
+        for (Cell cellRow[] : sim.getGrid()){
+            for (Cell cell : cellRow){
+                displayGroup.getChildren().add(cell.getRectangle());
+            }
+        }
+        for (Node menuItem : sim.getMenuItems()){
+            displayGroup.getChildren().add(menuItem);
+        }
 
     }
 }

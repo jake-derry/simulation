@@ -28,9 +28,9 @@ abstract public class Simulation {
     /**
      * Default constructor for simulation given no parameters
      */
-    Simulation() { running = true; simTitle = "Null"; grid = null;}
+    public Simulation() { running = true; simTitle = "Null"; grid = null;}
 
-    Simulation(String title, Cell[][] initialGrid){
+    public Simulation(String title, Cell[][] initialGrid){
         running = true;
         simTitle = title;
         grid = initialGrid;
