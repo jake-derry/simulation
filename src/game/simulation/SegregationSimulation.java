@@ -20,8 +20,8 @@ public class SegregationSimulation extends Simulation{
     private List<Cell> emptyCells;
 
 
-    SegregationSimulation(String title, Cell[][] initialGrid) {
-        super(title, initialGrid);
+    SegregationSimulation(String title, Cell[][] initialGrid, int windowSize) {
+        super(title, initialGrid, windowSize);
         emptyCells = getEmptyCells();
     }
 

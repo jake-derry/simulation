@@ -11,8 +11,8 @@ public class GameOfLifeSimulation extends Simulation {
     private static final int DEAD = 0;
     private static final int LIVE = 1;
 
-    GameOfLifeSimulation(String title, Cell[][] initialGrid) {
-        super(title, initialGrid);
+    GameOfLifeSimulation(String title, Cell[][] initialGrid, int windowSize) {
+        super(title, initialGrid, windowSize);
     }
 
     @Override

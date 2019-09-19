@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -26,15 +27,11 @@ abstract public class Simulation {
     private Visualization myVisualization;
     private String simTitle;
 
-    /**
-     * Default constructor for simulation given no parameters
-     */
-    public Simulation() { running = true; simTitle = "Null"; grid = null;}
-
-    public Simulation(String title, Cell[][] initialGrid){
+    public Simulation(String title, Cell[][] initialGrid, int windowSize){
         running = true;
         simTitle = title;
         grid = initialGrid;
+        myVisualization = new Visualization(initialGrid, new HashMap<>(), windowSize);
     }
 
     /**

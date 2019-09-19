@@ -12,6 +12,8 @@ import javafx.stage.Stage;
  * Main JavaFX application. Creates and calls Configurer, Simulation, and Visualization classes.
  */
 public class CAApp extends Application {
+    private static final int WINDOW_SIZE = 200;
+
     private Stage myStage;
     private Simulation mySim;
     private Group displayGroup;
