@@ -43,6 +43,7 @@ public class Visualization{
      * setUpRectangles: sets width, height, x, and y coordinates of rectangles for cells
      */
     public void setUpRectangles(){
+        // MattsBranch is best branch
         for (int i = 0; i < cellArray.length; i++){
             for (int j = 0; j < cellArray[0].length; j++){
                 cellArray[i][j].getRectangle().setHeight(CELL_HEIGHT);
