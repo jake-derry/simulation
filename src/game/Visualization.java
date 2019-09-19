@@ -1,12 +1,6 @@
 package game;
 
-import javafx.scene.Node;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-
-import java.util.ArrayList;
 import java.util.Map;
 
 
@@ -58,8 +52,6 @@ public class Visualization{
             }
         }
     }
-
-
 
     /**
      * visualize: step through cells and update colors accordingly

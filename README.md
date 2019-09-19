@@ -17,7 +17,7 @@ Hours Spent:
 
 
 ### Resources Used
-
+Button images gotten from: http://clipart-library.com/clip-art/play-pause-button-transparent-3.htm
 
 ### Running the Program
 
