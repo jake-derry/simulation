@@ -1,18 +1,26 @@
 package game;
 
 import game.simulation.Simulation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * Main JavaFX application. Creates and calls Configurer, Simulation, and Visualization classes.
  */
 public class CAApp extends Application {
     private static final int WINDOW_SIZE = 200;
+    private static final int FRAMES_PER_SECOND = 10;
+    private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
     private Stage myStage;
     private Simulation mySim;
@@ -34,8 +42,22 @@ public class CAApp extends Application {
         7. add rectangles from simulation and menu items from createMenu to display group
          */
 
-
         this.myStage = stage;
+        displayGroup = new Group();
+        stage.setScene(new Scene(displayGroup, WINDOW_SIZE, WINDOW_SIZE, Color.AZURE));
+        stage.setTitle("Test Title");
+        stage.show();
+
+        mySim = Configurer.getSimulation("GameofLife_Example.xml", WINDOW_SIZE);
+        addAssetsToDisplayGroup();
+
+        // attach "game loop" to timeline to play it (basically just calling step() method repeatedly forever)
+        var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
+        var animation = new Timeline();
+        animation.setCycleCount(Timeline.INDEFINITE);
+        animation.getKeyFrames().add(frame);
+        animation.play();
+
     }
 
     /**
@@ -47,6 +69,7 @@ public class CAApp extends Application {
         1. call simulation.Update
         2. call simulation.visualize
          */
+        mySim.step();
     }
 
     public static void main (String[] args) {
@@ -73,15 +96,16 @@ public class CAApp extends Application {
     /**
      * addAssetsToDisplayGroup: adds menu items and cell rectangles to the group to be displayed
      */
-    public void addAssetsToDisplayGroup(Simulation sim){
-        for (Cell cellRow[] : sim.getGrid()){
+    public void addAssetsToDisplayGroup(){
+        for (Cell cellRow[] : mySim.getGrid()){
             for (Cell cell : cellRow){
                 displayGroup.getChildren().add(cell.getRectangle());
             }
         }
+        /*
         for (Node menuItem : sim.getMenuItems()){
             displayGroup.getChildren().add(menuItem);
-        }
+        }*/
 
     }
 }

@@ -32,6 +32,7 @@ abstract public class Simulation {
         simTitle = title;
         grid = initialGrid;
         myVisualization = new Visualization(initialGrid, new HashMap<>(), windowSize);
+        myVisualization.setUpRectangles();
     }
 
     /**
@@ -39,7 +40,11 @@ abstract public class Simulation {
      * variable is set to true.
      */
     public void step() {
-        if (running) update();
+        if (running){
+            update();
+            myVisualization.visualize();
+
+        }
     }
 
     /**

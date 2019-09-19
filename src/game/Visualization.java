@@ -56,10 +56,10 @@ public class Visualization{
     /**
      * visualize: step through cells and update colors accordingly
      */
-    public void visualize(Color[] colors){
+    public void visualize(){
         for (Cell[] cellRow : cellArray){
             for (Cell cell : cellRow){
-                cell.stepState(colors);
+                cell.stepState(colorList);
             }
         }
     }
