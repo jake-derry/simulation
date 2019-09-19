@@ -49,22 +49,9 @@ public class GameOfLifeSimulation extends Simulation {
 
     private int countLiveNeighbors(int[] neighborStates) {
         int count = 0;
-        for (int i = 0; i < neighborStates.length; i++) {
-            if (neighborStates[i] == LIVE) count++;
+        for (int neighborState : neighborStates) {
+            if (neighborState == LIVE) count++;
         }
         return count;
-    }
-
-    private int[] getNeighborStates(int i, int j) {
-        int[] neighborStates = new int[8];
-        neighborStates[0] = getCell(i - 1, j).getState();
-        neighborStates[1] = getCell(i + 1, j).getState();
-        neighborStates[2] = getCell(i - 1, j - 1).getState();
-        neighborStates[3] = getCell(i + 1, j - 1).getState();
-        neighborStates[4] = getCell(i, j - 1).getState();
-        neighborStates[5] = getCell(i - 1, j + 1).getState();
-        neighborStates[6] = getCell(i + 1, j + 1).getState();
-        neighborStates[7] = getCell(i, j + 1).getState();
-        return neighborStates;
     }
 }
