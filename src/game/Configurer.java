@@ -7,6 +7,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import game.simulation.GameOfLifeSimulation;
+import game.simulation.Simulation;
 import org.w3c.dom.Document;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -41,7 +43,7 @@ public class Configurer{
      * @param myFile XML to be read
      * @return Simulation created based on XML file
      */
-    public static Simulation getSimulation(String myFile){
+    public static Simulation getSimulation(String myFile, int WindowSize){
         Document simDoc = readFile(myFile);
         int totalColumns = Integer.parseInt(simDoc.getElementsByTagName(COLUMN_TAG).item(0).getTextContent());
         int totalRows = Integer.parseInt(simDoc.getElementsByTagName(ROW_TAG).item(0).getTextContent());
@@ -50,7 +52,7 @@ public class Configurer{
         initializeInactiveCells(totalRows, totalColumns, activeCells, myCellArray);
         switch (simDoc.getElementsByTagName(TYPE_TAG).item(0).getTextContent()){
             case LIFE:
-                return new GameOfLifeSimulation(LIFE, myCellArray);
+                return new GameOfLifeSimulation(LIFE, myCellArray, WindowSize);
             case SEGREGATION:
 
             case PREDATOR_PREY:
