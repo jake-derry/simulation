@@ -26,7 +26,7 @@ public class Cell {
      *
      * @param state     Initial state of the Cell
      */
-    Cell(int state) {
+    public Cell(int state) {
         myState = state;
     }
 

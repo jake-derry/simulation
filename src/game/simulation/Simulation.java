@@ -19,6 +19,8 @@ import java.util.Map;
  * @author Jake Derry
  */
 abstract public class Simulation {
+    private static final int BEYOND_EDGE = -1;
+
     private Cell[][] grid;
     private boolean running;
     private Visualization myVisualization;
@@ -106,13 +108,19 @@ abstract public class Simulation {
     }
 
     /**
-     * Gets the cell at x, y in the 2D array (grid) of cells.
+     * Gets the cell at x, y in the 2D array (grid) of cells. If the cell
+     * does not exist, like in the case of
      * @param x     x index of grid
      * @param y     y index of grid
      * @return      Cell at x, y
      */
     protected Cell getCell(int x, int y) {
-        return grid[x][y];
+        try {
+            return grid[x][y];
+        }
+        catch (IndexOutOfBoundsException e) {
+            return new Cell(BEYOND_EDGE);
+        }
     }
 
     /**
