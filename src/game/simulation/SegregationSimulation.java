@@ -4,6 +4,7 @@ import game.Cell;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * This simulation runs the Segregation Simulation which
@@ -18,14 +19,16 @@ public class SegregationSimulation extends Simulation{
      * The number of cells with the empty code.
      */
     private List<Cell> emptyCells;
+    private double satisfactionPercent;
 
 
-    SegregationSimulation(String title, Cell[][] initialGrid, int windowSize) {
+    SegregationSimulation(String title, Cell[][] initialGrid, int windowSize, double percent) {
         super(title, initialGrid, windowSize);
-        emptyCells = getEmptyCells();
+        emptyCells = findEmptyCells();
+        satisfactionPercent = percent;
     }
 
-    private List<Cell> getEmptyCells() {
+    private List<Cell> findEmptyCells() {
         List<Cell> emptyCellList = new ArrayList<>();
         for (int i = 0; i < getGridRowCount(); i++) {
             for (int j = 0; j < getGridColumnCount(); j++) {
@@ -40,32 +43,41 @@ public class SegregationSimulation extends Simulation{
 
     @Override
     protected void update() {
+        List<Cell> unsatisfiedCells = updateNonEmptyCells();
+        updateEmptyCells(unsatisfiedCells);
+    }
+
+    private List<Cell> updateNonEmptyCells() {
+        List<Cell> unsatisfiedCells = new ArrayList<>();
         for (int i = 0; i < getGridRowCount(); i++) {
             for (int j = 0; j < getGridColumnCount(); j++) {
-                getCell(i, j).setNextState(nextState(i, j));
+                if (! satisfied(i, j)) {
+                    unsatisfiedCells.add(getCell(i, j));
+                }
             }
+        }
+        return unsatisfiedCells;
+    }
+
+    private void updateEmptyCells(List<Cell> unsatisfiedCells) {
+        for (Cell unsatisfiedCell : unsatisfiedCells) {
+            switchEmptyCell(unsatisfiedCell);
         }
     }
 
-    private int nextState(int i, int j) {
-        if (getCell(i, j).getState() == EMPTY) {
-            // handle randomly placing a 'person' in a spot
-            return EMPTY;
-        }
-        else {
-            if (satisfied(i, j)) {
-                return getCell(i, j).getState();
-            }
-
-            else {
-                return EMPTY;
-            }
-        }
+    private void switchEmptyCell(Cell unsatisfiedCell) {
+        Random random = new Random();
+        int switchState = unsatisfiedCell.getState();
+        Cell randomEmptyCell = emptyCells.get(random.nextInt(emptyCells.size()));
+        randomEmptyCell.setNextState(switchState);
+        emptyCells.remove(randomEmptyCell);
+        unsatisfiedCell.setNextState(EMPTY);
+        emptyCells.add(unsatisfiedCell);
     }
 
     private boolean satisfied(int i, int j) {
         int[] neighborStates = getNeighborStates(i, j);
-        // TODO: implement satisfied
+        // TODO: Implement satisfied
 
         return true;
     }
