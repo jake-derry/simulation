@@ -17,7 +17,7 @@ import javafx.util.Duration;
  * Main JavaFX application. Creates and calls Configurer, Simulation, and Visualization classes.
  */
 public class CAApp extends Application {
-    private static final int WINDOW_SIZE = 200;
+    private static final int WINDOW_SIZE = 2010;
     private static final int FRAMES_PER_SECOND = 10;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
