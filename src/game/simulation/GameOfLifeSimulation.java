@@ -1,16 +1,22 @@
 package game.simulation;
 
 
+import game.Cell;
+
 /**
  * This simulation runs Conway's Game of Life which
  * has rules that simulate life.
  */
 public class GameOfLifeSimulation extends Simulation {
-    int DEAD = 0;
-    int LIVE = 1;
+    private static final int DEAD = 0;
+    private static final int LIVE = 1;
+
+    GameOfLifeSimulation(String title, Cell[][] initialGrid) {
+        super(title, initialGrid);
+    }
 
     @Override
-    public void update() {
+    protected void update() {
         for (int i = 0; i < getGridRowCount(); i++) {
             for (int j = 0; j < getGridColumnCount(); i++) {
                 getCell(i, j).setNextState(nextState(i, j));
