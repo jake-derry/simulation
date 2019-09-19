@@ -16,6 +16,10 @@ public class Visualization{
     private Cell[][] cellArray;
     private Color[] colorList;
     private int WINDOW_SIZE;
+    private int MENU_HEIGHT;
+    // Stuff for calculating rectangle position / size
+    private final int CELL_WIDTH = WINDOW_SIZE / cellArray[0].length;
+    private final int CELL_HEIGHT = (WINDOW_SIZE - MENU_HEIGHT) / cellArray.length;
 
     /**
      * Constructor for Visualization
@@ -23,6 +27,7 @@ public class Visualization{
     public Visualization(Cell[][] groupOfCells, Map<String, Object> configVals, int windowDimension){
         cellArray = groupOfCells;
         WINDOW_SIZE = windowDimension;
+        MENU_HEIGHT = WINDOW_SIZE/4;
 
         //This can all be changed once we know a bit better how we want to instantiate our color list
         colorList = new Color[4];
@@ -36,16 +41,19 @@ public class Visualization{
      * setUp the rectangles to be displayed in CAApp
      */
     public void setUpRectangles(){
-        for (Cell[] cellRow : cellArray){
-            for (Cell cell : cellRow){
-                // TODO: Fill this stuff out
-                cell.getRectangle().setHeight(WINDOW_SIZE);
-                cell.getRectangle().setWidth(WINDOW_SIZE);
-                cell.getRectangle().setX(WINDOW_SIZE);
-                cell.getRectangle().setY(WINDOW_SIZE);
+        for (int i = 0; i < cellArray.length; i++){
+            for (int j = 0; j < cellArray[0].length; j++){
+                cellArray[i][j].getRectangle().setHeight(CELL_HEIGHT);
+                cellArray[i][j].getRectangle().setWidth(CELL_WIDTH);
+                cellArray[i][j].getRectangle().setX(j*CELL_WIDTH);
+                cellArray[i][j].getRectangle().setY(i*CELL_HEIGHT);
             }
         }
     }
+
+    /**
+     *
+     */
 
     /**
      * visualize: step through cells and update colors accordingly
