@@ -30,6 +30,8 @@ public class DisplayHandler {
     private final int BUTTON_DIMENSION;
     private Simulation mySim;
     private Configurer myConfig;
+    private Group myGroup;
+    private boolean simRunning;
 
     public DisplayHandler(Configurer config, Simulation sim, Group group, int windowDimension){
         myConfig = config;
@@ -65,9 +67,10 @@ public class DisplayHandler {
         Text simSpeedButtonText = createText(SIM_SPEED_X, BUTTON_TEXT_Y, "Simulation Speed", BUTTON_TEXT_SIZE);
         menuItems.add(simSpeedButtonText);
     }
-
+    /*
     public void setUpMenuButtons(){
         // Can almost certainly make some subclasses for these buttons
+        // NEW SIM BUTTON
         Button newSimButton = new Button("newSimButton", new ImageView("plus.png"));
         newSimButton.setLayoutX(NEW_SIM_X);
         newSimButton.setLayoutY(BUTTON_Y);
@@ -79,7 +82,25 @@ public class DisplayHandler {
             public void handle(ActionEvent event) {
             }
         });
-    }
+        myGroup.getChildren().add(newSimButton);
+
+        // PAUSE RESUME BUTTON
+        Button pauseResumeButton = new Button("pauseResumeButton", new ImageView("pause.png"));
+        pauseResumeButton.setLayoutX(PAUSE_RESUME_X);
+        newSimButton.setLayoutY(BUTTON_Y);
+        newSimButton.setPrefHeight(BUTTON_DIMENSION);
+        newSimButton.setPrefWidth(BUTTON_DIMENSION);
+        newSimButton.setOnAction(new EventHandler<ActionEvent>(){
+            // TODO: FIGURE OUT HOW TO DO THIS BUTTON'S BEHAVIOR
+            @Override
+            public void handle(ActionEvent event) {
+                if()
+                mySim.play()
+            }
+        });
+        myGroup.getChildren().add(newSimButton);
+
+    }*/
 
     /**
      * Helps with creating text of a particular size at a particular position

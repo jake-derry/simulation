@@ -18,7 +18,7 @@ public class GameOfLifeSimulation extends Simulation {
     @Override
     protected void update() {
         for (int i = 0; i < getGridRowCount(); i++) {
-            for (int j = 0; j < getGridColumnCount(); i++) {
+            for (int j = 0; j < getGridColumnCount(); j++) {
                 getCell(i, j).setNextState(nextState(i, j));
             }
         }
