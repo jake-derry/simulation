@@ -8,6 +8,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import game.simulation.GameOfLifeSimulation;
+import game.simulation.SegregationSimulation;
 import game.simulation.Simulation;
 import org.w3c.dom.Document;
 import javafx.scene.control.Alert;
@@ -25,6 +26,7 @@ public class Configurer{
     //Tags used within XML file
     private static final String COLUMN_TAG = "columns";
     private static final String ROW_TAG = "rows";
+    private static final String STATE_TAG = "defaultState";
     private static final String CELL_COLUMN_TAG = "col";
     private static final String CELL_ROW_TAG = "row";
     private static final String CELL_STATE_TAG = "state";
@@ -37,6 +39,10 @@ public class Configurer{
     private static final String FIRE = "fire";
     private static final String PERCOLATION = "percolation";
 
+    //Simulation-Specific Tags
+    private static final String SATISFACTION_PERCENT = "satisfaction";
+    private static final String CATCH_PERCENT = "probCatch";
+
     /**Reads XML file. First creates a document using the DocumentBuilder class. Uses this information to create a
      * cellular array and ultimately passes this information, along with WindowSize, to a new Simulation.
      *
@@ -47,18 +53,23 @@ public class Configurer{
         Document simDoc = readFile(myFile);
         int totalColumns = Integer.parseInt(simDoc.getElementsByTagName(COLUMN_TAG).item(0).getTextContent());
         int totalRows = Integer.parseInt(simDoc.getElementsByTagName(ROW_TAG).item(0).getTextContent());
+        int defaultState = Integer.parseInt(simDoc.getElementsByTagName(STATE_TAG).item(0).getTextContent());
         Cell[][] myCellArray = new Cell[totalRows][totalColumns];
         List<Integer> activeCells = initializeActiveCells(simDoc, totalColumns, myCellArray);
-        initializeInactiveCells(totalRows, totalColumns, activeCells, myCellArray);
+        initializeDefaultCells(totalRows, totalColumns, defaultState, activeCells, myCellArray);
         switch (simDoc.getElementsByTagName(TYPE_TAG).item(0).getTextContent()){
             case LIFE:
                 return new GameOfLifeSimulation(LIFE, myCellArray, WindowSize);
+                break;
             case SEGREGATION:
-
+                double satisfaction = Integer.parseInt(simDoc.getElementsByTagName(SATISFACTION_PERCENT).item(0).getTextContent());
+                return new SegregationSimulation(SEGREGATION, myCellArray, WindowSize, satisfaction/100);
+                break;
             case PREDATOR_PREY:
 
             case FIRE:
-
+                double chance = Integer.parseInt(simDoc.getElementsByTagName(CATCH_PERCENT).item(0).getTextContent());
+                return new FireSimulation(FIRE, myCellArray, WindowSize, chance/100);
             case PERCOLATION:
 
         }
@@ -93,11 +104,11 @@ public class Configurer{
         return activeCells;
     }
 
-    private static void initializeInactiveCells(int Rows, int Cols, List<Integer> activeCells, Cell[][] myArray){
+    private static void initializeDefaultCells(int Rows, int Cols, int state, List<Integer> activeCells, Cell[][] myArray){
         for(int i = 0; i < Rows; i++){
             for(int j = 0; j<Cols; j++){
                 if(!(activeCells.contains((i*Cols) + j))){
-                    myArray[i][j] = new Cell(0);
+                    myArray[i][j] = new Cell(state);
                 }
             }
         }

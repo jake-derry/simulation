@@ -7,11 +7,12 @@
         team6
     </author>
     <size>
-        <rows> 30 </rows>
-        <columns> 30 </columns>
+        <rows> 51 </rows>
+        <columns> 51 </columns>
     </size>
+    <defaultState>1</defaultState>
     <activeCells>
-        <cell> </cell>
+        <cell> <row>25</row> <col>25</col> <state>2</state></cell>
     </activeCells>
-    //Additional Parameters to go here
+    <probCatch> 50 </probCatch>
 </Simulation>

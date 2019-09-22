@@ -4,6 +4,7 @@
     <author> team6 </author>
     <rows>21</rows>
     <columns>21</columns>
+    <defaultState>0</defaultState>
     <activeCells>
         <cell>
             <row>9</row> <col>11</col> <state>1</state>
