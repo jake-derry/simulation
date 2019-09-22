@@ -1,0 +1,17 @@
+<?xml version="1"?>
+<Simulation>
+    <type>
+        predatorPrey
+    </type>
+    <author>
+        team6
+    </author>
+    <size>
+        <rows> 30 </rows>
+        <columns> 30 </columns>
+    </size>
+    <activeCells>
+        <cell> </cell>
+    </activeCells>
+    //Additional Parameters to go here
+</Simulation>
