@@ -25,7 +25,7 @@ public class GameOfLifeSimulation extends Simulation {
     }
 
     private int nextState(int i, int j) {
-        int[] neighborStates = getNeighborStates(i, j);
+        int[] neighborStates = getEightNeighborStates(i, j);
         int count = countLiveNeighbors(neighborStates);
         int state = getCell(i, j).getState();
         if (state == DEAD) {

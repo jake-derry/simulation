@@ -133,7 +133,7 @@ abstract public class Simulation {
         }
     }
 
-    protected int[] getNeighborStates(int i, int j) {
+    protected int[] getEightNeighborStates(int i, int j) {
         int[] neighborStates = new int[8];
         neighborStates[0] = getCell(i - 1, j).getState();
         neighborStates[1] = getCell(i + 1, j).getState();
@@ -143,6 +143,15 @@ abstract public class Simulation {
         neighborStates[5] = getCell(i - 1, j + 1).getState();
         neighborStates[6] = getCell(i + 1, j + 1).getState();
         neighborStates[7] = getCell(i, j + 1).getState();
+        return neighborStates;
+    }
+
+    protected int[] getFourNeighborStates(int i, int j) {
+        int[] neighborStates = new int[4];
+        neighborStates[0] = getCell(i - 1, j).getState();
+        neighborStates[1] = getCell(i + 1, j).getState();
+        neighborStates[2] = getCell(i, j - 1).getState();
+        neighborStates[3] = getCell(i, j + 1).getState();
         return neighborStates;
     }
 

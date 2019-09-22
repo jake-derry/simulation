@@ -76,7 +76,7 @@ public class SegregationSimulation extends Simulation{
     }
 
     private boolean satisfied(int i, int j) {
-        int[] neighborStates = getNeighborStates(i, j);
+        int[] neighborStates = getEightNeighborStates(i, j);
         double percentSame = getSameStateNeighbors(neighborStates, getCell(i, j).getState()) /
                 (double) neighborStates.length;
         return percentSame >= satisfactionPercent;
