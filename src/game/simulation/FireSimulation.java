@@ -36,6 +36,9 @@ public class FireSimulation extends Simulation {
             int burningNeighbors = burning(neighbors);
             return catchState(burningNeighbors);
         }
+        if (state == BEYOND_EDGE) {
+            return BEYOND_EDGE;
+        }
         return EMPTY;
     }
 
