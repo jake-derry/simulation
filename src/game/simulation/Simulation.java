@@ -20,7 +20,7 @@ import java.util.Map;
  * @author Jake Derry
  */
 abstract public class Simulation {
-    private static final int BEYOND_EDGE = -1;
+    protected static final int BEYOND_EDGE = -1;
 
     private Cell[][] grid;
     private boolean running;
