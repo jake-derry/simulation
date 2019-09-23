@@ -1,119 +1,86 @@
 package game;
 
-import game.simulation.Simulation;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
-import java.io.FileInputStream;
 import java.util.ArrayList;
 
+/**
+ * DisplayHandler to create and position menu items (buttons, title text) for the CAApp window
+ * Assumptions: there will be 5 buttons- New Sim, Pause/Resume, Step, Slower, and Faster
+ * Dependencies: N/A
+ * Use case: these methods can be called from CAApp to create the menu items needed to control the simulations
+ * @author Matt Harris
+ */
 public class DisplayHandler {
-    // Stuff for calculating menu positions
     private final int MENU_HEIGHT;
     private final int WINDOW_SIZE;
+    // Title Text
     private final int TITLE_X;
     private final int TITLE_Y;
     private final int TITLE_SIZE;
+    // Button Positioning
+    private final int BUTTON_HEIGHT;
     private final int NEW_SIM_X;
     private final int PAUSE_RESUME_X;
     private final int STEP_X;
-    private final int SIM_SPEED_X;
-    private final int BUTTON_TEXT_Y;
-    private final int BUTTON_TEXT_SIZE;
     private final int BUTTON_Y;
-    private final int BUTTON_DIMENSION;
-    private Simulation mySim;
-    private Configurer myConfig;
-    private Group myGroup;
-    private boolean simRunning;
+    private final int FASTER_X;
+    private final int SLOWER_X;
 
-    public DisplayHandler(Configurer config, Simulation sim, Group group, int windowDimension){
-        myConfig = config;
-        mySim = sim;
-        // Menu Item Positions
+    public DisplayHandler(int windowDimension){
         WINDOW_SIZE = windowDimension;
         MENU_HEIGHT = WINDOW_SIZE/4;
         TITLE_X = WINDOW_SIZE/16;
-        TITLE_Y = MENU_HEIGHT/4;
+        TITLE_Y = MENU_HEIGHT*2/5;
         TITLE_SIZE = MENU_HEIGHT/4;
-        NEW_SIM_X = TITLE_X;
-        PAUSE_RESUME_X = WINDOW_SIZE*2/5;
-        STEP_X = WINDOW_SIZE*3/5;
-        SIM_SPEED_X = WINDOW_SIZE*4/5;
-        BUTTON_TEXT_SIZE = TITLE_SIZE/2;
-        BUTTON_TEXT_Y = MENU_HEIGHT*3/4;
-        BUTTON_Y = MENU_HEIGHT/2;
-        BUTTON_DIMENSION = WINDOW_SIZE / 10;
+        NEW_SIM_X = WINDOW_SIZE/32;
+        PAUSE_RESUME_X = WINDOW_SIZE*7/32;
+        STEP_X = WINDOW_SIZE*13/32;
+        FASTER_X = WINDOW_SIZE*25/32;
+        SLOWER_X = WINDOW_SIZE*19/32;
+        BUTTON_Y = MENU_HEIGHT*3/5;
+        BUTTON_HEIGHT = WINDOW_SIZE/30;
     }
 
     /**
-     * setUpMenuItems: sets up title and position/size of menu items.
+     * Creates the tile of the displayed simulation at a particular size and particular position
+     * @param text- the String that is to be displayed as Text in the window
+     * @return- the Text object created to display the Title
+     * Assumptions: position and size of title specified by private variables TITLE_X, TITLE_Y, and TITLE_SIZE
      */
-    public void setUpMenuText(ArrayList<Node> menuItems){
-        Text titleText = createText(TITLE_X, TITLE_Y, mySim.getSimTitle(), TITLE_SIZE);
-        menuItems.add(titleText);
-        Text newSimButtonText = createText(NEW_SIM_X, BUTTON_TEXT_Y, "New Simulation", BUTTON_TEXT_SIZE);
-        menuItems.add(newSimButtonText);
-        Text pauseResumeButtonText = createText(PAUSE_RESUME_X, BUTTON_TEXT_Y, "New Simulation", BUTTON_TEXT_SIZE);
-        menuItems.add(pauseResumeButtonText);
-        Text stepButtonText = createText(STEP_X, BUTTON_TEXT_Y, "New Simulation", BUTTON_TEXT_SIZE);
-        menuItems.add(stepButtonText);
-        Text simSpeedButtonText = createText(SIM_SPEED_X, BUTTON_TEXT_Y, "Simulation Speed", BUTTON_TEXT_SIZE);
-        menuItems.add(simSpeedButtonText);
-    }
-    /*
-    public void setUpMenuButtons(){
-        // Can almost certainly make some subclasses for these buttons
-        // NEW SIM BUTTON
-        Button newSimButton = new Button("newSimButton", new ImageView("plus.png"));
-        newSimButton.setLayoutX(NEW_SIM_X);
-        newSimButton.setLayoutY(BUTTON_Y);
-        newSimButton.setPrefHeight(BUTTON_DIMENSION);
-        newSimButton.setPrefWidth(BUTTON_DIMENSION);
-        newSimButton.setOnAction(new EventHandler<ActionEvent>(){
-            // TODO: FIGURE OUT HOW TO DO THIS BUTTON'S BEHAVIOR
-            @Override
-            public void handle(ActionEvent event) {
-            }
-        });
-        myGroup.getChildren().add(newSimButton);
-
-        // PAUSE RESUME BUTTON
-        Button pauseResumeButton = new Button("pauseResumeButton", new ImageView("pause.png"));
-        pauseResumeButton.setLayoutX(PAUSE_RESUME_X);
-        newSimButton.setLayoutY(BUTTON_Y);
-        newSimButton.setPrefHeight(BUTTON_DIMENSION);
-        newSimButton.setPrefWidth(BUTTON_DIMENSION);
-        newSimButton.setOnAction(new EventHandler<ActionEvent>(){
-            // TODO: FIGURE OUT HOW TO DO THIS BUTTON'S BEHAVIOR
-            @Override
-            public void handle(ActionEvent event) {
-                if()
-                mySim.play()
-            }
-        });
-        myGroup.getChildren().add(newSimButton);
-
-    }*/
-
-    /**
-     * Helps with creating text of a particular size at a particular position
-     * @param xpos
-     * @param ypos
-     * @param text
-     * @param fontSize
-     * @return
-     */
-    private Text createText(int xpos, int ypos, String text, int fontSize){
-        Text finalText = new Text(xpos, ypos, text);
-        finalText.setFont(new Font(fontSize));
+    public Text createTitle(String text){
+        Text finalText = new Text(TITLE_X, TITLE_Y, text);
+        finalText.setFont(new Font(TITLE_SIZE));
         return finalText;
     }
 
+    /**
+     * @param text- the text to be displayed on the button
+     * @param xPos- the xcoordinate of where the button should be displayed
+     * @return- the button created with the specified text and position
+     */
+    private Button makeButton(String text, int xPos){
+        Button button = new Button(text);
+        button.setLayoutX(xPos);
+        button.setLayoutY(BUTTON_Y);
+        button.setPrefHeight(BUTTON_HEIGHT);
+        button.setPrefWidth(BUTTON_HEIGHT*5);
+        return button;
+    }
+
+    /**
+     * Creates and returns the specific menu buttons to be displayed and used
+     * @return- an ArrayList<Button> to be added to the display group in CAApp
+     * Assumptions- the functions of these buttons will be set in CAApp before adding them to the display group
+     */
+    public ArrayList<Button> makeMenuButtons(){
+        ArrayList<Button> menuButtons = new ArrayList<Button>();
+        menuButtons.add(makeButton("New Sim", NEW_SIM_X));
+        menuButtons.add(makeButton("Pause", PAUSE_RESUME_X));
+        menuButtons.add(makeButton("Step", STEP_X));
+        menuButtons.add(makeButton("Slower", SLOWER_X));
+        menuButtons.add(makeButton("Faster", FASTER_X));
+        return menuButtons;
+    }
 }

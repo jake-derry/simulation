@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * This simulation runs the Segregation Simulation which
+ * This simulation runs the Segregation.xml Simulation which
  * has rules that demonstrate segregation.
  */
 public class SegregationSimulation extends Simulation{

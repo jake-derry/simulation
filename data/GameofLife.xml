@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 <Simulation>
     <type>gameOfLife</type>
-    <author> team6 </author>
+    <author> Jonah Knapp </author>
     <rows>21</rows>
     <columns>21</columns>
+    <defaultState>0</defaultState>
     <activeCells>
         <cell>
             <row>9</row> <col>11</col> <state>1</state>

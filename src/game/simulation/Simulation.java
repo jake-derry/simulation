@@ -37,7 +37,7 @@ abstract public class Simulation {
         simTitle = title;
         grid = initialGrid;
         emptyCells = findMatches(EMPTY);
-        myVisualization = new Visualization(initialGrid, new HashMap<>(), windowSize);
+        myVisualization = new Visualization(initialGrid, windowSize);
         myVisualization.setUpRectangles();
     }
 
@@ -49,7 +49,6 @@ abstract public class Simulation {
         if (running){
             update();
             myVisualization.visualize();
-
         }
     }
 

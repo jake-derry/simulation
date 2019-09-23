@@ -1,0 +1,17 @@
+<?xml version="1"?>
+<Simulation>
+    <type>
+        percolation
+    </type>
+    <author>
+        team6
+    </author>
+    <size>
+        <rows> 30 </rows>
+        <columns> 30 </columns>
+    </size>
+    <defaultState>0</defaultState>
+    <activeCells>
+        <cell> </cell>
+    </activeCells>
+</Simulation>
