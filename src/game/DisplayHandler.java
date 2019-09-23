@@ -6,7 +6,7 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 
 /**
- * DisplayHandler to create and position menu items (buttons, title text) for the CAApp window
+ * DisplayHandler: create and position menu items (buttons, title text) for the CAApp window
  * Assumptions: there will be 5 buttons- New Sim, Pause/Resume, Step, Slower, and Faster
  * Dependencies: N/A
  * Use case: these methods can be called from CAApp to create the menu items needed to control the simulations

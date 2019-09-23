@@ -13,12 +13,11 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.File;
 import java.util.ArrayList;
 
 /**
- * Main JavaFX application. Calls Configurer to read in XML file and create simulation of proper type, Simulation to calculate and step through
+ * CAApp: Main JavaFX application. Calls Configurer to read in XML file and create simulation of proper type, Simulation to calculate and step through
  * states of cells based on the rules, and DisplayHandler to create and position menu assets to be displayed.
  * Assumptions:
  * Dependencies: Display Handler, Configuration, Simulation
@@ -207,7 +206,7 @@ public class CAApp extends Application {
     private void step(){
         mySim.step();
     }
-    
+
     public static void main (String[] args) {
         launch(args);
     }
