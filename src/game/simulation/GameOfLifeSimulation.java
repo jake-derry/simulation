@@ -8,7 +8,6 @@ import game.Cell;
  * has rules that simulate life.
  */
 public class GameOfLifeSimulation extends Simulation {
-    private static final int DEAD = 0;
     private static final int LIVE = 1;
 
     public GameOfLifeSimulation(String title, Cell[][] initialGrid, int windowSize) {
@@ -28,18 +27,18 @@ public class GameOfLifeSimulation extends Simulation {
         int[] neighborStates = getEightNeighborStates(i, j);
         int count = countLiveNeighbors(neighborStates);
         int state = getCell(i, j).getState();
-        if (state == DEAD) {
+        if (state == EMPTY) {
             if (count == 3) {
                 return LIVE;
             }
             else {
-                return DEAD;
+                return EMPTY;
             }
         }
 
         else {
             if (count < 2 || count > 3) {
-                return DEAD;
+                return EMPTY;
             }
             else {
                 return LIVE;

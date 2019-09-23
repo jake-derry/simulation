@@ -5,8 +5,10 @@ import game.Visualization;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,16 +23,20 @@ import java.util.Map;
  */
 abstract public class Simulation {
     protected static final int BEYOND_EDGE = -1;
+    protected static final int EMPTY = 0;
 
     private Cell[][] grid;
     private boolean running;
     private Visualization myVisualization;
     private String simTitle;
 
+    private List<Cell> emptyCells;
+
     public Simulation(String title, Cell[][] initialGrid, int windowSize){
         running = true;
         simTitle = title;
         grid = initialGrid;
+        emptyCells = findMatches(EMPTY);
         myVisualization = new Visualization(initialGrid, new HashMap<>(), windowSize);
         myVisualization.setUpRectangles();
     }
@@ -133,26 +139,62 @@ abstract public class Simulation {
         }
     }
 
+    protected List<Cell> getEightNeighbors(int i, int j) {
+        List<Cell> neighbors= new ArrayList<>();
+        neighbors.add(getCell(i - 1, j));
+        neighbors.add(getCell(i + 1, j));
+        neighbors.add(getCell(i - 1, j - 1));
+        neighbors.add(getCell(i + 1, j - 1));
+        neighbors.add(getCell(i, j - 1));
+        neighbors.add(getCell(i - 1, j + 1));
+        neighbors.add(getCell(i + 1, j + 1));
+        neighbors.add(getCell(i, j + 1));
+        return neighbors;
+    }
+
+    protected List<Cell> getFourNeighbors(int i, int j) {
+        List<Cell> neighbors= new ArrayList<>();
+        neighbors.add(getCell(i - 1, j));
+        neighbors.add(getCell(i + 1, j));
+        neighbors.add(getCell(i, j - 1));
+        neighbors.add(getCell(i, j + 1));
+        return neighbors;
+    }
+
     protected int[] getEightNeighborStates(int i, int j) {
-        int[] neighborStates = new int[8];
-        neighborStates[0] = getCell(i - 1, j).getState();
-        neighborStates[1] = getCell(i + 1, j).getState();
-        neighborStates[2] = getCell(i - 1, j - 1).getState();
-        neighborStates[3] = getCell(i + 1, j - 1).getState();
-        neighborStates[4] = getCell(i, j - 1).getState();
-        neighborStates[5] = getCell(i - 1, j + 1).getState();
-        neighborStates[6] = getCell(i + 1, j + 1).getState();
-        neighborStates[7] = getCell(i, j + 1).getState();
+        List<Cell> neighbors = getEightNeighbors(i, j);
+        int[] neighborStates = new int[neighbors.size()];
+        for (int x = 0; x < neighbors.size(); x++) {
+            neighborStates[x] = neighbors.get(x).getState();
+        }
         return neighborStates;
     }
 
     protected int[] getFourNeighborStates(int i, int j) {
-        int[] neighborStates = new int[4];
-        neighborStates[0] = getCell(i - 1, j).getState();
-        neighborStates[1] = getCell(i + 1, j).getState();
-        neighborStates[2] = getCell(i, j - 1).getState();
-        neighborStates[3] = getCell(i, j + 1).getState();
+        List<Cell> neighbors = getFourNeighbors(i, j);
+        int[] neighborStates = new int[neighbors.size()];
+        for (int x = 0; x < neighbors.size(); x++) {
+            neighborStates[x] = neighbors.get(x).getState();
+        }
         return neighborStates;
+    }
+
+    protected List<Cell> findMatches(int state) {
+        List<Cell> matches = new ArrayList<>();
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                Cell cell = getCell(i, j);
+                if (cell.getState() == state) {
+                    matches.add(cell);
+                }
+            }
+        }
+        return matches;
+    }
+
+
+    protected List<Cell> getEmptyCells() {
+        return emptyCells;
     }
 
 }

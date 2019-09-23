@@ -3,7 +3,6 @@ package game.simulation;
 import game.Cell;
 
 public class PercolationSimulation extends Simulation {
-    private static final int EMPTY = 0;
     private static final int WALL = 1;
     private static final int WATER = 2;
 
