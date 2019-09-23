@@ -5,13 +5,13 @@
         team6
     </author>
     <size>
-        <rows>50</rows>
-        <columns>50</columns>
+        <rows>100</rows>
+        <columns>100</columns>
     </size>
     <defaultState>0</defaultState>
     <activeCells>
-        <cell>
-            <row>25</row> <col>25</col> <state>1</state>
-        </cell>
+        <cell> <row>1</row> <col>50</col> <state>2</state> </cell>
+        <cell> <row>99</row> <col>50</col> <state>2</state> </cell>
+
     </activeCells>
 </Simulation>
