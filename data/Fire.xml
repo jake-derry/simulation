@@ -1,18 +1,16 @@
 <?xml version="1"?>
 <Simulation>
-    <type>
-        fire
-    </type>
+    <type>fire</type>
     <author>
         Jonah Knapp
     </author>
     <size>
-        <rows> 51 </rows>
-        <columns> 51 </columns>
+        <rows>51</rows>
+        <columns>51</columns>
     </size>
     <defaultState>1</defaultState>
     <activeCells>
         <cell> <row>25</row> <col>25</col> <state>2</state></cell>
     </activeCells>
-    <probCatch> 50 </probCatch>
+    <probCatch>50</probCatch>
 </Simulation>
