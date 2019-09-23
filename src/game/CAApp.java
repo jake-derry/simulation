@@ -18,8 +18,12 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * Main JavaFX application. Creates and calls Configurer, Simulation, and Visualization classes.
- *
+ * Main JavaFX application. Calls Configurer to read in XML file and create simulation of proper type, Simulation to calculate and step through
+ * states of cells based on the rules, and DisplayHandler to create and position menu assets to be displayed.
+ * Assumptions:
+ * Dependencies: Display Handler, Configuration, Simulation
+ * Use case: this is the top level of the CA simulation. It handles what exactly is being displayed in the window and represents the piece the
+ * user can interact with and see
  * @author Matt Harris
  */
 public class CAApp extends Application {
@@ -43,8 +47,8 @@ public class CAApp extends Application {
     private Stage myStage;
 
     /**
-     *
-     * @param stage Stage to display application on
+     * start: Starts the simulation and animation of the app. Here the display group, display handler, simulation, and animation are all defined and started.
+     * @param stage- stage to display application on
      */
     @Override
     public void start(Stage stage){
@@ -61,7 +65,7 @@ public class CAApp extends Application {
     }
 
     /**
-     *
+     * startApp: Sets up the display group (with the help of the display handler) and starts the animation timeline
      */
     private void startApp(){
         simRunning = true;
@@ -70,7 +74,7 @@ public class CAApp extends Application {
     }
 
     /**
-     *
+     * setUpDisplayGroup: Refreshes display group and adds Title, Menu Items, and Cells to be displayed
      */
     private void setUpDisplayGroup(){
         displayGroup.getChildren().clear();
@@ -80,14 +84,14 @@ public class CAApp extends Application {
     }
 
     /**
-     *
+     * addTitleTextToDisplayGroup: Adds the Title text to the display group
      */
     private void addTitleTextToDisplayGroup(){
         displayGroup.getChildren().add(myDisplayHandler.createTitle(mySim.getSimTitle()));
     }
 
     /**
-     *
+     * addMenuButtonsToDisplayGroup: Adds the Menu Buttons to display group
      */
     private void addMenuButtonsToDisplayGroup(){
         ArrayList<Button> menuButtons = myDisplayHandler.makeMenuButtons();
@@ -105,8 +109,8 @@ public class CAApp extends Application {
     }
 
     /**
-     *
-     * @return
+     * setNewSimHandler: Sets the specfic button action for the New Sim Button
+     * @return- event handler for New Sim Button
      */
     private EventHandler<ActionEvent> setNewSimHandler(){
         final FileChooser fileChooser = new FileChooser();
@@ -124,8 +128,8 @@ public class CAApp extends Application {
     }
 
     /**
-     *
-     * @return
+     * setPauseResumeHandler: Sets the specfic button action for the Pause/Resume Button
+     * @return- event handler for Pause/Resume Button
      */
     private EventHandler<ActionEvent> setPauseResumeHandler(){
         EventHandler<ActionEvent> handler = e -> {
@@ -143,8 +147,8 @@ public class CAApp extends Application {
     }
 
     /**
-     *
-     * @return
+     * setStepHandler: Sets the specfic button action for the Step Button
+     * @return- event handler for Step Button
      */
     private EventHandler<ActionEvent> setStepHandler(){
         EventHandler<ActionEvent> handler = e -> {
@@ -158,9 +162,11 @@ public class CAApp extends Application {
     }
 
     /**
-     *
-     * @param multiplier
-     * @return
+     * setSpeedHandler: Sets the specfic button action for the Simulation Speed Buttons
+     * @param multiplier- applying a multiplier > 1 to the MILLISECOND_DELAY decreases the framerate of the animation
+     *                  while applying a multiplier < 1 increases the framerate of the animation
+     * @return- event handler for Sim Speed Buttons
+     * Note: a check had to added in order to keep the speed from being increased to a point of crashing the app
      */
     private EventHandler<ActionEvent> setSpeedHandler(double multiplier){
         EventHandler<ActionEvent> handler = e -> {
@@ -175,7 +181,7 @@ public class CAApp extends Application {
     /**
      * addCellsToDisplayGroup: adds cell rectangles to the group to be displayed
      */
-    public void addCellsToDisplayGroup(){
+    private void addCellsToDisplayGroup(){
         for (Cell cellRow[] : mySim.getGrid()){
             for (Cell cell : cellRow){
                 displayGroup.getChildren().add(cell.getRectangle());
@@ -184,7 +190,7 @@ public class CAApp extends Application {
     }
 
     /**
-     *
+     * startAnimation: stops the previously running animation and creates a new Timeline based on a perhaps updated MILLISECOND_DELAY
      */
     private void startAnimation(){
         myAnimation.pause();
@@ -195,10 +201,13 @@ public class CAApp extends Application {
         myAnimation.play();
     }
 
+    /**
+     * step: calls the simulation to step through calculating and updating states according to the pace of the current timeline
+     */
     private void step(){
         mySim.step();
     }
-
+    
     public static void main (String[] args) {
         launch(args);
     }
