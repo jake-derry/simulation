@@ -17,7 +17,7 @@ public class SegregationSimulation extends Simulation{
     private double satisfactionPercent;
 
 
-    SegregationSimulation(String title, Cell[][] initialGrid, int windowSize, double percent) {
+    public SegregationSimulation(String title, Cell[][] initialGrid, int windowSize, double percent) {
         super(title, initialGrid, windowSize);
         satisfactionPercent = percent;
     }

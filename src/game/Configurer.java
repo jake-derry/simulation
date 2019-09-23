@@ -6,12 +6,7 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import game.simulation.GameOfLifeSimulation;
-//import game.simulation.SegregationSimulation;
-//import game.simulation.PercolationSimulation;
-//import game.simulation.FireSimulation;
-//import game.simulation.PredatorPreySimulation;
-import game.simulation.Simulation;
+import game.simulation.*;
 import org.w3c.dom.Document;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -43,6 +38,9 @@ public class Configurer{
     //Simulation-Specific Tags
     private static final String SATISFACTION_PERCENT = "satisfaction";
     private static final String CATCH_PERCENT = "probCatch";
+    private static final String BREED_TIME = "breedTime";
+    private static final String PREDATOR_INITIAL_ENERGY = "initEnergy";
+    private static final String PREDATOR_ENERGY_THRESHOLD = "energyThreshold";
 
     /**Reads XML file. First creates a document using the DocumentBuilder class. Uses this information to create a
      * cellular array and ultimately passes this information, along with WindowSize, to a new Simulation.
@@ -64,14 +62,18 @@ public class Configurer{
                 return new GameOfLifeSimulation(LIFE, myCellArray, WindowSize);
             case SEGREGATION:
                 double satisfaction = getFirstElementInteger(mainElement,  SATISFACTION_PERCENT);
-                //return new SegregationSimulation(SEGREGATION, myCellArray, WindowSize, satisfaction/100);
+                return new SegregationSimulation(SEGREGATION, myCellArray, WindowSize, satisfaction/100);
             case PREDATOR_PREY:
-
-                //return new PredatorPreySimulation(PREDATOR_PREY, myCellArray, WindowSize, );
+                int breedTime = getFirstElementInteger(mainElement, BREED_TIME);
+                int initialEnergy = getFirstElementInteger(mainElement, PREDATOR_INITIAL_ENERGY);
+                int energyThreshold = getFirstElementInteger(mainElement, PREDATOR_ENERGY_THRESHOLD);
+                return new PredatorPreySimulation(PREDATOR_PREY, myCellArray, WindowSize, breedTime,
+                        initialEnergy, energyThreshold);
             case FIRE:
                 double chance = getFirstElementInteger(mainElement,  CATCH_PERCENT);
-                //return new FireSimulation(FIRE, myCellArray, WindowSize, chance/100);
+                return new FireSimulation(FIRE, myCellArray, WindowSize, chance/100);
             case PERCOLATION:
+                return new PercolationSimulation(PERCOLATION, myCellArray, WindowSize);
 
         }
         return null;

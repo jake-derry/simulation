@@ -6,7 +6,7 @@ public class PercolationSimulation extends Simulation {
     private static final int WALL = 1;
     private static final int WATER = 2;
 
-    PercolationSimulation(String title, Cell[][] initialGrid, int windowSize) {
+    public PercolationSimulation(String title, Cell[][] initialGrid, int windowSize) {
         super(title, initialGrid, windowSize);
     }
 

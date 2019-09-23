@@ -57,7 +57,7 @@ public class CAApp extends Application {
         myAnimation = new Timeline();
         myDisplayHandler = new DisplayHandler(WINDOW_SIZE);
 
-        mySim = Configurer.getSimulation("GameofLife.xml", WINDOW_SIZE);
+        mySim = Configurer.getSimulation("Segregation.xml", WINDOW_SIZE);
         myStage.setScene(new Scene(displayGroup, WINDOW_SIZE, WINDOW_SIZE, BACKGROUND_COLOR));
         myStage.setTitle(mySim.getSimTitle());
         myStage.show();
