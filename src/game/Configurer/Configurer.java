@@ -1,4 +1,4 @@
-package game;
+package game.Configurer;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -6,6 +6,7 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import game.Cell;
 import game.simulation.*;
 import org.w3c.dom.Document;
 import javafx.scene.control.Alert;
@@ -88,7 +89,6 @@ public class Configurer{
             DocumentBuilder simDocumentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             return simDocumentBuilder.parse(simFile);
         } catch (Exception e) {
-            e.printStackTrace();
             errorAlert(e.getMessage());
     }
         return null;
