@@ -5,11 +5,22 @@ import game.Cell;
 
 /**
  * This simulation runs Conway's Game of Life which
- * has rules that simulate life.
+ * has rules that simulate life. Only able to run a
+ * Conway's Game of Life simulation and assumes that
+ * the user does not want the cell grid to 'wrap around.'
+ *
+ * DEPENDENCIES:
+ *      Cell
+ *
+ * @see Simulation
+ * @author Jake Derry
  */
 public class GameOfLifeSimulation extends Simulation {
     private static final int LIVE = 1;
 
+    /**
+     * Initializes a game of life simulation
+     */
     public GameOfLifeSimulation(String title, Cell[][] initialGrid, int windowSize) {
         super(title, initialGrid, windowSize);
     }

@@ -1,11 +1,23 @@
 package game.simulation;
 
 import game.Cell;
-import util.ArrayUtils;
 
+import util.ArrayUtils;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * This simulation runs a Predator-Prey Simulation which
+ * has rules that simulate a small food chain. Only able
+ * to run a Predator-Prey (Wator) simulation and assumes
+ * that the user wants the cell grid to 'wrap around.'
+ *
+ * DEPENDENCIES:
+ *      Cell
+ *
+ * @see Simulation
+ * @author Jake Derry
+ */
 public class PredatorPreySimulation extends Simulation {
     private static final boolean WRAP_AROUND = true;
     private static final int PREDATOR = 1;
@@ -20,7 +32,13 @@ public class PredatorPreySimulation extends Simulation {
     private int initialEnergy;
     private int energyThreshold;
 
-
+    /**
+     * Initializes a predator-prey simulation
+     *
+     * @param breedTime                 Number of updates before the prey 'reproduce'
+     * @param predatorInitialEnergy     Initial energy that each predator has
+     * @param predatorEnergyThreshold   Energy level at which the predator 'reproduces'
+     */
     public PredatorPreySimulation(String title, Cell[][] initialGrid, int windowSize,
                                   int breedTime, int predatorInitialEnergy, int predatorEnergyThreshold) {
         super(title, initialGrid, windowSize);
