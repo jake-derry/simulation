@@ -6,24 +6,23 @@ This project implements a cellular automata simulator.
 Names:
 Jake Derry jad111
 Matt Harris msh54
+Jonah Knapp jk366
 
 ### Timeline
 
-Start Date: 
+Start Date: Sept 15
 
-Finish Date: 
+Finish Date: Sept 23
 
-Hours Spent:
+Hours Spent: 44 hours between members
 
 ### Primary Roles
 
-Simulation
+Simulation: Jake Derry
 
 Visualization and Display: Matt Harris
 
-Configuration
-
-
+Configuration: Jonah Knapp
 
 ### Resources Used
 Button images obtained from: http://clipart-library.com/clip-art/play-pause-button-transparent-3.htm
@@ -31,17 +30,24 @@ New Sim File Chooser inspiration from: https://docs.oracle.com/javafx/2/ui_contr
 
 ### Running the Program
 
-Main class:
+Main class: CAApp.java 
 
-Data files needed: 
+Data files needed: (needed for running simulations of each type) Fire.xml, GameOfLife.xml, Percolation.xml, PredatorPrey.xml, Segregation.xml
 
-Interesting data files:
+Interesting data files: GameOfLife.xml
 
-Features implemented:
+Features implemented: Simulations for 5 different cellular automata configured with an xml file and visualized in a display controlled 
+by a play/resume button, step button, increase and decrease simulation speed buttons, and a New Sim button capable of loading
+a new config file for a new simulation on the fly.
 
 Assumptions or Simplifications:
+* no additional types of CA's can be run besides the five implemented
+* only one CA can be simulated and visualized at once
+* every simulation being run is visualized
+* the color scheme is hard coded
 
 Known Bugs:
+* the current implementation of the segregation CA seems to be working incorrectly however this will be fixed for the final version
 
 Extra credit:
 
@@ -59,21 +65,7 @@ Acceptable values for the state of a cell depend on the simulation being ran.
 "gameOfLife", "segregation", "predatorPrey", "fire", and "percolation". There are also different requirements based on 
 the type of file selected. 
 
-**Parameter Requirements for Simulations**
-* gameOfLife
-
-There are no additional parameters needed for the segregation simulation. 
-* segregation
-
-
-* predatorPrey
-
-
-* fire
-
-
-* percolation
-
-
 ### Impressions
-
+* the functionality of the menu buttons was much more deeply connected to the simulations themselves than we expected
+* we took the planning phase much more seriously than our individual brickbreaker assignments and this made the integration of our separate parts much easier
+* when implementing many subclasses of a design you realize how good (or bad) it is

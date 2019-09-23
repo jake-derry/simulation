@@ -108,7 +108,7 @@ public class CAApp extends Application {
     }
 
     /**
-     * setNewSimHandler: Sets the specfic button action for the New Sim Button
+     * setNewSimHandler: Sets the specific button action for the New Sim Button
      * @return- event handler for New Sim Button
      */
     private EventHandler<ActionEvent> setNewSimHandler(){
@@ -127,7 +127,7 @@ public class CAApp extends Application {
     }
 
     /**
-     * setPauseResumeHandler: Sets the specfic button action for the Pause/Resume Button
+     * setPauseResumeHandler: Sets the specific button action for the Pause/Resume Button
      * @return- event handler for Pause/Resume Button
      */
     private EventHandler<ActionEvent> setPauseResumeHandler(){
@@ -146,7 +146,7 @@ public class CAApp extends Application {
     }
 
     /**
-     * setStepHandler: Sets the specfic button action for the Step Button
+     * setStepHandler: Sets the specific button action for the Step Button
      * @return- event handler for Step Button
      */
     private EventHandler<ActionEvent> setStepHandler(){

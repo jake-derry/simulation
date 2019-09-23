@@ -1,9 +1,7 @@
 package game.simulation;
 
 import game.Cell;
-import util.ArrayUtils;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -39,11 +37,11 @@ public class SegregationSimulation extends Simulation {
 
     @Override
     protected void update() {
-        List<Cell> unsatisfiedCells = updateNonEmptyCells();
+        List<Cell> unsatisfiedCells = findUnsatisfiedCells();
         updateEmptyCells(unsatisfiedCells);
     }
 
-    private List<Cell> updateNonEmptyCells() {
+    private List<Cell> findUnsatisfiedCells() {
         List<Cell> unsatisfiedCells = new ArrayList<>();
         for (int i = 0; i < getGridRowCount(); i++) {
             for (int j = 0; j < getGridColumnCount(); j++) {
@@ -59,15 +57,14 @@ public class SegregationSimulation extends Simulation {
         for (Cell unsatisfiedCell : unsatisfiedCells) {
             switchEmptyCell(unsatisfiedCell);
         }
-        for (Cell unsatisfiedCell : unsatisfiedCells) {
-            getEmptyCells().remove(unsatisfiedCell);
-        }
     }
 
     private void switchEmptyCell(Cell unsatisfiedCell) {
         Random random = new Random();
         int switchState = unsatisfiedCell.getState();
-        Cell randomEmptyCell = getEmptyCells().get(random.nextInt(getEmptyCells().size()));
+        int randomIndex = random.nextInt(getEmptyCells().size());
+
+        Cell randomEmptyCell = getEmptyCells().get(randomIndex);
         randomEmptyCell.setNextState(switchState);
         getEmptyCells().remove(randomEmptyCell);
         unsatisfiedCell.setNextState(EMPTY);
