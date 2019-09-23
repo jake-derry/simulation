@@ -86,8 +86,9 @@ public class PredatorPreySimulation extends Simulation {
             int randomEmptyIndex = random.nextInt(emptyCount);
 
             List<Cell> neighbors = getEightNeighbors(i, j);
+            int[] acceptableStates = {EMPTY};
             Cell newPreyLocation = neighbors.get(
-                    findOccurrence(neighbors, randomEmptyIndex)
+                    findOccurrence(neighbors, randomEmptyIndex, acceptableStates)
             );
             neighbors.remove(newPreyLocation);
 
@@ -98,7 +99,7 @@ public class PredatorPreySimulation extends Simulation {
                 int randomEmptyChildIndex = random.nextInt(emptyCount - 1);
 
                 Cell newPreyChildLocation = neighbors.get(
-                        findOccurrence(neighbors, randomEmptyChildIndex)
+                        findOccurrence(neighbors, randomEmptyChildIndex, acceptableStates)
                 );
 
                 newPreyChildLocation.setNextState(PREY);
@@ -111,15 +112,17 @@ public class PredatorPreySimulation extends Simulation {
         return PREY;
     }
 
-    private int findOccurrence(List<Cell> neighbors, int index) {
+    private int findOccurrence(List<Cell> neighbors, int index, int[] acceptableStates) {
         int count = 0;
         for (int x = 0; x < neighbors.size(); x++) {
-            if (neighbors.get(x).getState() == EMPTY) {
-                if (count < index) {
-                    count++;
-                }
-                else {
-                    return x;
+            for (int state : acceptableStates) {
+                if (neighbors.get(x).getState() == state) {
+                    if (count < index) {
+                        count++;
+                    }
+                    else {
+                        return x;
+                    }
                 }
             }
         }
@@ -137,8 +140,9 @@ public class PredatorPreySimulation extends Simulation {
             int randomIndex = random.nextInt(availableCellCount);
 
             List<Cell> neighbors = getEightNeighbors(i, j);
+            int[] acceptableStates = {EMPTY, PREY};
             Cell newPredatorLocation = neighbors.get(
-                    findOccurrence(neighbors, randomIndex)
+                    findOccurrence(neighbors, randomIndex, acceptableStates)
             );
             neighbors.remove(newPredatorLocation);
 
@@ -146,7 +150,7 @@ public class PredatorPreySimulation extends Simulation {
                 int randomChildIndex = random.nextInt(availableCellCount - 1);
 
                 Cell newPredatorChildLocation = neighbors.get(
-                        findOccurrence(neighbors, randomChildIndex)
+                        findOccurrence(neighbors, randomChildIndex, acceptableStates)
                 );
 
                 movePredator(newPredatorChildLocation);
