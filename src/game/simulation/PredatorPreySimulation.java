@@ -137,11 +137,7 @@ public class PredatorPreySimulation extends Simulation {
         int preyCount = ArrayUtils.countIf(getEightNeighborStates(i, j), PREY);
         int availableCellCount = emptyCount + preyCount;
 
-        if (predatorEnergies[i][j] <= 0) {
-            getCell(i, j).setNextState(EMPTY);
-            predatorEnergies[i][j] = NO_ENERGY;
-        }
-        else if (availableCellCount > 0) {
+        if (availableCellCount > 0) {
             int randomIndex = random.nextInt(availableCellCount);
 
             List<Cell> neighbors = getEightNeighbors(i, j);
@@ -158,20 +154,25 @@ public class PredatorPreySimulation extends Simulation {
                         findOccurrence(neighbors, randomChildIndex, acceptableStates)
                 );
 
-                movePredator(newPredatorChildLocation);
+                movePredator(i, j, newPredatorChildLocation);
             }
 
-            movePredator(newPredatorLocation);
+            movePredator(i, j, newPredatorLocation);
 
             getCell(i, j, WRAP_AROUND).setNextState(EMPTY);
             predatorEnergies[i][j] = NO_ENERGY;
         }
+        if (predatorEnergies[i][j] <= 0) {
+            getCell(i, j).setNextState(EMPTY);
+            predatorEnergies[i][j] = NO_ENERGY;
+            return EMPTY;
+        }
         return PREDATOR;
     }
 
-    private void movePredator(Cell newPredatorChildLocation) {
+    private void movePredator(int i, int j, Cell newPredatorChildLocation) {
         newPredatorChildLocation.setNextState(PREDATOR);
-        predatorEnergies[newPredatorChildLocation.getRow()][newPredatorChildLocation.getColumn()] +=
+        predatorEnergies[newPredatorChildLocation.getRow()][newPredatorChildLocation.getColumn()] = predatorEnergies[i][j] +
                 energyChange(newPredatorChildLocation.getState());
     }
 

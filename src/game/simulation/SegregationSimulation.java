@@ -55,7 +55,6 @@ public class SegregationSimulation extends Simulation {
         List<Cell> unsatisfiedCells = updateNonEmptyCells();
         updateEmptyCells(unsatisfiedCells);
         nonEmptyCount = countNonEmpty();
-        System.out.println(nonEmptyCount);
     }
 
     private List<Cell> updateNonEmptyCells() {
