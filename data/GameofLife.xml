@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Simulation>
     <type>gameOfLife</type>
-    <author> team6 </author>
+    <author> Jonah Knapp </author>
     <rows>21</rows>
     <columns>21</columns>
     <defaultState>0</defaultState>

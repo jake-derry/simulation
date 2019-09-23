@@ -5,16 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import game.simulation.GameOfLifeSimulation;
-import game.simulation.SegregationSimulation;
+//import game.simulation.SegregationSimulation;
+//import game.simulation.PercolationSimulation;
+//import game.simulation.FireSimulation;
+//import game.simulation.PredatorPreySimulation;
 import game.simulation.Simulation;
 import org.w3c.dom.Document;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 
@@ -51,38 +52,39 @@ public class Configurer{
      */
     public static Simulation getSimulation(String myFile, int WindowSize){
         Document simDoc = readFile(myFile);
-        int totalColumns = Integer.parseInt(simDoc.getElementsByTagName(COLUMN_TAG).item(0).getTextContent());
-        int totalRows = Integer.parseInt(simDoc.getElementsByTagName(ROW_TAG).item(0).getTextContent());
-        int defaultState = Integer.parseInt(simDoc.getElementsByTagName(STATE_TAG).item(0).getTextContent());
+        Element mainElement = simDoc.getDocumentElement();
+        int totalColumns = getFirstElementInteger(mainElement,  COLUMN_TAG);
+        int totalRows = getFirstElementInteger(mainElement,  ROW_TAG);
+        int defaultState = getFirstElementInteger(mainElement,  STATE_TAG);
         Cell[][] myCellArray = new Cell[totalRows][totalColumns];
-        List<Integer> activeCells = initializeActiveCells(simDoc, totalColumns, myCellArray);
+        List<Integer> activeCells = initializeActiveCells(simDoc, myCellArray);
         initializeDefaultCells(totalRows, totalColumns, defaultState, activeCells, myCellArray);
-        switch (simDoc.getElementsByTagName(TYPE_TAG).item(0).getTextContent()){
+        switch (getFirstElementString(mainElement, TYPE_TAG)){
             case LIFE:
                 return new GameOfLifeSimulation(LIFE, myCellArray, WindowSize);
-                break;
             case SEGREGATION:
-                double satisfaction = Integer.parseInt(simDoc.getElementsByTagName(SATISFACTION_PERCENT).item(0).getTextContent());
-                return new SegregationSimulation(SEGREGATION, myCellArray, WindowSize, satisfaction/100);
-                break;
+                double satisfaction = getFirstElementInteger(mainElement,  SATISFACTION_PERCENT);
+                //return new SegregationSimulation(SEGREGATION, myCellArray, WindowSize, satisfaction/100);
             case PREDATOR_PREY:
 
+                //return new PredatorPreySimulation(PREDATOR_PREY, myCellArray, WindowSize, );
             case FIRE:
-                double chance = Integer.parseInt(simDoc.getElementsByTagName(CATCH_PERCENT).item(0).getTextContent());
-                return new FireSimulation(FIRE, myCellArray, WindowSize, chance/100);
+                double chance = getFirstElementInteger(mainElement,  CATCH_PERCENT);
+                //return new FireSimulation(FIRE, myCellArray, WindowSize, chance/100);
             case PERCOLATION:
 
         }
         return null;
     }
 
+    /**
+     * Creates a documentBuilder from an XML file then parses it into a document
+     */
     private static Document readFile(String myFile){
         try{
             File simFile = new File("data/" + myFile);
             DocumentBuilder simDocumentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            Document simDoc = simDocumentBuilder.parse(simFile);
-            //printActiveCells(simDoc);
-            return simDoc;
+            return simDocumentBuilder.parse(simFile);
         } catch (Exception e) {
             e.printStackTrace();
             errorAlert(e.getMessage());
@@ -90,20 +92,31 @@ public class Configurer{
         return null;
     }
 
-    private static List<Integer> initializeActiveCells(Document myDoc, int totalCols, Cell[][] myArray){
+    /**
+     *
+     * @param myDoc Document to be read
+     * @param myArray Array to save initialized cells in
+     *
+     * @return List of integers containing the indexes of cells that have been initialized
+     */
+    private static List<Integer> initializeActiveCells(Document myDoc, Cell[][] myArray){
         NodeList nList = myDoc.getElementsByTagName("cell");
         List<Integer> activeCells = new ArrayList<>();
+        int totalCols = myArray.length;
         for(int i = 0 ; i < nList.getLength(); i++){
             Element myCell = (Element) nList.item(i);
-            int myRow = Integer.parseInt(getFirstElement(myCell, CELL_ROW_TAG));
-            int myColumn = Integer.parseInt(getFirstElement(myCell, CELL_COLUMN_TAG));
-            int myState = Integer.parseInt(getFirstElement(myCell, CELL_STATE_TAG));
+            int myRow = getFirstElementInteger(myCell, CELL_ROW_TAG);
+            int myColumn = getFirstElementInteger(myCell, CELL_COLUMN_TAG);
+            int myState = getFirstElementInteger(myCell, CELL_STATE_TAG);
             myArray[myRow-1][myColumn-1] = new Cell(myState);
             activeCells.add((myRow-1) * totalCols + myColumn-1);
         }
         return activeCells;
     }
 
+    /**
+     * Initializes default cells in the Cellular Array
+     */
     private static void initializeDefaultCells(int Rows, int Cols, int state, List<Integer> activeCells, Cell[][] myArray){
         for(int i = 0; i < Rows; i++){
             for(int j = 0; j<Cols; j++){
@@ -114,24 +127,36 @@ public class Configurer{
         }
     }
 
+    /**
+     * Prints cells that have been initialized, as specified by the XML application
+     */
     private static void printActiveCells(Document myDoc) {
         NodeList nList = myDoc.getElementsByTagName("cell");
         for(int i = 0 ; i < nList.getLength(); i++){
             Element myCell = (Element) nList.item(i);
             System.out.println("Cell " + i + ":");
-            System.out.println(CELL_ROW_TAG + " " + getFirstElement(myCell, CELL_ROW_TAG));
-            System.out.println(CELL_COLUMN_TAG + " " + getFirstElement(myCell, CELL_COLUMN_TAG));
-            System.out.println(CELL_STATE_TAG + " " + getFirstElement(myCell, CELL_STATE_TAG));
+            System.out.println(CELL_ROW_TAG + " " + getFirstElementString(myCell, CELL_ROW_TAG));
+            System.out.println(CELL_COLUMN_TAG + " " + getFirstElementString(myCell, CELL_COLUMN_TAG));
+            System.out.println(CELL_STATE_TAG + " " + getFirstElementString(myCell, CELL_STATE_TAG));
         }
     }
 
 
-    private static String getFirstElement(Element myElement, String TagName){
+    /** Returns a String containing the name of the first sub-element of an element
+     */
+    private static String getFirstElementString(Element myElement, String TagName){
         return myElement.getElementsByTagName(TagName).item(0).getTextContent();
     }
 
+    /** Returns a Integer representation of the first sub-element of an element
+     */
+    private static Integer getFirstElementInteger(Element myElement, String TagName){
+        return Integer.parseInt(myElement.getElementsByTagName(TagName).item(0).getTextContent());
+    }
 
 
+    /**Displays an alert on the screen that requires handling by the user
+     */
     private static void errorAlert(String myErrorMessage){
         new Alert(AlertType.ERROR, myErrorMessage).showAndWait();
     }

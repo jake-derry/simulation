@@ -4,7 +4,7 @@
         predatorPrey
     </type>
     <author>
-        team6
+        Jonah Knapp
     </author>
     <size>
         <rows> 30 </rows>
@@ -14,5 +14,4 @@
     <activeCells>
         <cell> </cell>
     </activeCells>
-    //Additional Parameters to go here
 </Simulation>
