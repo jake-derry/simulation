@@ -4,6 +4,7 @@ simulation
 This project implements a cellular automata simulator.
 
 Names:
+Jake Derry jad111
 
 ### Timeline
 
@@ -14,6 +15,13 @@ Finish Date:
 Hours Spent:
 
 ### Primary Roles
+
+Simulation
+
+Visualization and Display
+
+Configuration
+
 
 
 ### Resources Used
