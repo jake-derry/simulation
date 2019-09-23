@@ -114,6 +114,6 @@
         </activeCells>
     </activeCells>
     <breedTime>5</breedTime>
-    <initEnergy>5</initEnergy>
+    <initEnergy>10</initEnergy>
     <energyThreshold>10</energyThreshold>
 </Simulation>

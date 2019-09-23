@@ -2,14 +2,8 @@ package game.simulation;
 
 import game.Cell;
 import game.Visualization;
-import javafx.scene.Node;
-import javafx.scene.image.ImageView;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * This abstract class runs a simulation of any

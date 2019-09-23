@@ -12,7 +12,7 @@ import java.util.Random;
  * This simulation runs a Segregation simulation which
  * has rules that simulate how people group together.
  * Only able to run a Segregation simulation and assumes that
- * the user wants the cell grid to 'wrap around.'
+ * the user doesn't want the cell grid to 'wrap around'
  *
  * DEPENDENCIES:
  *      Cell
@@ -21,12 +21,10 @@ import java.util.Random;
  * @author Jake Derry
  */
 public class SegregationSimulation extends Simulation {
-    private static final boolean WRAP_AROUND = true;
     private static final int GROUP_A = 1;
     private static final int GROUP_B = 2;
 
     private double satisfactionPercent;
-    private int nonEmptyCount;
 
     /**
      * Initializes a segregation simulation
@@ -37,25 +35,12 @@ public class SegregationSimulation extends Simulation {
     public SegregationSimulation(String title, Cell[][] initialGrid, int windowSize, double percent) {
         super(title, initialGrid, windowSize);
         satisfactionPercent = percent;
-        nonEmptyCount = countNonEmpty();
-    }
-
-    private int countNonEmpty() {
-        int count = 0;
-        for (int i = 0; i < getGridRowCount(); i++) {
-            for (int j = 0; j < getGridColumnCount(); j++) {
-                if (getCell(i, j).getState() != EMPTY) count++;
-            }
-        }
-        return count;
     }
 
     @Override
     protected void update() {
         List<Cell> unsatisfiedCells = updateNonEmptyCells();
         updateEmptyCells(unsatisfiedCells);
-        nonEmptyCount = countNonEmpty();
-        System.out.println(nonEmptyCount);
     }
 
     private List<Cell> updateNonEmptyCells() {
@@ -63,7 +48,7 @@ public class SegregationSimulation extends Simulation {
         for (int i = 0; i < getGridRowCount(); i++) {
             for (int j = 0; j < getGridColumnCount(); j++) {
                 if (! satisfied(i, j)) {
-                    unsatisfiedCells.add(getCell(i, j, WRAP_AROUND));
+                    unsatisfiedCells.add(getCell(i, j));
                 }
             }
         }
@@ -73,6 +58,9 @@ public class SegregationSimulation extends Simulation {
     private void updateEmptyCells(List<Cell> unsatisfiedCells) {
         for (Cell unsatisfiedCell : unsatisfiedCells) {
             switchEmptyCell(unsatisfiedCell);
+        }
+        for (Cell unsatisfiedCell : unsatisfiedCells) {
+            getEmptyCells().remove(unsatisfiedCell);
         }
     }
 
@@ -88,7 +76,7 @@ public class SegregationSimulation extends Simulation {
 
     private boolean satisfied(int i, int j) {
         int[] neighborStates = getEightNeighborStates(i, j);
-        double percentSame = getSameStateNeighbors(neighborStates, getCell(i, j, WRAP_AROUND).getState()) /
+        double percentSame = getSameStateNeighbors(neighborStates, getCell(i, j).getState()) /
                 (double) neighborStates.length;
         return percentSame >= satisfactionPercent;
     }

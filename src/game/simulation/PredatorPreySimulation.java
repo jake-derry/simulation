@@ -45,8 +45,8 @@ public class PredatorPreySimulation extends Simulation {
         super(title, initialGrid, windowSize);
         myBreedTime = breedTime;
         clock = 0;
-        predatorEnergies = setupPredatorEnergies(initialGrid);
         initialEnergy = predatorInitialEnergy;
+        predatorEnergies = setupPredatorEnergies(initialGrid);
         energyThreshold = predatorEnergyThreshold;
     }
 
@@ -55,6 +55,7 @@ public class PredatorPreySimulation extends Simulation {
         for (int i = 0; i < initialGrid.length; i++) {
             for (int j = 0; j < initialGrid[0].length; j++) {
                 if (initialGrid[i][j].getState() == PREDATOR) {
+                    System.out.println(initialEnergy);
                     energies[i][j] = initialEnergy;
                 }
                 else {
@@ -69,15 +70,17 @@ public class PredatorPreySimulation extends Simulation {
     protected void update() {
         for (int i = 0; i < getGridRowCount(); i++) {
             for (int j = 0; j < getGridColumnCount(); j++) {
+                System.out.printf("(%d, %d) : %d", i, j, predatorEnergies[i][j]);
                 nextState(i, j);
             }
         }
+        System.out.println();
     }
 
     private void nextState(int i, int j) {
         int state = getCell(i, j, WRAP_AROUND).getState();
-        if (state == PREDATOR) getCell(i, j, WRAP_AROUND).setNextState(hunt(i, j));
-        else if (state == PREY) getCell(i, j, WRAP_AROUND).setNextState(run(i, j));
+        if (state == PREY) getCell(i, j, WRAP_AROUND).setNextState(run(i, j));
+        else if (state == PREDATOR) getCell(i, j, WRAP_AROUND).setNextState(hunt(i, j));
     }
 
     private int run(int i, int j) {
@@ -140,7 +143,9 @@ public class PredatorPreySimulation extends Simulation {
         if (predatorEnergies[i][j] <= 0) {
             getCell(i, j).setNextState(EMPTY);
             predatorEnergies[i][j] = NO_ENERGY;
+            return EMPTY;
         }
+
         else if (availableCellCount > 0) {
             int randomIndex = random.nextInt(availableCellCount);
 
@@ -158,20 +163,19 @@ public class PredatorPreySimulation extends Simulation {
                         findOccurrence(neighbors, randomChildIndex, acceptableStates)
                 );
 
-                movePredator(newPredatorChildLocation);
+                movePredator(i, j, newPredatorChildLocation);
             }
 
-            movePredator(newPredatorLocation);
+            movePredator(i, j, newPredatorLocation);
 
             getCell(i, j, WRAP_AROUND).setNextState(EMPTY);
-            predatorEnergies[i][j] = NO_ENERGY;
         }
         return PREDATOR;
     }
 
-    private void movePredator(Cell newPredatorChildLocation) {
+    private void movePredator(int i, int j, Cell newPredatorChildLocation) {
         newPredatorChildLocation.setNextState(PREDATOR);
-        predatorEnergies[newPredatorChildLocation.getRow()][newPredatorChildLocation.getColumn()] +=
+        predatorEnergies[newPredatorChildLocation.getRow()][newPredatorChildLocation.getColumn()] = predatorEnergies[i][j] +
                 energyChange(newPredatorChildLocation.getState());
     }
 

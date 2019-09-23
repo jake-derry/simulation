@@ -24,9 +24,9 @@ public class Visualization{
         CELL_WIDTH = WINDOW_SIZE / cellArray[0].length;
         CELL_HEIGHT = (WINDOW_SIZE - MENU_HEIGHT) / cellArray.length;
         colorList = new Color[4];
-        colorList[0] = Color.DARKBLUE;
-        colorList[1] = Color.YELLOW;
-        colorList[2] = Color.GREEN;
+        colorList[0] = Color.BLACK;
+        colorList[1] = Color.RED;
+        colorList[2] = Color.YELLOW;
     }
 
     /**

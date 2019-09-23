@@ -5,6 +5,7 @@ This project implements a cellular automata simulator.
 
 Names:
 Jake Derry jad111
+Matt Harris msh54
 
 ### Timeline
 
@@ -18,15 +19,15 @@ Hours Spent:
 
 Simulation
 
-Visualization and Display
+Visualization and Display: Matt Harris
 
 Configuration
 
 
 
 ### Resources Used
-Button images gotten from: http://clipart-library.com/clip-art/play-pause-button-transparent-3.htm
-New File Chooser inspiration from: https://docs.oracle.com/javafx/2/ui_controls/file-chooser.htm
+Button images obtained from: http://clipart-library.com/clip-art/play-pause-button-transparent-3.htm
+New Sim File Chooser inspiration from: https://docs.oracle.com/javafx/2/ui_controls/file-chooser.htm
 
 ### Running the Program
 
