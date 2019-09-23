@@ -1,14 +1,12 @@
 <?xml version="1"?>
 <Simulation>
-    <type>
-        predatorPrey
-    </type>
+    <type>predatorPrey</type>
     <author>
         Jonah Knapp
     </author>
     <size>
-        <rows> 30 </rows>
-        <columns> 30 </columns>
+        <rows>30</rows>
+        <columns>30</columns>
     </size>
     <defaultState>0</defaultState>
     <activeCells>
