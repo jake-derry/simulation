@@ -31,7 +31,7 @@ abstract public class Simulation {
         running = true;
         simTitle = title;
         grid = initialGrid;
-        myVisualization = new Visualization(initialGrid, new HashMap<>(), windowSize);
+        myVisualization = new Visualization(initialGrid, windowSize);
         myVisualization.setUpRectangles();
     }
 
@@ -43,7 +43,6 @@ abstract public class Simulation {
         if (running){
             update();
             myVisualization.visualize();
-
         }
     }
 
