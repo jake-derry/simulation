@@ -5,12 +5,12 @@
         Jonah Knapp
     </author>
     <size>
-        <rows>51</rows>
-        <columns>51</columns>
+        <rows>50</rows>
+        <columns>50</columns>
     </size>
-    <defaultState>1</defaultState>
+    <defaultState>2</defaultState>
     <activeCells>
-        <cell> <row>25</row> <col>25</col> <state>2</state></cell>
+        <cell> <row>25</row> <col>25</col> <state>1</state></cell>
     </activeCells>
     <probCatch>50</probCatch>
 </Simulation>
