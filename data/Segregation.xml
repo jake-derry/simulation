@@ -1,14 +1,12 @@
 <?xml version="1"?>
 <Simulation>
-    <type>
-        segregation
-    </type>
+    <type>segregation</type>
     <author>
         Jonah Knapp
     </author>
     <size>
-        <rows> 10 </rows>
-        <columns> 10 </columns>
+        <rows>10</rows>
+        <columns>10</columns>
     </size>
     <defaultState>0</defaultState>
     <activeCells>
@@ -113,5 +111,5 @@
         <cell> <row>10</row> <col>9</col> <state>2</state> </cell>
         <cell> <row>10</row> <col>10</col> <state>2</state> </cell>
     </activeCells>
-    <satisfaction> 50 </satisfaction>
+    <satisfaction>50</satisfaction>
 </Simulation>
