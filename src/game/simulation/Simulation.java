@@ -19,6 +19,15 @@ import java.util.Map;
  *
  * This simulation constantly updates if it is running.
  *
+ * DEPENDENCIES:
+ *      Visualization
+ *      Cell
+ *
+ * USAGE:
+ *      After calling the constructor, call the step method.
+ *      Call the pause and play methods to determine whether
+ *      the step method does action or not.
+ *
  * @author Jake Derry
  */
 abstract public class Simulation {
@@ -32,6 +41,12 @@ abstract public class Simulation {
 
     private List<Cell> emptyCells;
 
+    /**
+     * Initializes a simulation running.
+     * @param title         Title of the simulation
+     * @param initialGrid   Initial grid of the simulation
+     * @param windowSize    Window size of the simulation
+     */
     public Simulation(String title, Cell[][] initialGrid, int windowSize){
         running = true;
         simTitle = title;

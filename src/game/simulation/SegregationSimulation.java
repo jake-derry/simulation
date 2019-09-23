@@ -7,8 +7,16 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * This simulation runs the Segregation.xml Simulation which
- * has rules that demonstrate segregation.
+ * This simulation runs a Segregation simulation which
+ * has rules that simulate how people group together.
+ * Only able to run a Segregation simulation and assumes that
+ * the user wants the cell grid to 'wrap around.'
+ *
+ * DEPENDENCIES:
+ *      Cell
+ *
+ * @see Simulation
+ * @author Jake Derry
  */
 public class SegregationSimulation extends Simulation {
     private static final boolean WRAP_AROUND = true;
@@ -18,7 +26,13 @@ public class SegregationSimulation extends Simulation {
     private double satisfactionPercent;
 
 
-    SegregationSimulation(String title, Cell[][] initialGrid, int windowSize, double percent) {
+    /**
+     * Initializes a segregation simulation
+     *
+     * @param percent       Percent of same state cells required
+     *                      for the cell to become 'satisfied'
+     */
+    public SegregationSimulation(String title, Cell[][] initialGrid, int windowSize, double percent) {
         super(title, initialGrid, windowSize);
         satisfactionPercent = percent;
     }
