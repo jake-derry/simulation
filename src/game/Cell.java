@@ -19,15 +19,32 @@ public class Cell {
     private int myNextState;
     private Rectangle myRectangle;
 
+    private int row;
+    private int column;
+
     /**
      * Constructor for Cell. Initializes the state of the
      * cell.
      *
-     * @param state     Initial state of the Cell
+     * @param state         Initial state of the Cell
      */
     public Cell(int state) {
         myState = state;
         myRectangle = new Rectangle();
+    }
+
+    /**
+     * Constructor for Cell. Initializes the state of the
+     * cell, and stores row and column information.
+     *
+     * @param state         Initial state of the Cell
+     * @param cellRow       Which row in the grid this cell is
+     * @param cellColumn    Which column in the grid this cell is
+     */
+    public Cell(int state, int cellRow, int cellColumn) {
+        this(state);
+        row = cellRow;
+        column = cellColumn;
     }
 
     /**
@@ -78,6 +95,24 @@ public class Cell {
      */
     public int getState() {
         return myState;
+    }
+
+    /**
+     * Gets the row of the cell
+     *
+     * @return      the cell's row in the grid
+     */
+    public int getRow() {
+        return row;
+    }
+
+    /**
+     * Gets the column of the cell
+     *
+     * @return      the cell's column in the grid
+     */
+    public int getColumn() {
+        return column;
     }
 
 }

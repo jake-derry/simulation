@@ -5,8 +5,10 @@ import game.Visualization;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,17 +22,21 @@ import java.util.Map;
  * @author Jake Derry
  */
 abstract public class Simulation {
-    private static final int BEYOND_EDGE = -1;
+    protected static final int BEYOND_EDGE = -1;
+    protected static final int EMPTY = 0;
 
     private Cell[][] grid;
     private boolean running;
     private Visualization myVisualization;
     private String simTitle;
 
+    private List<Cell> emptyCells;
+
     public Simulation(String title, Cell[][] initialGrid, int windowSize){
         running = true;
         simTitle = title;
         grid = initialGrid;
+        emptyCells = findMatches(EMPTY);
         myVisualization = new Visualization(initialGrid, windowSize);
         myVisualization.setUpRectangles();
     }
@@ -119,9 +125,9 @@ abstract public class Simulation {
      * Gets the cell at x, y in the 2D array (grid) of cells. If the cell
      * does not exist, like in the case of an edge cell, a cell is returned
      * with a placeholder state.
-     * @param x     x index of grid
-     * @param y     y index of grid
-     * @return      Cell at x, y
+     * @param x         x index of grid
+     * @param y         y index of grid
+     * @return          Cell at x, y
      */
     protected Cell getCell(int x, int y) {
         try {
@@ -132,17 +138,94 @@ abstract public class Simulation {
         }
     }
 
-    protected int[] getNeighborStates(int i, int j) {
-        int[] neighborStates = new int[8];
-        neighborStates[0] = getCell(i - 1, j).getState();
-        neighborStates[1] = getCell(i + 1, j).getState();
-        neighborStates[2] = getCell(i - 1, j - 1).getState();
-        neighborStates[3] = getCell(i + 1, j - 1).getState();
-        neighborStates[4] = getCell(i, j - 1).getState();
-        neighborStates[5] = getCell(i - 1, j + 1).getState();
-        neighborStates[6] = getCell(i + 1, j + 1).getState();
-        neighborStates[7] = getCell(i, j + 1).getState();
+    /**
+     * Gets the cell at x, y in the 2D array (grid) of cells. Options of how to handle
+     * out of bound indices
+     * @param x         x index of grid
+     * @param y         y index of grid
+     * @param wrapAround    choose between the grid being (true) wrap around where
+     *                  out of bound indices reach to the opposite side of the grid
+     *                  or (false) surrounded by a border of cells that have
+     *                  a specific state
+     * @return          Cell at x, y
+     */
+    protected Cell getCell(int x, int y, boolean wrapAround) {
+        if (wrapAround) {
+            if (x > getGridRowCount()) {
+                x -= getGridRowCount();
+            }
+            else if (x < 0) {
+                x = getGridRowCount() - x;
+            }
+
+            if (y > getGridColumnCount()) {
+                y -= getGridColumnCount();
+            }
+            else if (y < 0) {
+                y = getGridRowCount() - y;
+            }
+
+            return grid[x][y];
+        }
+        return getCell(x, y);
+    }
+
+    protected List<Cell> getEightNeighbors(int i, int j) {
+        List<Cell> neighbors= new ArrayList<>();
+        neighbors.add(getCell(i - 1, j));
+        neighbors.add(getCell(i + 1, j));
+        neighbors.add(getCell(i - 1, j - 1));
+        neighbors.add(getCell(i + 1, j - 1));
+        neighbors.add(getCell(i, j - 1));
+        neighbors.add(getCell(i - 1, j + 1));
+        neighbors.add(getCell(i + 1, j + 1));
+        neighbors.add(getCell(i, j + 1));
+        return neighbors;
+    }
+
+    protected List<Cell> getFourNeighbors(int i, int j) {
+        List<Cell> neighbors= new ArrayList<>();
+        neighbors.add(getCell(i - 1, j));
+        neighbors.add(getCell(i + 1, j));
+        neighbors.add(getCell(i, j - 1));
+        neighbors.add(getCell(i, j + 1));
+        return neighbors;
+    }
+
+    protected int[] getEightNeighborStates(int i, int j) {
+        List<Cell> neighbors = getEightNeighbors(i, j);
+        int[] neighborStates = new int[neighbors.size()];
+        for (int x = 0; x < neighbors.size(); x++) {
+            neighborStates[x] = neighbors.get(x).getState();
+        }
         return neighborStates;
+    }
+
+    protected int[] getFourNeighborStates(int i, int j) {
+        List<Cell> neighbors = getFourNeighbors(i, j);
+        int[] neighborStates = new int[neighbors.size()];
+        for (int x = 0; x < neighbors.size(); x++) {
+            neighborStates[x] = neighbors.get(x).getState();
+        }
+        return neighborStates;
+    }
+
+    protected List<Cell> findMatches(int state) {
+        List<Cell> matches = new ArrayList<>();
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                Cell cell = getCell(i, j);
+                if (cell.getState() == state) {
+                    matches.add(cell);
+                }
+            }
+        }
+        return matches;
+    }
+
+
+    protected List<Cell> getEmptyCells() {
+        return emptyCells;
     }
 
 }
