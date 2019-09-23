@@ -146,7 +146,7 @@ public class PredatorPreySimulation extends Simulation {
             );
             neighbors.remove(newPredatorLocation);
 
-            if (predatorEnergies[i][j] > energyThreshold) {
+            if (availableCellCount > 1 && predatorEnergies[i][j] > energyThreshold) {
                 int randomChildIndex = random.nextInt(availableCellCount - 1);
 
                 Cell newPredatorChildLocation = neighbors.get(
