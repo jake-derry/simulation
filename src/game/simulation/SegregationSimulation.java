@@ -1,7 +1,9 @@
 package game.simulation;
 
 import game.Cell;
+import util.ArrayUtils;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -24,6 +26,7 @@ public class SegregationSimulation extends Simulation {
     private static final int GROUP_B = 2;
 
     private double satisfactionPercent;
+    private int nonEmptyCount;
 
     /**
      * Initializes a segregation simulation
@@ -34,12 +37,25 @@ public class SegregationSimulation extends Simulation {
     public SegregationSimulation(String title, Cell[][] initialGrid, int windowSize, double percent) {
         super(title, initialGrid, windowSize);
         satisfactionPercent = percent;
+        nonEmptyCount = countNonEmpty();
+    }
+
+    private int countNonEmpty() {
+        int count = 0;
+        for (int i = 0; i < getGridRowCount(); i++) {
+            for (int j = 0; j < getGridColumnCount(); j++) {
+                if (getCell(i, j).getState() != EMPTY) count++;
+            }
+        }
+        return count;
     }
 
     @Override
     protected void update() {
         List<Cell> unsatisfiedCells = updateNonEmptyCells();
         updateEmptyCells(unsatisfiedCells);
+        nonEmptyCount = countNonEmpty();
+        System.out.println(nonEmptyCount);
     }
 
     private List<Cell> updateNonEmptyCells() {

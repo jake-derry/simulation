@@ -29,6 +29,7 @@ public class PredatorPreySimulation extends Simulation {
     private int clock;
 
     private int[][] predatorEnergies;
+
     private int initialEnergy;
     private int energyThreshold;
 
@@ -136,7 +137,11 @@ public class PredatorPreySimulation extends Simulation {
         int preyCount = ArrayUtils.countIf(getEightNeighborStates(i, j), PREY);
         int availableCellCount = emptyCount + preyCount;
 
-        if (availableCellCount > 0) {
+        if (predatorEnergies[i][j] <= 0) {
+            getCell(i, j).setNextState(EMPTY);
+            predatorEnergies[i][j] = NO_ENERGY;
+        }
+        else if (availableCellCount > 0) {
             int randomIndex = random.nextInt(availableCellCount);
 
             List<Cell> neighbors = getEightNeighbors(i, j);
