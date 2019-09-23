@@ -3,9 +3,15 @@ package game;
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
 import java.util.ArrayList;
 
+/**
+ * DisplayHandler to create and position menu items (buttons, title text) for the CAApp window
+ * Assumptions: there will be 5 buttons- New Sim, Pause/Resume, Step, Slower, and Faster
+ * Dependencies: N/A
+ * Use case: these methods can be called from CAApp to create the menu items needed to control the simulations
+ * @author Matt Harris
+ */
 public class DisplayHandler {
     private final int MENU_HEIGHT;
     private final int WINDOW_SIZE;
@@ -23,7 +29,6 @@ public class DisplayHandler {
     private final int SLOWER_X;
 
     public DisplayHandler(int windowDimension){
-        // Menu Item Positions
         WINDOW_SIZE = windowDimension;
         MENU_HEIGHT = WINDOW_SIZE/4;
         TITLE_X = WINDOW_SIZE/16;
@@ -39,20 +44,21 @@ public class DisplayHandler {
     }
 
     /**
-     * Helps with creating text of a particular size at a particular position
-     * @param text
-     * @return
+     * Creates the tile of the displayed simulation at a particular size and particular position
+     * @param text- the String that is to be displayed as Text in the window
+     * @return- the Text object created to display the Title
+     * Assumptions: position and size of title specified by private variables TITLE_X, TITLE_Y, and TITLE_SIZE
      */
-    public Text createText(String text){
+    public Text createTitle(String text){
         Text finalText = new Text(TITLE_X, TITLE_Y, text);
         finalText.setFont(new Font(TITLE_SIZE));
         return finalText;
     }
 
     /**
-     * @param text
-     * @param xPos
-     * @return
+     * @param text- the text to be displayed on the button
+     * @param xPos- the xcoordinate of where the button should be displayed
+     * @return- the button created with the specified text and position
      */
     private Button makeButton(String text, int xPos){
         Button button = new Button(text);
@@ -63,6 +69,11 @@ public class DisplayHandler {
         return button;
     }
 
+    /**
+     * Creates and returns the specific menu buttons to be displayed and used
+     * @return- an ArrayList<Button> to be added to the display group in CAApp
+     * Assumptions- the functions of these buttons will be set in CAApp before adding them to the display group
+     */
     public ArrayList<Button> makeMenuButtons(){
         ArrayList<Button> menuButtons = new ArrayList<Button>();
         menuButtons.add(makeButton("New Sim", NEW_SIM_X));

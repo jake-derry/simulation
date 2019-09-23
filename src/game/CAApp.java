@@ -19,6 +19,8 @@ import java.util.ArrayList;
 
 /**
  * Main JavaFX application. Creates and calls Configurer, Simulation, and Visualization classes.
+ *
+ * @author Matt Harris
  */
 public class CAApp extends Application {
     private static final int WINDOW_SIZE = 600;
@@ -81,7 +83,7 @@ public class CAApp extends Application {
      *
      */
     private void addTitleTextToDisplayGroup(){
-        displayGroup.getChildren().add(myDisplayHandler.createText(mySim.getSimTitle()));
+        displayGroup.getChildren().add(myDisplayHandler.createTitle(mySim.getSimTitle()));
     }
 
     /**
