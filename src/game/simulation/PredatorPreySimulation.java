@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 public class PredatorPreySimulation extends Simulation {
+    private static final boolean WRAP_AROUND = true;
     private static final int PREDATOR = 1;
     private static final int PREY = 2;
 
@@ -18,6 +19,7 @@ public class PredatorPreySimulation extends Simulation {
     private int[][] predatorEnergies;
     private int initialEnergy;
     private int energyThreshold;
+
 
     public PredatorPreySimulation(String title, Cell[][] initialGrid, int windowSize,
                                   int breedTime, int predatorInitialEnergy, int predatorEnergyThreshold) {
@@ -54,9 +56,9 @@ public class PredatorPreySimulation extends Simulation {
     }
 
     private void nextState(int i, int j) {
-        int state = getCell(i, j).getState();
-        if (state == PREDATOR) getCell(i, j).setNextState(hunt(i, j));
-        else if (state == PREY) getCell(i, j).setNextState(run(i, j));
+        int state = getCell(i, j, WRAP_AROUND).getState();
+        if (state == PREDATOR) getCell(i, j, WRAP_AROUND).setNextState(hunt(i, j));
+        else if (state == PREY) getCell(i, j, WRAP_AROUND).setNextState(run(i, j));
     }
 
     private int run(int i, int j) {
@@ -72,7 +74,7 @@ public class PredatorPreySimulation extends Simulation {
             neighbors.remove(newPreyLocation);
 
             newPreyLocation.setNextState(PREY);
-            getCell(i, j).setNextState(EMPTY);
+            getCell(i, j, WRAP_AROUND).setNextState(EMPTY);
 
             if (clock == myBreedTime && emptyCount > 1) {
                 int randomEmptyChildIndex = random.nextInt(emptyCount - 1);
@@ -134,7 +136,7 @@ public class PredatorPreySimulation extends Simulation {
 
             movePredator(newPredatorLocation);
 
-            getCell(i, j).setNextState(EMPTY);
+            getCell(i, j, WRAP_AROUND).setNextState(EMPTY);
             predatorEnergies[i][j] = NO_ENERGY;
         }
         return PREDATOR;

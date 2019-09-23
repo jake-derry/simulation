@@ -28,12 +28,22 @@ public class Cell {
      * cell.
      *
      * @param state         Initial state of the Cell
+     */
+    public Cell(int state) {
+        myState = state;
+        myRectangle = new Rectangle();
+    }
+
+    /**
+     * Constructor for Cell. Initializes the state of the
+     * cell, and stores row and column information.
+     *
+     * @param state         Initial state of the Cell
      * @param cellRow       Which row in the grid this cell is
      * @param cellColumn    Which column in the grid this cell is
      */
     public Cell(int state, int cellRow, int cellColumn) {
-        myState = state;
-        myRectangle = new Rectangle();
+        this(state);
         row = cellRow;
         column = cellColumn;
     }

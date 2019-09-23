@@ -126,9 +126,9 @@ abstract public class Simulation {
      * Gets the cell at x, y in the 2D array (grid) of cells. If the cell
      * does not exist, like in the case of an edge cell, a cell is returned
      * with a placeholder state.
-     * @param x     x index of grid
-     * @param y     y index of grid
-     * @return      Cell at x, y
+     * @param x         x index of grid
+     * @param y         y index of grid
+     * @return          Cell at x, y
      */
     protected Cell getCell(int x, int y) {
         try {
@@ -137,6 +137,38 @@ abstract public class Simulation {
         catch (IndexOutOfBoundsException e) {
             return new Cell(BEYOND_EDGE);
         }
+    }
+
+    /**
+     * Gets the cell at x, y in the 2D array (grid) of cells. Options of how to handle
+     * out of bound indices
+     * @param x         x index of grid
+     * @param y         y index of grid
+     * @param wrapAround    choose between the grid being (true) wrap around where
+     *                  out of bound indices reach to the opposite side of the grid
+     *                  or (false) surrounded by a border of cells that have
+     *                  a specific state
+     * @return          Cell at x, y
+     */
+    protected Cell getCell(int x, int y, boolean wrapAround) {
+        if (wrapAround) {
+            if (x > getGridRowCount()) {
+                x -= getGridRowCount();
+            }
+            else if (x < 0) {
+                x = getGridRowCount() - x;
+            }
+
+            if (y > getGridColumnCount()) {
+                y -= getGridColumnCount();
+            }
+            else if (y < 0) {
+                y = getGridRowCount() - y;
+            }
+
+            return grid[x][y];
+        }
+        return getCell(x, y);
     }
 
     protected List<Cell> getEightNeighbors(int i, int j) {
