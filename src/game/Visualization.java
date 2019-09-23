@@ -3,8 +3,10 @@ package game;
 import javafx.scene.paint.Color;
 
 /**
- * Visualization section of our CAApp.
- *
+ * Visualization: created by a simulation in order to display the states in the cell grid.
+ * Assumptions: at max, we will have 3 different unique states to be displayed for cells, represented by colorList
+ * Dependencies: Cell
+ * Use Case: a visualization is made for a simulation's gridOfCells when it is created and this will track and display the grid in the window
  * @author Matt Harris
  */
 public class Visualization{
@@ -14,10 +16,7 @@ public class Visualization{
     private final int CELL_HEIGHT;
     private Cell[][] cellArray;
     private Color[] colorList;
-
-    /**
-     * Constructor for Visualization
-     */
+    
     public Visualization(Cell[][] gridOfCells, int windowDimension){
         cellArray = gridOfCells;
         WINDOW_SIZE = windowDimension;
@@ -28,11 +27,11 @@ public class Visualization{
         colorList[0] = Color.RED;
         colorList[1] = Color.ORANGE;
         colorList[2] = Color.YELLOW;
-        colorList[3] = Color.WHITE;
     }
 
     /**
      * setUpRectangles: sets width, height, x, and y coordinates of rectangles for cells
+     * Assumptions: constant cellWidth / height
      */
     public void setUpRectangles(){
         for (int i = 0; i < cellArray.length; i++){
@@ -47,6 +46,7 @@ public class Visualization{
 
     /**
      * visualize: step through cells and update colors accordingly
+     * Assumptions: N/A
      */
     public void visualize(){
         for (Cell[] cellRow : cellArray){
