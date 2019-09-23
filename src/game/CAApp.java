@@ -28,7 +28,7 @@ import java.util.ArrayList;
 public class CAApp extends Application {
     private static final int WINDOW_SIZE = 600;
     private static final Color BACKGROUND_COLOR = Color.LIGHTGRAY;
-    private static int FRAMES_PER_SECOND = 5;
+    private static int FRAMES_PER_SECOND = 3;
     private static int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
 
     private Group displayGroup;

@@ -18,6 +18,7 @@ Hours Spent:
 
 ### Resources Used
 Button images gotten from: http://clipart-library.com/clip-art/play-pause-button-transparent-3.htm
+New File Chooser inspiration from: https://docs.oracle.com/javafx/2/ui_controls/file-chooser.htm
 
 ### Running the Program
 
