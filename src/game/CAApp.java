@@ -4,25 +4,41 @@ import game.simulation.Simulation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
+import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Main JavaFX application. Creates and calls Configurer, Simulation, and Visualization classes.
  */
 public class CAApp extends Application {
     private static final int WINDOW_SIZE = 600;
-    private static final int FRAMES_PER_SECOND = 10;
-    private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-    private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+    private static final Color BACKGROUND_COLOR = Color.LIGHTGRAY;
+    private static int FRAMES_PER_SECOND = 5;
+    private static int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
 
-    private Stage myStage;
-    private Simulation mySim;
     private Group displayGroup;
+    private Timeline myAnimation;
+    private Simulation mySim;
+    private DisplayHandler myDisplayHandler;
+
+    private Button myNewSimButton;
+    private Button myPauseResumeButton;
+    private Button myStepButton;
+    private Button myFasterButton;
+    private Button mySlowerButton;
+
+    private boolean simRunning;
+    private Stage myStage;
 
     /**
      *
@@ -30,81 +46,159 @@ public class CAApp extends Application {
      */
     @Override
     public void start(Stage stage){
-        /* Basic Flow Idea
-        1. setup configuration object
-        2. call configuration.readXML (gathers data from initialization file)
-        3. call configuration.createGrid (takes gathered info and creates a "grid" of Cells with proper grid dimensions, initial states, but no rectangle info)
-        4. call configuration.createSimulation (takes type information and created grid to make a new simulation)
-        5. call visualization.setUpRectangles when simulation is created (takes grid dimensions and fills in rectangle info)
-        6. call createMenu to create menu items
-        7. add rectangles from simulation and menu items from createMenu to display group
-         */
-
-        this.myStage = stage;
+        myStage = stage;
         displayGroup = new Group();
-        stage.setScene(new Scene(displayGroup, WINDOW_SIZE, WINDOW_SIZE, Color.AZURE));
-        stage.setTitle("Test Title");
-        stage.show();
+        myAnimation = new Timeline();
+        myDisplayHandler = new DisplayHandler(WINDOW_SIZE);
 
         mySim = Configurer.getSimulation("GameofLife_Example.xml", WINDOW_SIZE);
-        addAssetsToDisplayGroup();
-
-        // attach "game loop" to timeline to play it (basically just calling step() method repeatedly forever)
-        var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
-        var animation = new Timeline();
-        animation.setCycleCount(Timeline.INDEFINITE);
-        animation.getKeyFrames().add(frame);
-        animation.play();
-
+        myStage.setScene(new Scene(displayGroup, WINDOW_SIZE, WINDOW_SIZE, BACKGROUND_COLOR));
+        myStage.setTitle(mySim.getSimTitle());
+        myStage.show();
+        startApp();
     }
 
     /**
      *
-     * @param elapsedTime corresponds to the second delay to take
      */
-    private void step(double elapsedTime){
-        /* Basic Flow Idea
-        1. call simulation.Update
-        2. call simulation.visualize
-         */
-        mySim.step();
-    }
-
-    public static void main (String[] args) {
-        launch(args);
+    private void startApp(){
+        simRunning = true;
+        setUpDisplayGroup();
+        startAnimation();
     }
 
     /**
      *
-     * @param xPos x coordinate of screen click
-     * @param yPos y coordinate of screen click
      */
-    private void handleMouseInput(double xPos, double yPos){
-
+    private void setUpDisplayGroup(){
+        displayGroup.getChildren().clear();
+        addTitleTextToDisplayGroup();
+        addMenuButtonsToDisplayGroup();
+        addCellsToDisplayGroup();
     }
 
     /**
      *
-     * @param code KeyCode of key pressed by user
      */
-    private void handleKeyInput(KeyCode code){
-
+    private void addTitleTextToDisplayGroup(){
+        displayGroup.getChildren().add(myDisplayHandler.createText(mySim.getSimTitle()));
     }
 
     /**
-     * addAssetsToDisplayGroup: adds menu items and cell rectangles to the group to be displayed
+     *
      */
-    public void addAssetsToDisplayGroup(){
+    private void addMenuButtonsToDisplayGroup(){
+        ArrayList<Button> menuButtons = myDisplayHandler.makeMenuButtons();
+        myNewSimButton = menuButtons.get(0);
+        myPauseResumeButton = menuButtons.get(1);
+        myStepButton = menuButtons.get(2);
+        mySlowerButton = menuButtons.get(3);
+        myFasterButton = menuButtons.get(4);
+        myNewSimButton.setOnAction(setNewSimHandler());
+        myPauseResumeButton.setOnAction(setPauseResumeHandler());
+        myStepButton.setOnAction(setStepHandler());
+        mySlowerButton.setOnAction(setSpeedHandler(2));
+        myFasterButton.setOnAction(setSpeedHandler(0.5));
+        displayGroup.getChildren().addAll(menuButtons);
+    }
+
+    /**
+     *
+     * @return
+     */
+    private EventHandler<ActionEvent> setNewSimHandler(){
+        final FileChooser fileChooser = new FileChooser();
+        EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(final ActionEvent e) {
+                File file = fileChooser.showOpenDialog(myStage);
+                if (file != null) {
+                    mySim = Configurer.getSimulation(file.getName(), WINDOW_SIZE);
+                    startApp();
+                }
+            }
+        };
+        return handler;
+    }
+
+    /**
+     *
+     * @return
+     */
+    private EventHandler<ActionEvent> setPauseResumeHandler(){
+        EventHandler<ActionEvent> handler = e -> {
+            if (simRunning) {
+                mySim.pause();
+                myPauseResumeButton.setText("Play");
+                simRunning = false;
+            } else {
+                mySim.play();
+                myPauseResumeButton.setText("Pause");
+                simRunning = true;
+            }
+        };
+        return handler;
+    }
+
+    /**
+     *
+     * @return
+     */
+    private EventHandler<ActionEvent> setStepHandler(){
+        EventHandler<ActionEvent> handler = e -> {
+            if (!simRunning){
+                mySim.play();
+                mySim.step();
+                mySim.pause();
+            }
+        };
+        return handler;
+    }
+
+    /**
+     *
+     * @param multiplier
+     * @return
+     */
+    private EventHandler<ActionEvent> setSpeedHandler(double multiplier){
+        EventHandler<ActionEvent> handler = e -> {
+            if (MILLISECOND_DELAY > 50 || multiplier > 1){
+                MILLISECOND_DELAY = (int) (multiplier*MILLISECOND_DELAY);
+                startAnimation();
+            }
+        };
+        return handler;
+    }
+
+    /**
+     * addCellsToDisplayGroup: adds cell rectangles to the group to be displayed
+     */
+    public void addCellsToDisplayGroup(){
         for (Cell cellRow[] : mySim.getGrid()){
             for (Cell cell : cellRow){
                 displayGroup.getChildren().add(cell.getRectangle());
             }
         }
-        /*
-        for (Node menuItem : sim.getMenuItems()){
-            displayGroup.getChildren().add(menuItem);
-        }*/
+    }
 
+    /**
+     *
+     */
+    private void startAnimation(){
+        myAnimation.pause();
+        var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step());
+        myAnimation = new Timeline();
+        myAnimation.setCycleCount(Timeline.INDEFINITE);
+        myAnimation.getKeyFrames().add(frame);
+        myAnimation.play();
+    }
+
+    private void step(){
+        mySim.step();
+    }
+
+    public static void main (String[] args) {
+        launch(args);
     }
 }
 
