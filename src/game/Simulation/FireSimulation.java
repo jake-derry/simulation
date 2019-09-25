@@ -1,6 +1,6 @@
-package game.simulation;
+package game.Simulation;
 
-import game.Cell;
+import game.Simulation.Cell.Cell;
 
 import java.util.Random;
 

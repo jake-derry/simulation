@@ -6,8 +6,8 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import game.Cell;
-import game.simulation.*;
+import game.Simulation.Cell.Cell;
+import game.Simulation.*;
 import org.w3c.dom.Document;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;

@@ -1,7 +1,6 @@
-package game.simulation;
+package game.Simulation;
 
-import game.Cell;
-
+import game.Simulation.Cell.Cell;
 import util.ArrayUtils;
 import java.util.List;
 import java.util.Random;

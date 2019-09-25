@@ -1,6 +1,6 @@
-package game.simulation;
+package game.Simulation;
 
-import game.Cell;
+import game.Simulation.Cell.Cell;
 import game.Visualization;
 import java.util.ArrayList;
 import java.util.List;

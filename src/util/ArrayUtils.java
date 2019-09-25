@@ -1,10 +1,5 @@
 package util;
 
-import game.Cell;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class ArrayUtils {
 
     public static int countIf(int[] array, int search) {

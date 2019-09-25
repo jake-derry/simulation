@@ -1,5 +1,6 @@
 package game;
 
+import game.Simulation.Cell.Cell;
 import javafx.scene.paint.Color;
 
 /**

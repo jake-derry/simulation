@@ -1,7 +1,8 @@
 package game;
 
 import game.Configurer.Configurer;
-import game.simulation.Simulation;
+import game.Simulation.Cell.Cell;
+import game.Simulation.Simulation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;

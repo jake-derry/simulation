@@ -1,7 +1,7 @@
-package game.simulation;
+package game.Simulation;
 
 
-import game.Cell;
+import game.Simulation.Cell.Cell;
 
 /**
  * This simulation runs Conway's Game of Life which
