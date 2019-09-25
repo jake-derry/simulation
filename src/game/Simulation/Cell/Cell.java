@@ -1,5 +1,8 @@
 package game.Simulation.Cell;
 
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * This class represents a single cell in a cellular
  * automata simulation that is stored in a grid. It
@@ -12,8 +15,10 @@ package game.Simulation.Cell;
  * @author Jake Derry
  */
 abstract public class Cell {
+
     private int myState;
     private int myNextState;
+    private Iterator<Cell> myNeighbors;
 
     /**
      * Constructor for Cell. Initializes the state of the
@@ -21,8 +26,9 @@ abstract public class Cell {
      *
      * @param state         Initial state of the Cell
      */
-    public Cell(int state) {
+    public Cell(int state, Iterator<Cell> neighbors) {
         myState = state;
+        myNeighbors = neighbors;
     }
 
     /**
@@ -49,6 +55,16 @@ abstract public class Cell {
      */
     public int getState() {
         return myState;
+    }
+
+    /**
+     * Gets the cell's neighbors. This is only used by subclasses to
+     * implement updateNext.
+     *
+     * @return          the cell's neighbors in an Iterator
+     */
+    protected Iterator<Cell> getNeighbors() {
+        return myNeighbors;
     }
 
     /**
