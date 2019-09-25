@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GridShape>
+    <name>Rectangle</name>
+    <displacement>
+        <place index="0">
+            <x>0</x>
+        </place>
+    </displacement>
+</GridShape>
