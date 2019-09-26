@@ -19,9 +19,6 @@ import java.util.Random;
  * @author Jake Derry
  */
 public class SegregationSimulation extends Simulation {
-    private static final int GROUP_A = 1;
-    private static final int GROUP_B = 2;
-
     private double satisfactionPercent;
 
     /**

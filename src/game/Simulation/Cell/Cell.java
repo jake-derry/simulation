@@ -15,8 +15,8 @@ import javafx.scene.shape.Rectangle;
  * @author Jake Derry
  */
 public class Cell {
-    private int myState;
-    private int myNextState;
+    private State myState;
+    private State myNextState;
     private Rectangle myRectangle;
 
     private int row;
@@ -28,7 +28,7 @@ public class Cell {
      *
      * @param state         Initial state of the Cell
      */
-    public Cell(int state) {
+    public Cell(State state) {
         myState = state;
         myRectangle = new Rectangle();
     }
@@ -41,7 +41,7 @@ public class Cell {
      * @param cellRow       Which row in the grid this cell is
      * @param cellColumn    Which column in the grid this cell is
      */
-    public Cell(int state, int cellRow, int cellColumn) {
+    public Cell(State state, int cellRow, int cellColumn) {
         this(state);
         row = cellRow;
         column = cellColumn;
@@ -93,7 +93,7 @@ public class Cell {
      *
      * @return      the cell's state
      */
-    public int getState() {
+    public State getState() {
         return myState;
     }
 

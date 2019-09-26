@@ -19,8 +19,6 @@ import java.util.Random;
  */
 public class PredatorPreySimulation extends Simulation {
     private static final boolean WRAP_AROUND = true;
-    private static final int PREDATOR = 1;
-    private static final int PREY = 2;
 
     private static final int NO_ENERGY = -1;
 
@@ -82,7 +80,7 @@ public class PredatorPreySimulation extends Simulation {
         else if (state == PREDATOR) getCell(i, j, WRAP_AROUND).setNextState(hunt(i, j));
     }
 
-    private int run(int i, int j) {
+    private State run(int i, int j) {
         Random random = new Random();
         int emptyCount = ArrayUtils.countIf(getEightNeighborStates(i, j), EMPTY);
         if (emptyCount > 0) {
@@ -132,7 +130,7 @@ public class PredatorPreySimulation extends Simulation {
         return -1;
     }
 
-    private int hunt(int i, int j) {
+    private State hunt(int i, int j) {
         Random random = new Random();
 
         int emptyCount = ArrayUtils.countIf(getEightNeighborStates(i, j), EMPTY);

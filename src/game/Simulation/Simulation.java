@@ -30,8 +30,6 @@ import java.util.List;
  * @author Jake Derry
  */
 abstract public class Simulation implements Playable {
-    protected static final int BEYOND_EDGE = -1;
-    protected static final int EMPTY = 0;
 
     private Cell[][] grid;
     private boolean running;

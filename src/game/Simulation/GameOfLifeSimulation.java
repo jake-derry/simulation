@@ -16,7 +16,6 @@ import game.Simulation.Cell.Cell;
  * @author Jake Derry
  */
 public class GameOfLifeSimulation extends Simulation {
-    private static final int LIVE = 1;
 
     /**
      * Initializes a game of life simulation
@@ -34,7 +33,7 @@ public class GameOfLifeSimulation extends Simulation {
         }
     }
 
-    private int nextState(int i, int j) {
+    private State nextState(int i, int j) {
         int[] neighborStates = getEightNeighborStates(i, j);
         int count = countLiveNeighbors(neighborStates);
         int state = getCell(i, j).getState();

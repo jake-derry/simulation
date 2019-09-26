@@ -1,7 +1,10 @@
 package game.Simulation;
 
 import game.Simulation.Cell.Cell;
-
+import static game.Simulation.State.TREE;
+import static game.Simulation.State.EMPTY;
+import static game.Simulation.State.BURNING;
+import static game.Simulation.State.BEYOND_EDGE;
 import java.util.Random;
 
 /**
@@ -17,10 +20,6 @@ import java.util.Random;
  * @author Jake Derry
  */
 public class FireSimulation extends Simulation {
-    private static final int EMPTY = 0;
-    private static final int BURNING = 1;
-    private static final int TREE = 2;
-
 
     private double myProbCatch;
 
@@ -44,7 +43,7 @@ public class FireSimulation extends Simulation {
         }
     }
 
-    private int spread(int i, int j) {
+    private State spread(int i, int j) {
         int[] neighbors = getFourNeighborStates(i, j);
         int state = getCell(i, j).getState();
         if (state == TREE) {
@@ -57,7 +56,7 @@ public class FireSimulation extends Simulation {
         return EMPTY;
     }
 
-    private int catchState(int neighbors) {
+    private State catchState(int neighbors) {
         Random random = new Random();
         for (int i = 0; i < neighbors; i++) {
             if (random.nextFloat() < myProbCatch) {
@@ -67,7 +66,7 @@ public class FireSimulation extends Simulation {
         return TREE;
     }
 
-    private int burning(int[] neighbors) {
+    private State burning(int[] neighbors) {
         int count = 0;
         for (int neighbor : neighbors) {
             if (neighbor == BURNING) count++;
