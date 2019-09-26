@@ -30,8 +30,8 @@ public class SegregationSimulation extends Simulation {
      * @param percent       Percent of same state cells required
      *                      for the cell to become 'satisfied'
      */
-    public SegregationSimulation(String title, Cell[][] initialGrid, int windowSize, double percent) {
-        super(title, initialGrid, windowSize);
+    public SegregationSimulation(String title, Cell[][] initialGrid, double percent) {
+        super(title, initialGrid);
         satisfactionPercent = percent;
     }
 
