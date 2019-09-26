@@ -1,7 +1,6 @@
 package game.visualization.menu.buttons;
 
 import game.Simulation.Simulation;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
