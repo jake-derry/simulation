@@ -39,9 +39,9 @@ public class PredatorPreySimulation extends Simulation {
      * @param predatorInitialEnergy     Initial energy that each predator has
      * @param predatorEnergyThreshold   Energy level at which the predator 'reproduces'
      */
-    public PredatorPreySimulation(String title, Cell[][] initialGrid, int windowSize,
+    public PredatorPreySimulation(String title, Cell[][] initialGrid,
                                   int breedTime, int predatorInitialEnergy, int predatorEnergyThreshold) {
-        super(title, initialGrid, windowSize);
+        super(title, initialGrid);
         myBreedTime = breedTime;
         clock = 0;
         initialEnergy = predatorInitialEnergy;

@@ -22,8 +22,8 @@ public class PercolationSimulation extends Simulation {
     /**
      * Initializes a percolation simulation
      */
-    public PercolationSimulation(String title, Cell[][] initialGrid, int windowSize) {
-        super(title, initialGrid, windowSize);
+    public PercolationSimulation(String title, Cell[][] initialGrid) {
+        super(title, initialGrid);
     }
 
     @Override

@@ -29,8 +29,8 @@ public class FireSimulation extends Simulation {
      *
      * @param probCatch     Probability of a 'tree' catching fire
      */
-    public FireSimulation (String title, Cell[][] initialGrid, int windowSize, double probCatch) {
-        super(title, initialGrid, windowSize);
+    public FireSimulation (String title, Cell[][] initialGrid, double probCatch) {
+        super(title, initialGrid);
         myProbCatch = probCatch;
     }
 
