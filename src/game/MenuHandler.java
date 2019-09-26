@@ -28,7 +28,7 @@ public class MenuHandler {
     // Button Positioning
     private final int BUTTON_HEIGHT;
     private final int NEW_SIM_X;
-    private final int PAUSE_RESUME_X;
+    private final int PAUSE_PLAY_X;
     private final int STEP_X;
     private final int BUTTON_Y;
     private final int FASTER_X;
@@ -47,7 +47,7 @@ public class MenuHandler {
         TITLE_Y = MENU_HEIGHT*2/5;
         TITLE_SIZE = MENU_HEIGHT/4;
         NEW_SIM_X = WINDOW_SIZE/32;
-        PAUSE_RESUME_X = WINDOW_SIZE*7/32;
+        PAUSE_PLAY_X = WINDOW_SIZE*7/32;
         STEP_X = WINDOW_SIZE*13/32;
         FASTER_X = WINDOW_SIZE*25/32;
         SLOWER_X = WINDOW_SIZE*19/32;
@@ -87,8 +87,10 @@ public class MenuHandler {
      */
     private void  addMenuButtonsToDisplayGroup(){
         ResourceBundle myResources = ResourceBundle.getBundle(myLanguage);
-        LoadNewSimButton NewSimButton = new LoadNewSimButton(NEW_SIM_X, BUTTON_Y, BUTTON_HEIGHT, myResources, myStage, myGroup, mySim, myAnimation, WINDOW_SIZE, MILLISECOND_DELAY, myLanguage);
-        myGroup.getChildren().add(NewSimButton.getButton());
+        LoadNewSimButton newSimButton = new LoadNewSimButton(NEW_SIM_X, BUTTON_Y, BUTTON_HEIGHT, myResources, myStage, myGroup, mySim, myAnimation, WINDOW_SIZE, MILLISECOND_DELAY, myLanguage);
+        myGroup.getChildren().add(newSimButton.getButton());
+        PausePlayButton pausePlayButton = new PausePlayButton(PAUSE_PLAY_X, BUTTON_Y, BUTTON_HEIGHT, myResources, mySim);
+        myGroup.getChildren().add(pausePlayButton.getButton());
     }
 
 }

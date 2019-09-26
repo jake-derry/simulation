@@ -76,61 +76,6 @@ public class CAApp extends Application {
     }
 
     /**
-     * setUpDisplayGroup: Refreshes display group and adds Title, Menu Items, and Cells to be displayed
-     */
-    private void setUpDisplayGroup(){
-        displayGroup.getChildren().clear();
-        addTitleTextToDisplayGroup();
-        addMenuButtonsToDisplayGroup();
-        addCellsToDisplayGroup();
-    }
-
-    /**
-     * addTitleTextToDisplayGroup: Adds the Title text to the display group
-     */
-    private void addTitleTextToDisplayGroup(){
-        displayGroup.getChildren().add(myDisplayHandler.createTitle(mySim.getSimTitle()));
-    }
-
-    /**
-     * addMenuButtonsToDisplayGroup: Adds the Menu Buttons to display group
-     */
-    private void addMenuButtonsToDisplayGroup(){
-        ArrayList<Button> menuButtons = myDisplayHandler.makeMenuButtons();
-        myNewSimButton = menuButtons.get(0);
-        myPauseResumeButton = menuButtons.get(1);
-        myStepButton = menuButtons.get(2);
-        mySlowerButton = menuButtons.get(3);
-        myFasterButton = menuButtons.get(4);
-        myNewSimButton.setOnAction(setNewSimHandler());
-        myPauseResumeButton.setOnAction(setPauseResumeHandler());
-        myStepButton.setOnAction(setStepHandler());
-        mySlowerButton.setOnAction(setSpeedHandler(2));
-        myFasterButton.setOnAction(setSpeedHandler(0.5));
-        displayGroup.getChildren().addAll(menuButtons);
-    }
-
-    /**
-     * setNewSimHandler: Sets the specific button action for the New Sim Button
-     * @return- event handler for New Sim Button
-     */
-    private EventHandler<ActionEvent> setNewSimHandler(){
-        final FileChooser fileChooser = new FileChooser();
-        EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>(){
-            @Override
-            public void handle(final ActionEvent e) {
-                File file = fileChooser.showOpenDialog(myStage);
-                if (file != null) {
-                    mySim = Configurer.getSimulation(file.getName(), WINDOW_SIZE, language);
-                    mySim.setVisualization(myAnimation, displayGroup, myStage, MILLISECOND_DELAY, WINDOW_SIZE, language);
-                    startApp();
-                }
-            }
-        };
-        return handler;
-    }
-
-    /**
      * setPauseResumeHandler: Sets the specific button action for the Pause/Resume Button
      * @return- event handler for Pause/Resume Button
      */

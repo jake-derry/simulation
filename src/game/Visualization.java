@@ -82,8 +82,6 @@ public class Visualization{
      */
     public void setUpDisplayGroup(){
         myGroup.getChildren().clear();
-        //myMenuHandler.setUpMenu();
-        //myGridHandler.addCellsToDisplayGroup();
     }
 
     /**
