@@ -21,8 +21,8 @@ public class GameOfLifeSimulation extends Simulation {
     /**
      * Initializes a game of life simulation
      */
-    public GameOfLifeSimulation(String title, Cell[][] initialGrid, int windowSize) {
-        super(title, initialGrid, windowSize);
+    public GameOfLifeSimulation(String title, Cell[][] initialGrid) {
+        super(title, initialGrid);
     }
 
     @Override
