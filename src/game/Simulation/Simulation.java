@@ -2,7 +2,11 @@ package game.Simulation;
 
 import game.Playable;
 import game.Simulation.Cell.Cell;
-import game.Visualization;
+import game.visualization.Visualization;
+import javafx.animation.Timeline;
+import javafx.scene.Group;
+import javafx.stage.Stage;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +37,7 @@ abstract public class Simulation implements Playable {
     private boolean running;
     private Visualization myVisualization;
     private String simTitle;
+    private int MILLISECOND_DELAY;
 
     private List<Cell> emptyCells;
 
@@ -40,16 +45,20 @@ abstract public class Simulation implements Playable {
      * Initializes a simulation running.
      * @param title         Title of the simulation
      * @param initialGrid   Initial grid of the simulation
-     * @param windowSize    Window size of the simulation
      */
-    public Simulation(String title, Cell[][] initialGrid, int windowSize){
+    public Simulation(String title, Cell[][] initialGrid){
         running = true;
         simTitle = title;
         grid = initialGrid;
         emptyCells = findMatches(EMPTY);
-        myVisualization = new Visualization(initialGrid, windowSize);
-        myVisualization.setUpRectangles();
+        //TODO CHANGE THIS
+        MILLISECOND_DELAY = 500;
     }
+
+    public void setVisualization(Timeline animation, Group group, Stage stage, int windowSize, String language){
+        myVisualization = new Visualization(animation, group, this, stage, windowSize, language);
+    }
+
 
     /**
      * Calls the update() method when the running
@@ -76,6 +85,22 @@ abstract public class Simulation implements Playable {
      */
     public void play() {
         running = true;
+    }
+
+    public void setSimRunning(boolean bool){
+        running = bool;
+    }
+
+    public boolean getSimRunning(){
+        return running;
+    }
+
+    public int getMILLISECOND_DELAY(){
+        return MILLISECOND_DELAY;
+    }
+
+    public void setMILLISECOND_DELAY(int delay){
+        MILLISECOND_DELAY = delay;
     }
 
     /**
