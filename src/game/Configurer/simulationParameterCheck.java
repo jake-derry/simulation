@@ -10,10 +10,20 @@ public abstract class simulationParameterCheck {
     private String BAD_NUM_COLS = "Unsupported number of columns specified. Using default value of %s.";
     private int defaultCols = 10;
 
-    public int[] simulationParameterCheck(int numRows, int numCols){
+    simulationParameterCheck(int numRows, int numCols){
+        totalRows = numRows;
+        totalColumns = numCols;
+    }
+
+    /**Checks the validity of dimensions supplied by the XML file. If the dimensions are not supported,
+     * then the method will return corrected values.
+     *
+     * @return either the corrected number of rows/columns or the original specification
+     */
+    public int[] checkDimensions(){
         int[] fixedParameters = new int[2];
-        fixedParameters[0] = checkRows(numRows);
-        fixedParameters[1] = checkColumns(numCols);
+        fixedParameters[0] = checkRows(totalRows);
+        fixedParameters[1] = checkColumns(totalColumns);
         return fixedParameters;
     }
 
