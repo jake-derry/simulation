@@ -57,10 +57,9 @@ public class CAApp extends Application {
         myStage = stage;
         displayGroup = new Group();
         myAnimation = new Timeline();
-        myDisplayHandler = new DisplayHandler(WINDOW_SIZE);
 
         mySim = Configurer.getSimulation("Segregation.xml", WINDOW_SIZE, language);
-        mySim.setVisualization(myAnimation, displayGroup, MILLISECOND_DELAY, WINDOW_SIZE, language);
+        mySim.setVisualization(myAnimation, displayGroup, myStage, MILLISECOND_DELAY, WINDOW_SIZE, language);
         myStage.setScene(new Scene(displayGroup, WINDOW_SIZE, WINDOW_SIZE, BACKGROUND_COLOR));
         myStage.setTitle(mySim.getSimTitle());
         myStage.show();
@@ -72,7 +71,7 @@ public class CAApp extends Application {
      */
     public void startApp(){
         simRunning = true;
-        setUpDisplayGroup();
+        //setUpDisplayGroup();
         startAnimation();
     }
 
@@ -123,7 +122,7 @@ public class CAApp extends Application {
                 File file = fileChooser.showOpenDialog(myStage);
                 if (file != null) {
                     mySim = Configurer.getSimulation(file.getName(), WINDOW_SIZE, language);
-                    mySim.setVisualization(myAnimation, displayGroup, MILLISECOND_DELAY, WINDOW_SIZE, language);
+                    mySim.setVisualization(myAnimation, displayGroup, myStage, MILLISECOND_DELAY, WINDOW_SIZE, language);
                     startApp();
                 }
             }

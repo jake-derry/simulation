@@ -6,6 +6,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.util.ResourceBundle;
 
@@ -26,16 +27,17 @@ public class Visualization{
     private ResourceBundle myResources;
     private Timeline myAnimation;
     private Group myGroup;
-    //private MenuHandler myMenuHandler;
-    //private GridHandler myGridHandler;
+    private MenuHandler myMenuHandler;
+    private GridHandler myGridHandler;
     private Simulation mySim;
     private int myDelay;
     private boolean simRunning;
     
-    public Visualization(Timeline animation, Group group, Simulation sim, int windowDimension, int delay, String language){
+    public Visualization(Timeline animation, Group group, Simulation sim, Stage stage, int windowDimension, int delay, String language){
         myAnimation = animation;
         startAnimation();
         myGroup = group;
+        myGroup.getChildren().clear();
         mySim = sim;
         WINDOW_SIZE = windowDimension;
         MENU_HEIGHT = WINDOW_SIZE/4;
@@ -46,25 +48,10 @@ public class Visualization{
         colorList[1] = Color.RED;
         colorList[2] = Color.YELLOW;
         myResources = ResourceBundle.getBundle(language);
-       // myMenuHandler = new MenuHandler();
-        //myGridHandler = new GridHandler();
+        myMenuHandler = new MenuHandler(myGroup, mySim, WINDOW_SIZE, stage, myAnimation, delay, language);
+        myGridHandler = new GridHandler(mySim, myGroup, WINDOW_SIZE);
         myDelay = delay;
         simRunning = true;
-    }
-
-    /**
-     * setUpRectangles: sets width, height, x, and y coordinates of rectangles for cells
-     * Assumptions: constant cellWidth / height
-     */
-    public void setUpRectangles(){
-        for (int i = 0; i < mySim.getGrid().length; i++){
-            for (int j = 0; j < mySim.getGrid()[0].length; j++){
-                mySim.getGrid()[i][j].getRectangle().setHeight(CELL_HEIGHT);
-                mySim.getGrid()[i][j].getRectangle().setWidth(CELL_WIDTH);
-                mySim.getGrid()[i][j].getRectangle().setX(j*CELL_WIDTH+(WINDOW_SIZE-CELL_WIDTH*mySim.getGrid().length)/2);
-                mySim.getGrid()[i][j].getRectangle().setY(i*CELL_HEIGHT+MENU_HEIGHT);
-            }
-        }
     }
 
     /**
@@ -95,8 +82,8 @@ public class Visualization{
      */
     public void setUpDisplayGroup(){
         myGroup.getChildren().clear();
-       // myMenuHandler.setUpMenu();
-        // myGridHandler.addCellsToDisplayGroup();
+        //myMenuHandler.setUpMenu();
+        //myGridHandler.addCellsToDisplayGroup();
     }
 
     /**

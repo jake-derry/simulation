@@ -9,13 +9,17 @@ abstract public class MenuButton {
     protected ResourceBundle myResources;
 
 
-    public MenuButton(int xPos, int yPos, int size, ResourceBundle resources){
+    public MenuButton(int xPos, int yPos, int height, ResourceBundle resources){
         myButton = new Button();
         myButton.setLayoutX(xPos);
         myButton.setLayoutY(yPos);
-        myButton.setPrefHeight(size);
-        myButton.setPrefWidth(size*5);
+        myButton.setPrefHeight(height);
+        myButton.setPrefWidth(height*5);
         myResources = resources;
+    }
+
+    public Button getButton(){
+        return myButton;
     }
 
     protected abstract void setButtonAction();

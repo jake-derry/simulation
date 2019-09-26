@@ -4,6 +4,7 @@ import game.Simulation.Cell.Cell;
 import game.Visualization;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,9 +51,8 @@ abstract public class Simulation {
         emptyCells = findMatches(EMPTY);
     }
 
-    public void setVisualization(Timeline animation, Group group, int delay, int windowSize, String language){
-        myVisualization = new Visualization(animation, group, this, windowSize, delay, language);
-        myVisualization.setUpRectangles();
+    public void setVisualization(Timeline animation, Group group, Stage stage, int delay, int windowSize, String language){
+        myVisualization = new Visualization(animation, group, this, stage, windowSize, delay, language);
     }
 
 
