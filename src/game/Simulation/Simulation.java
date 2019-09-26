@@ -59,8 +59,8 @@ abstract public class Simulation {
         startAnimation(myDelay);
     }
 
-    public void setVisualization(Timeline animation, Group group, Stage stage, int windowSize, String language){
-        myVisualization = new Visualization(animation, group, this, stage, windowSize, language);
+    public void setVisualization(Group group, Stage stage, int windowSize, String language){
+        myVisualization = new Visualization(group, this, stage, windowSize, language);
     }
 
     public Timeline getAnimation(){

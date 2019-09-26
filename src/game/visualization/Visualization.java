@@ -25,14 +25,12 @@ public class Visualization{
     private final int CELL_HEIGHT;
     private Color[] colorList;
     private ResourceBundle myResources;
-    private Timeline myAnimation;
     private Group myGroup;
     private MenuHandler myMenuHandler;
     private GridHandler myGridHandler;
     private Simulation mySim;
     
-    public Visualization(Timeline animation, Group group, Simulation sim, Stage stage, int windowDimension, String language){
-        myAnimation = animation;
+    public Visualization(Group group, Simulation sim, Stage stage, int windowDimension, String language){
         myGroup = group;
         myGroup.getChildren().clear();
         mySim = sim;
@@ -45,7 +43,7 @@ public class Visualization{
         colorList[1] = Color.RED;
         colorList[2] = Color.YELLOW;
         myResources = ResourceBundle.getBundle(language);
-        myMenuHandler = new MenuHandler(myGroup, mySim, WINDOW_SIZE, stage, myAnimation, language);
+        myMenuHandler = new MenuHandler(myGroup, mySim, WINDOW_SIZE, stage, language);
         myGridHandler = new GridHandler(mySim, myGroup, WINDOW_SIZE);
     }
 

@@ -16,7 +16,6 @@ public class MenuHandler {
     private Group myGroup;
     private Simulation mySim;
     private Stage myStage;
-    private Timeline myAnimation;
     private String myLanguage;
     private final int MENU_HEIGHT;
     private final int WINDOW_SIZE;
@@ -33,11 +32,10 @@ public class MenuHandler {
     private final int FASTER_X;
     private final int SLOWER_X;
 
-    public MenuHandler(Group group, Simulation sim, int size, Stage stage, Timeline animation, String language){
+    public MenuHandler(Group group, Simulation sim, int size, Stage stage, String language){
         myGroup = group;
         mySim = sim;
         myStage = stage;
-        myAnimation = animation;
         myLanguage = language;
         WINDOW_SIZE = size;
         MENU_HEIGHT = WINDOW_SIZE/4;
