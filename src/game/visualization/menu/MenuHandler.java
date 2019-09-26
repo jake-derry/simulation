@@ -85,15 +85,15 @@ public class MenuHandler {
      */
     private void  addMenuButtonsToDisplayGroup(){
         ResourceBundle myResources = ResourceBundle.getBundle(myLanguage);
-        LoadNewSimButton newSimButton = new LoadNewSimButton(NEW_SIM_X, BUTTON_Y, BUTTON_HEIGHT, myResources, myStage, myGroup, mySim, myAnimation, WINDOW_SIZE, myLanguage);
+        LoadNewSimButton newSimButton = new LoadNewSimButton(NEW_SIM_X, BUTTON_Y, BUTTON_HEIGHT, myResources, myStage, myGroup, mySim, WINDOW_SIZE, myLanguage);
         myGroup.getChildren().add(newSimButton.getButton());
         PausePlayButton pausePlayButton = new PausePlayButton(PAUSE_PLAY_X, BUTTON_Y, BUTTON_HEIGHT, myResources, mySim);
         myGroup.getChildren().add(pausePlayButton.getButton());
         StepButton stepButton = new StepButton(STEP_X, BUTTON_Y, BUTTON_HEIGHT, myResources, mySim);
         myGroup.getChildren().add(stepButton.getButton());
-        SpeedControlButton fasterButton = new SpeedControlButton(FASTER_X, BUTTON_Y, BUTTON_HEIGHT, myResources, mySim, myAnimation, 0.5);
+        SpeedControlButton fasterButton = new SpeedControlButton(FASTER_X, BUTTON_Y, BUTTON_HEIGHT, myResources, mySim, 0.5);
         myGroup.getChildren().add(fasterButton.getButton());
-        SpeedControlButton slowerButton = new SpeedControlButton(SLOWER_X, BUTTON_Y, BUTTON_HEIGHT, myResources, mySim, myAnimation, 2.0);
+        SpeedControlButton slowerButton = new SpeedControlButton(SLOWER_X, BUTTON_Y, BUTTON_HEIGHT, myResources, mySim, 2.0);
         myGroup.getChildren().add(slowerButton.getButton());
     }
 
