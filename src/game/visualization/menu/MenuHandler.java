@@ -5,7 +5,6 @@ import game.visualization.menu.buttons.LoadNewSimButton;
 import game.visualization.menu.buttons.PausePlayButton;
 import game.visualization.menu.buttons.SpeedControlButton;
 import game.visualization.menu.buttons.StepButton;
-import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
