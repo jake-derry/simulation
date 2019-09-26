@@ -2,9 +2,11 @@ package game.Simulation;
 
 import game.Simulation.Cell.Cell;
 import game.visualization.Visualization;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +38,8 @@ abstract public class Simulation {
     private boolean running;
     private Visualization myVisualization;
     private String simTitle;
-    private int MILLISECOND_DELAY;
+    private int myDelay;
+    private Timeline myAnimation;
 
     private List<Cell> emptyCells;
 
@@ -51,11 +54,27 @@ abstract public class Simulation {
         grid = initialGrid;
         emptyCells = findMatches(EMPTY);
         //TODO CHANGE THIS
-        MILLISECOND_DELAY = 500;
+        myDelay = 500;
+        myAnimation = new Timeline();
+        startAnimation(myDelay);
     }
 
     public void setVisualization(Timeline animation, Group group, Stage stage, int windowSize, String language){
         myVisualization = new Visualization(animation, group, this, stage, windowSize, language);
+    }
+
+    public Timeline getAnimation(){
+        return myAnimation;
+    }
+
+    public void startAnimation(int delay){
+        myDelay = delay;
+        myAnimation.pause();
+        myAnimation = new Timeline();
+        var frame = new KeyFrame(Duration.millis(delay), e -> step());
+        myAnimation.setCycleCount(Timeline.INDEFINITE);
+        myAnimation.getKeyFrames().add(frame);
+        myAnimation.play();
     }
 
 
@@ -94,12 +113,8 @@ abstract public class Simulation {
         return running;
     }
 
-    public int getMILLISECOND_DELAY(){
-        return MILLISECOND_DELAY;
-    }
-
-    public void setMILLISECOND_DELAY(int delay){
-        MILLISECOND_DELAY = delay;
+    public int getDelay(){
+        return myDelay;
     }
 
     /**
