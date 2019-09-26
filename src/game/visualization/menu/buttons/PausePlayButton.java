@@ -1,11 +1,9 @@
-package game;
+package game.visualization.menu.buttons;
 
 import game.Simulation.Simulation;
-import javafx.animation.Timeline;
+import game.visualization.menu.buttons.MenuButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.stage.Stage;
 
 import java.util.ResourceBundle;
 

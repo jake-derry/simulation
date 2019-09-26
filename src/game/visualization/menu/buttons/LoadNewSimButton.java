@@ -1,5 +1,6 @@
-package game;
+package game.visualization.menu.buttons;
 
+import game.CAApp;
 import game.Configurer.Configurer;
 import game.Simulation.Simulation;
 import javafx.animation.Timeline;
@@ -12,7 +13,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.ResourceBundle;
 
-public class LoadNewSimButton extends MenuButton{
+public class LoadNewSimButton extends MenuButton {
     private Stage myStage;
     private Simulation mySim;
     private int WINDOW_SIZE;

@@ -1,19 +1,16 @@
-package game;
+package game.visualization.menu.buttons;
 
-import game.Configurer.Configurer;
 import game.Simulation.Simulation;
+import game.visualization.menu.buttons.MenuButton;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.ResourceBundle;
 
-public class SpeedControlButton extends MenuButton{
+public class SpeedControlButton extends MenuButton {
     private double multiplier;
     private Timeline myAnimation;
     private Simulation mySim;

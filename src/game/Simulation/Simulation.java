@@ -1,7 +1,7 @@
 package game.Simulation;
 
 import game.Simulation.Cell.Cell;
-import game.Visualization;
+import game.visualization.Visualization;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.stage.Stage;

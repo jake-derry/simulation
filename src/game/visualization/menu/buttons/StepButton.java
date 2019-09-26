@@ -1,4 +1,4 @@
-package game;
+package game.visualization.menu.buttons;
 
 import game.Simulation.Simulation;
 import javafx.event.ActionEvent;
@@ -6,7 +6,7 @@ import javafx.event.EventHandler;
 
 import java.util.ResourceBundle;
 
-public class StepButton extends MenuButton{
+public class StepButton extends MenuButton {
 
     private Simulation mySim;
     public StepButton(int xPos, int yPos, int height, ResourceBundle resources, Simulation sim){

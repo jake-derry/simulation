@@ -1,7 +1,8 @@
-package game;
+package game.visualization;
 
 import game.Simulation.Cell.Cell;
 import game.Simulation.Simulation;
+import game.visualization.menu.MenuHandler;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;

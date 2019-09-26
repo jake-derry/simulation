@@ -1,22 +1,13 @@
 package game;
 
 import game.Configurer.Configurer;
-import game.Simulation.Cell.Cell;
 import game.Simulation.Simulation;
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import java.io.File;
-import java.util.ArrayList;
 
 /**
  * CAApp: Main JavaFX application. Calls Configurer to read in XML file and create simulation of proper type, Simulation to calculate and step through
@@ -37,15 +28,7 @@ public class CAApp extends Application {
     private Group displayGroup;
     private Timeline myAnimation;
     private static Simulation mySim;
-    private DisplayHandler myDisplayHandler;
 
-    private Button myNewSimButton;
-    private Button myPauseResumeButton;
-    private Button myStepButton;
-    private Button myFasterButton;
-    private Button mySlowerButton;
-
-    private boolean simRunning;
     private Stage myStage;
 
     /**
@@ -64,8 +47,6 @@ public class CAApp extends Application {
         myStage.setTitle(mySim.getSimTitle());
         myStage.show();
     }
-
-
 
     public static void setSim(Simulation sim){
         mySim = sim;

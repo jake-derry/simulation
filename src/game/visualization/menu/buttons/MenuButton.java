@@ -1,4 +1,4 @@
-package game;
+package game.visualization.menu.buttons;
 
 import javafx.scene.control.Button;
 
