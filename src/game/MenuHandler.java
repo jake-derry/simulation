@@ -91,6 +91,8 @@ public class MenuHandler {
         myGroup.getChildren().add(newSimButton.getButton());
         PausePlayButton pausePlayButton = new PausePlayButton(PAUSE_PLAY_X, BUTTON_Y, BUTTON_HEIGHT, myResources, mySim);
         myGroup.getChildren().add(pausePlayButton.getButton());
+        StepButton stepButton = new StepButton(STEP_X, BUTTON_Y, BUTTON_HEIGHT, myResources, mySim);
+        myGroup.getChildren().add(stepButton.getButton());
     }
 
 }

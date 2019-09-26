@@ -95,8 +95,4 @@ public class Visualization{
         myAnimation.getKeyFrames().add(frame);
         myAnimation.play();
     }
-
-    public void setSimRunning(boolean bool){
-        simRunning = bool;
-    }
 }

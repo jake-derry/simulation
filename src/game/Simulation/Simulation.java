@@ -83,6 +83,14 @@ abstract public class Simulation {
         running = true;
     }
 
+    public void setSimRunning(boolean bool){
+        running = bool;
+    }
+
+    public boolean getSimRunning(){
+        return running;
+    }
+
     /**
      * Gets the simTitle for a sim
      */

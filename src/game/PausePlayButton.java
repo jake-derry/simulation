@@ -30,14 +30,12 @@ public class PausePlayButton extends MenuButton {
         myButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(final ActionEvent e) {
-                if (simRunning) {
+                if (mySim.getSimRunning()) {
                     mySim.pause();
                     getButton().setText("Play");
-                    simRunning = false;
                 } else {
                     mySim.play();
                     getButton().setText("Pause");
-                    simRunning = true;
                 }
             }
         });
