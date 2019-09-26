@@ -3,6 +3,8 @@ package game.Simulation;
 
 import game.Simulation.Cell.Cell;
 
+import game.Simulation.State;
+
 /**
  * This simulation runs Conway's Game of Life which
  * has rules that simulate life. Only able to run a
@@ -42,7 +44,7 @@ public class GameOfLifeSimulation extends Simulation {
                 return LIVE;
             }
             else {
-                return EMPTY;
+                return State.EMPTY;
             }
         }
 
