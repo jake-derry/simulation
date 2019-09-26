@@ -1,5 +1,7 @@
 package game.Simulation.Cell;
 
+import game.Simulation.State;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,8 +18,8 @@ import java.util.List;
  */
 abstract public class Cell {
 
-    private int myState;
-    private int myNextState;
+    private State myState;
+    private State myNextState;
     private Iterator<Cell> myNeighbors;
 
     /**
@@ -26,7 +28,7 @@ abstract public class Cell {
      *
      * @param state         Initial state of the Cell
      */
-    public Cell(int state, Iterator<Cell> neighbors) {
+    public Cell(State state, Iterator<Cell> neighbors) {
         myState = state;
         myNeighbors = neighbors;
     }
@@ -53,7 +55,7 @@ abstract public class Cell {
      *
      * @return          the cell's state
      */
-    public int getState() {
+    public State getState() {
         return myState;
     }
 
@@ -76,7 +78,7 @@ abstract public class Cell {
      *
      * @param state     the cell's new state
      */
-    public void setState(int state) {
+    public void setState(State state) {
         setNextState(state);
         stepState();
     }
@@ -89,7 +91,7 @@ abstract public class Cell {
      *
      * @param next  sets the next state
      */
-    public void setNextState(int next) {
+    public void setNextState(State next) {
         myNextState = next;
     }
 

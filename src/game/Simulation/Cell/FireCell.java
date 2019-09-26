@@ -1,19 +1,20 @@
 package game.Simulation.Cell;
 
+import game.Simulation.State;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
+import static game.Simulation.State.*;
+
 public class FireCell extends Cell {
-    private static final int EMPTY = 0;
-    private static final int BURNING = 1;
-    private static final int TREE = 2;
 
     private double myProbCatch;
     private Random random;
-    private Map<Integer, Integer> countMap;
+    private Map<State, Integer> countMap;
 
-    public FireCell(int state, Iterator<Cell> neighborIterator, double probCatch) {
+    public FireCell(State state, Iterator<Cell> neighborIterator, double probCatch) {
         super(state, neighborIterator);
         myProbCatch = probCatch;
         random = new Random();
@@ -23,7 +24,7 @@ public class FireCell extends Cell {
     @Override
     public void updateNext() {
         updateCountMap();
-        int nextState;
+        State nextState;
         switch (getState()) {
             case (EMPTY) :
             case (BURNING) :{
