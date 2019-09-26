@@ -2,6 +2,9 @@ package game.Simulation;
 
 import game.Simulation.Cell.Cell;
 import game.Visualization;
+import javafx.animation.Timeline;
+import javafx.scene.Group;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,16 +42,19 @@ abstract public class Simulation {
      * Initializes a simulation running.
      * @param title         Title of the simulation
      * @param initialGrid   Initial grid of the simulation
-     * @param windowSize    Window size of the simulation
      */
-    public Simulation(String title, Cell[][] initialGrid, int windowSize){
+    public Simulation(String title, Cell[][] initialGrid){
         running = true;
         simTitle = title;
         grid = initialGrid;
         emptyCells = findMatches(EMPTY);
-        myVisualization = new Visualization(initialGrid, windowSize);
+    }
+
+    public void setVisualization(Timeline animation, Group group, int delay, int windowSize, String language){
+        myVisualization = new Visualization(animation, group, this, windowSize, delay, language);
         myVisualization.setUpRectangles();
     }
+
 
     /**
      * Calls the update() method when the running

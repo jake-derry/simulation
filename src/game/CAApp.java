@@ -32,10 +32,11 @@ public class CAApp extends Application {
     private static final Color BACKGROUND_COLOR = Color.LIGHTGRAY;
     private static int FRAMES_PER_SECOND = 3;
     private static int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private String language = "English";
 
     private Group displayGroup;
     private Timeline myAnimation;
-    private Simulation mySim;
+    private static Simulation mySim;
     private DisplayHandler myDisplayHandler;
 
     private Button myNewSimButton;
@@ -58,7 +59,8 @@ public class CAApp extends Application {
         myAnimation = new Timeline();
         myDisplayHandler = new DisplayHandler(WINDOW_SIZE);
 
-        mySim = Configurer.getSimulation("Segregation.xml", WINDOW_SIZE);
+        mySim = Configurer.getSimulation("Segregation.xml", WINDOW_SIZE, language);
+        mySim.setVisualization(myAnimation, displayGroup, MILLISECOND_DELAY, WINDOW_SIZE, language);
         myStage.setScene(new Scene(displayGroup, WINDOW_SIZE, WINDOW_SIZE, BACKGROUND_COLOR));
         myStage.setTitle(mySim.getSimTitle());
         myStage.show();
@@ -68,7 +70,7 @@ public class CAApp extends Application {
     /**
      * startApp: Sets up the display group (with the help of the display handler) and starts the animation timeline
      */
-    private void startApp(){
+    public void startApp(){
         simRunning = true;
         setUpDisplayGroup();
         startAnimation();
@@ -120,7 +122,8 @@ public class CAApp extends Application {
             public void handle(final ActionEvent e) {
                 File file = fileChooser.showOpenDialog(myStage);
                 if (file != null) {
-                    mySim = Configurer.getSimulation(file.getName(), WINDOW_SIZE);
+                    mySim = Configurer.getSimulation(file.getName(), WINDOW_SIZE, language);
+                    mySim.setVisualization(myAnimation, displayGroup, MILLISECOND_DELAY, WINDOW_SIZE, language);
                     startApp();
                 }
             }
@@ -200,6 +203,10 @@ public class CAApp extends Application {
         myAnimation.setCycleCount(Timeline.INDEFINITE);
         myAnimation.getKeyFrames().add(frame);
         myAnimation.play();
+    }
+
+    public static void setSim(Simulation sim){
+        mySim = sim;
     }
 
     /**

@@ -49,7 +49,7 @@ public class Configurer{
      * @param myFile XML to be read
      * @return Simulation created based on XML file
      */
-    public static Simulation getSimulation(String myFile, int WindowSize){
+    public static Simulation getSimulation(String myFile, int WindowSize, String language){
         Document simDoc = readFile(myFile);
         Element mainElement = simDoc.getDocumentElement();
         int totalColumns = getFirstElementInteger(mainElement,  COLUMN_TAG);
@@ -60,21 +60,21 @@ public class Configurer{
         initializeDefaultCells(totalRows, totalColumns, defaultState, activeCells, myCellArray);
         switch (getFirstElementString(mainElement, TYPE_TAG)){
             case LIFE:
-                return new GameOfLifeSimulation(LIFE, myCellArray, WindowSize);
+                return new GameOfLifeSimulation(LIFE, myCellArray);
             case SEGREGATION:
                 double satisfaction = getFirstElementInteger(mainElement,  SATISFACTION_PERCENT);
-                return new SegregationSimulation(SEGREGATION, myCellArray, WindowSize, satisfaction/100);
+                return new SegregationSimulation(SEGREGATION, myCellArray, satisfaction/100);
             case PREDATOR_PREY:
                 int breedTime = getFirstElementInteger(mainElement, BREED_TIME);
                 int initialEnergy = getFirstElementInteger(mainElement, PREDATOR_INITIAL_ENERGY);
                 int energyThreshold = getFirstElementInteger(mainElement, PREDATOR_ENERGY_THRESHOLD);
-                return new PredatorPreySimulation(PREDATOR_PREY, myCellArray, WindowSize, breedTime,
+                return new PredatorPreySimulation(PREDATOR_PREY, myCellArray, breedTime,
                         initialEnergy, energyThreshold);
             case FIRE:
                 double chance = getFirstElementInteger(mainElement,  CATCH_PERCENT);
-                return new FireSimulation(FIRE, myCellArray, WindowSize, chance/100);
+                return new FireSimulation(FIRE, myCellArray, chance/100);
             case PERCOLATION:
-                return new PercolationSimulation(PERCOLATION, myCellArray, WindowSize);
+                return new PercolationSimulation(PERCOLATION, myCellArray);
 
         }
         return null;

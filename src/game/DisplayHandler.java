@@ -4,6 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 /**
  * DisplayHandler: create and position menu items (buttons, title text) for the CAApp window
@@ -75,8 +76,9 @@ public class DisplayHandler {
      * Assumptions- the functions of these buttons will be set in CAApp before adding them to the display group
      */
     public ArrayList<Button> makeMenuButtons(){
+        ResourceBundle myResources = ResourceBundle.getBundle("English");
         ArrayList<Button> menuButtons = new ArrayList<Button>();
-        menuButtons.add(makeButton("New Sim", NEW_SIM_X));
+        menuButtons.add(makeButton(myResources.getString("LoadNewSim"), NEW_SIM_X));
         menuButtons.add(makeButton("Pause", PAUSE_RESUME_X));
         menuButtons.add(makeButton("Step", STEP_X));
         menuButtons.add(makeButton("Slower", SLOWER_X));
