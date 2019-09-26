@@ -59,95 +59,13 @@ public class CAApp extends Application {
         myAnimation = new Timeline();
 
         mySim = Configurer.getSimulation("Segregation.xml", WINDOW_SIZE, language);
-        mySim.setVisualization(myAnimation, displayGroup, myStage, MILLISECOND_DELAY, WINDOW_SIZE, language);
+        mySim.setVisualization(myAnimation, displayGroup, myStage, WINDOW_SIZE, language);
         myStage.setScene(new Scene(displayGroup, WINDOW_SIZE, WINDOW_SIZE, BACKGROUND_COLOR));
         myStage.setTitle(mySim.getSimTitle());
         myStage.show();
-        startApp();
     }
 
-    /**
-     * startApp: Sets up the display group (with the help of the display handler) and starts the animation timeline
-     */
-    public void startApp(){
-        simRunning = true;
-        //setUpDisplayGroup();
-        startAnimation();
-    }
 
-    /**
-     * setPauseResumeHandler: Sets the specific button action for the Pause/Resume Button
-     * @return- event handler for Pause/Resume Button
-     */
-    private EventHandler<ActionEvent> setPauseResumeHandler(){
-        EventHandler<ActionEvent> handler = e -> {
-            if (simRunning) {
-                mySim.pause();
-                myPauseResumeButton.setText("Play");
-                simRunning = false;
-            } else {
-                mySim.play();
-                myPauseResumeButton.setText("Pause");
-                simRunning = true;
-            }
-        };
-        return handler;
-    }
-
-    /**
-     * setStepHandler: Sets the specific button action for the Step Button
-     * @return- event handler for Step Button
-     */
-    private EventHandler<ActionEvent> setStepHandler(){
-        EventHandler<ActionEvent> handler = e -> {
-            if (!simRunning){
-                mySim.play();
-                mySim.step();
-                mySim.pause();
-            }
-        };
-        return handler;
-    }
-
-    /**
-     * setSpeedHandler: Sets the specfic button action for the Simulation Speed Buttons
-     * @param multiplier- applying a multiplier > 1 to the MILLISECOND_DELAY decreases the framerate of the animation
-     *                  while applying a multiplier < 1 increases the framerate of the animation
-     * @return- event handler for Sim Speed Buttons
-     * Note: a check had to added in order to keep the speed from being increased to a point of crashing the app
-     */
-    private EventHandler<ActionEvent> setSpeedHandler(double multiplier){
-        EventHandler<ActionEvent> handler = e -> {
-            if (MILLISECOND_DELAY > 50 || multiplier > 1){
-                MILLISECOND_DELAY = (int) (multiplier*MILLISECOND_DELAY);
-                startAnimation();
-            }
-        };
-        return handler;
-    }
-
-    /**
-     * addCellsToDisplayGroup: adds cell rectangles to the group to be displayed
-     */
-    private void addCellsToDisplayGroup(){
-        for (Cell cellRow[] : mySim.getGrid()){
-            for (Cell cell : cellRow){
-                displayGroup.getChildren().add(cell.getRectangle());
-            }
-        }
-    }
-
-    /**
-     * startAnimation: stops the previously running animation and creates a new Timeline based on a perhaps updated MILLISECOND_DELAY
-     */
-    private void startAnimation(){
-        myAnimation.pause();
-        var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step());
-        myAnimation = new Timeline();
-        myAnimation.setCycleCount(Timeline.INDEFINITE);
-        myAnimation.getKeyFrames().add(frame);
-        myAnimation.play();
-    }
 
     public static void setSim(Simulation sim){
         mySim = sim;

@@ -18,10 +18,9 @@ public class LoadNewSimButton extends MenuButton{
     private int WINDOW_SIZE;
     private Group myGroup;
     private Timeline myAnimation;
-    private int MILLISECOND_DELAY;
     private String myLanguage;
 
-    public LoadNewSimButton(int xPos, int yPos, int height, ResourceBundle resources, Stage stage, Group group, Simulation sim, Timeline animation, int windowSize, int delay, String language){
+    public LoadNewSimButton(int xPos, int yPos, int height, ResourceBundle resources, Stage stage, Group group, Simulation sim, Timeline animation, int windowSize, String language){
         super(xPos, yPos, height, resources);
         myButton.setText(myResources.getString("LoadNewSim"));
         myStage = stage;
@@ -29,7 +28,6 @@ public class LoadNewSimButton extends MenuButton{
         myGroup = group;
         WINDOW_SIZE = windowSize;
         myAnimation = animation;
-        MILLISECOND_DELAY = delay;
         myLanguage = language;
         setButtonAction();
     }
@@ -43,7 +41,7 @@ public class LoadNewSimButton extends MenuButton{
                 File file = fileChooser.showOpenDialog(myStage);
                 if (file != null) {
                     mySim = Configurer.getSimulation(file.getName(), WINDOW_SIZE, myLanguage);
-                    mySim.setVisualization(myAnimation, myGroup, myStage, MILLISECOND_DELAY, WINDOW_SIZE, myLanguage);
+                    mySim.setVisualization(myAnimation, myGroup, myStage, WINDOW_SIZE, myLanguage);
                     CAApp.setSim(mySim);
                 }
             }

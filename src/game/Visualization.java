@@ -8,6 +8,7 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
 import java.util.ResourceBundle;
 
 /**
@@ -33,9 +34,8 @@ public class Visualization{
     private int myDelay;
     private boolean simRunning;
     
-    public Visualization(Timeline animation, Group group, Simulation sim, Stage stage, int windowDimension, int delay, String language){
+    public Visualization(Timeline animation, Group group, Simulation sim, Stage stage, int windowDimension, String language){
         myAnimation = animation;
-        startAnimation();
         myGroup = group;
         myGroup.getChildren().clear();
         mySim = sim;
@@ -48,10 +48,10 @@ public class Visualization{
         colorList[1] = Color.RED;
         colorList[2] = Color.YELLOW;
         myResources = ResourceBundle.getBundle(language);
-        myMenuHandler = new MenuHandler(myGroup, mySim, WINDOW_SIZE, stage, myAnimation, delay, language);
-        myGridHandler = new GridHandler(mySim, myGroup, WINDOW_SIZE);
-        myDelay = delay;
         simRunning = true;
+        startAnimation();
+        myMenuHandler = new MenuHandler(myGroup, mySim, WINDOW_SIZE, stage, myAnimation, language);
+        myGridHandler = new GridHandler(mySim, myGroup, WINDOW_SIZE);
     }
 
     /**
@@ -89,10 +89,11 @@ public class Visualization{
      */
     private void startAnimation(){
         myAnimation.pause();
-        var frame = new KeyFrame(Duration.millis(myDelay), e -> mySim.step());
+        var frame = new KeyFrame(Duration.millis(mySim.getMILLISECOND_DELAY()), e -> mySim.step());
         myAnimation = new Timeline();
         myAnimation.setCycleCount(Timeline.INDEFINITE);
         myAnimation.getKeyFrames().add(frame);
         myAnimation.play();
     }
+
 }

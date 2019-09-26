@@ -36,6 +36,7 @@ abstract public class Simulation {
     private boolean running;
     private Visualization myVisualization;
     private String simTitle;
+    private int MILLISECOND_DELAY;
 
     private List<Cell> emptyCells;
 
@@ -49,10 +50,12 @@ abstract public class Simulation {
         simTitle = title;
         grid = initialGrid;
         emptyCells = findMatches(EMPTY);
+        //TODO CHANGE THIS
+        MILLISECOND_DELAY = 500;
     }
 
-    public void setVisualization(Timeline animation, Group group, Stage stage, int delay, int windowSize, String language){
-        myVisualization = new Visualization(animation, group, this, stage, windowSize, delay, language);
+    public void setVisualization(Timeline animation, Group group, Stage stage, int windowSize, String language){
+        myVisualization = new Visualization(animation, group, this, stage, windowSize, language);
     }
 
 
@@ -89,6 +92,14 @@ abstract public class Simulation {
 
     public boolean getSimRunning(){
         return running;
+    }
+
+    public int getMILLISECOND_DELAY(){
+        return MILLISECOND_DELAY;
+    }
+
+    public void setMILLISECOND_DELAY(int delay){
+        MILLISECOND_DELAY = delay;
     }
 
     /**
