@@ -2,6 +2,9 @@ package game.Simulation;
 
 import game.Simulation.Cell.Cell;
 
+import static game.Simulation.State.EMPTY;
+import static game.Simulation.State.WATER;
+
 /**
  * This simulation runs a Percolation simulation which
  * has rules that simulate how water percolates through
@@ -34,15 +37,15 @@ public class PercolationSimulation extends Simulation {
     }
 
     private State percolate(int i, int j) {
-        int state = getCell(i, j).getState();
+        State state = getCell(i, j).getState();
         if (state != EMPTY) {
             return state;
         }
         return wetNeighbor(getEightNeighborStates(i, j));
     }
 
-    private State wetNeighbor(int[] neighbors) {
-        for (int neighbor : neighbors) {
+    private State wetNeighbor(State[] neighbors) {
+        for (State neighbor : neighbors) {
             if (neighbor == WATER) {
                 return WATER;
             }

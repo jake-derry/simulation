@@ -7,14 +7,14 @@ public enum State {
     // TODO: Fill in the state codes        JONAH
     EMPTY(null),
     LIVE(null),
-    WALL(),
-    WATER(),
-    PREDATOR(),
-    PREY(),
-    GROUP_A(),
-    GROUP_B(),
-    BURNING(),
-    TREE();
+    WALL(null),
+    WATER(null),
+    PREDATOR(null),
+    PREY(null),
+    GROUP_A(null),
+    GROUP_B(null),
+    BURNING(null),
+    TREE(null);
 
     private Map<String, State> stateMap = getStateMap();
     private String[] myStateCodes;

@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
+import game.Simulation.State;
+
 /**
  * This abstract class runs a simulation of any
  * type. This type changes how the simulation is
@@ -48,7 +50,7 @@ abstract public class Simulation implements Playable {
         running = true;
         simTitle = title;
         grid = initialGrid;
-        emptyCells = findMatches(EMPTY);
+        emptyCells = findMatches(State.EMPTY);
         //TODO CHANGE THIS
         MILLISECOND_DELAY = 500;
     }
@@ -167,7 +169,7 @@ abstract public class Simulation implements Playable {
             return grid[x][y];
         }
         catch (IndexOutOfBoundsException e) {
-            return new Cell(BEYOND_EDGE);
+            return new Cell(State.EMPTY);
         }
     }
 
@@ -225,25 +227,25 @@ abstract public class Simulation implements Playable {
         return neighbors;
     }
 
-    protected int[] getEightNeighborStates(int i, int j) {
+    protected State[] getEightNeighborStates(int i, int j) {
         List<Cell> neighbors = getEightNeighbors(i, j);
-        int[] neighborStates = new int[neighbors.size()];
+        State[] neighborStates = new State[neighbors.size()];
         for (int x = 0; x < neighbors.size(); x++) {
             neighborStates[x] = neighbors.get(x).getState();
         }
         return neighborStates;
     }
 
-    protected int[] getFourNeighborStates(int i, int j) {
+    protected State[] getFourNeighborStates(int i, int j) {
         List<Cell> neighbors = getFourNeighbors(i, j);
-        int[] neighborStates = new int[neighbors.size()];
+        State[] neighborStates = new State[neighbors.size()];
         for (int x = 0; x < neighbors.size(); x++) {
             neighborStates[x] = neighbors.get(x).getState();
         }
         return neighborStates;
     }
 
-    protected List<Cell> findMatches(int state) {
+    protected List<Cell> findMatches(State state) {
         List<Cell> matches = new ArrayList<>();
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {

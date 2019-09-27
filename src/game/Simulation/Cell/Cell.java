@@ -1,5 +1,6 @@
 package game.Simulation.Cell;
 
+import game.Simulation.State;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -55,7 +56,7 @@ public class Cell {
      *
      * @param next  sets the next state
      */
-    public void setNextState(int next) {
+    public void setNextState(State next) {
         myNextState = next;
     }
 
@@ -72,7 +73,7 @@ public class Cell {
      */
     public void stepState(Color[] palette) {
         myState = myNextState;
-        myRectangle.setFill(palette[myState]);
+        myRectangle.setFill(palette[myState.]);
     }
 
     /**

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static game.Simulation.State.EMPTY;
+
 /**
  * This simulation runs a Segregation simulation which
  * has rules that simulate how people group together.
@@ -58,7 +60,7 @@ public class SegregationSimulation extends Simulation {
 
     private void switchEmptyCell(Cell unsatisfiedCell) {
         Random random = new Random();
-        int switchState = unsatisfiedCell.getState();
+        State switchState = unsatisfiedCell.getState();
         int randomIndex = random.nextInt(getEmptyCells().size());
 
         Cell randomEmptyCell = getEmptyCells().get(randomIndex);
@@ -69,15 +71,15 @@ public class SegregationSimulation extends Simulation {
     }
 
     private boolean satisfied(int i, int j) {
-        int[] neighborStates = getEightNeighborStates(i, j);
+        State[] neighborStates = getEightNeighborStates(i, j);
         double percentSame = getSameStateNeighbors(neighborStates, getCell(i, j).getState()) /
                 (double) neighborStates.length;
         return percentSame >= satisfactionPercent;
     }
 
-    private int getSameStateNeighbors(int[] neighborStates, int state) {
+    private int getSameStateNeighbors(State[] neighborStates, State state) {
         int count = 0;
-        for (int neighborState: neighborStates) {
+        for (State neighborState: neighborStates) {
             if (neighborState == state) {
                 count++;
             }
