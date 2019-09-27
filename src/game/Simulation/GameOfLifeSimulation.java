@@ -3,7 +3,8 @@ package game.Simulation;
 
 import game.Simulation.Cell.Cell;
 
-import game.Simulation.State;
+import static game.Simulation.State.LIVE;
+import static game.Simulation.State.EMPTY;
 
 /**
  * This simulation runs Conway's Game of Life which
@@ -36,15 +37,15 @@ public class GameOfLifeSimulation extends Simulation {
     }
 
     private State nextState(int i, int j) {
-        int[] neighborStates = getEightNeighborStates(i, j);
+        State[] neighborStates = getEightNeighborStates(i, j);
         int count = countLiveNeighbors(neighborStates);
-        int state = getCell(i, j).getState();
+        State state = getCell(i, j).getState();
         if (state == EMPTY) {
             if (count == 3) {
                 return LIVE;
             }
             else {
-                return State.EMPTY;
+                return EMPTY;
             }
         }
 
@@ -58,9 +59,9 @@ public class GameOfLifeSimulation extends Simulation {
         }
     }
 
-    private int countLiveNeighbors(int[] neighborStates) {
+    private int countLiveNeighbors(State[] neighborStates) {
         int count = 0;
-        for (int neighborState : neighborStates) {
+        for (State neighborState : neighborStates) {
             if (neighborState == LIVE) count++;
         }
         return count;

@@ -44,8 +44,8 @@ public class FireSimulation extends Simulation {
     }
 
     private State spread(int i, int j) {
-        int[] neighbors = getFourNeighborStates(i, j);
-        int state = getCell(i, j).getState();
+        State[] neighbors = getFourNeighborStates(i, j);
+        State state = getCell(i, j).getState();
         if (state == TREE) {
             int burningNeighbors = burning(neighbors);
             return catchState(burningNeighbors);
@@ -66,9 +66,9 @@ public class FireSimulation extends Simulation {
         return TREE;
     }
 
-    private State burning(int[] neighbors) {
+    private int burning(State[] neighbors) {
         int count = 0;
-        for (int neighbor : neighbors) {
+        for (State neighbor : neighbors) {
             if (neighbor == BURNING) count++;
         }
         return count;
