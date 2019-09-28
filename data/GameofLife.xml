@@ -4,6 +4,7 @@
     <author> Jonah Knapp </author>
     <rows>21</rows>
     <columns>21</columns>
+    <highestState>1</highestState>
     <defaultState>0</defaultState>
     <activeCells>
         <cell>

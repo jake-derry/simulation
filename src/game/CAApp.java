@@ -36,7 +36,7 @@ public class CAApp extends Application {
         myStage = stage;
         displayGroup = new Group();
 
-        mySim = Configurer.getSimulation("Segregation.xml", WINDOW_SIZE, language);
+        mySim = Configurer.getSimulation("././GameofLife.xml");
         mySim.setVisualization(displayGroup, myStage, WINDOW_SIZE, language);
         myStage.setScene(new Scene(displayGroup, WINDOW_SIZE, WINDOW_SIZE, BACKGROUND_COLOR));
         myStage.setTitle(mySim.getSimTitle());

@@ -8,6 +8,7 @@
         <rows>100</rows>
         <columns>100</columns>
     </size>
+    <highestState>2</highestState>
     <defaultState>0</defaultState>
     <activeCells>
         <cell> <row>1</row> <col>50</col> <state>2</state> </cell>
