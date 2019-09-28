@@ -85,6 +85,13 @@ public class Configurer {
         return getSimulation(DEFAULT_SIM);
     }
 
+    public static Map<String, String> getStyling(String myStyleFile){
+        Document styleDoc = readFile(myStyleFile);
+        Element mainElement = styleDoc.getDocumentElement();
+        StylingLoader myStyling = new StylingLoader(mainElement);
+        return myStyling.getStylings();
+    }
+
     /**
      * Saving XML file:
      */
