@@ -69,6 +69,7 @@ these parameters, a default simulation file will be ran.
 name of the first node within the XML file. 
 * Type of Simulation: Ensures that the simulation type is supported.
 * Errors due to file type, such as the event that a non-XML file is chosen.
+
 #### XML File Format:
 * The required fields for all XML files are the following: type, author, rows, and columns. If the file does not contain
 any one of these fields, then the file reader will not succeed and will throw an error. In order to have a meaningful output, 

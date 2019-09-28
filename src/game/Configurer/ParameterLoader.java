@@ -3,6 +3,7 @@ package game.Configurer;
 import game.Configurer.ExceptionHandlers.ErrorThrow;
 import game.Configurer.ExceptionHandlers.XMLSimulationException;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.HashMap;
@@ -31,7 +32,7 @@ public class ParameterLoader {
     private static final int DEFAULT_PERCENTAGE = 50;
 
     private static final String BAD_DIMENSIONS = "Unsupported dimensions specified. Using default value of %s x %s.";
-    private static final String NOT_FOUND = "Parameter type %s not found";
+    private static final String NOT_FOUND = "Parameter type %s not found. Default value will be used.";
 
     private Element mainElement;
     private int totalRows;
@@ -58,7 +59,6 @@ public class ParameterLoader {
         if(totalRows < 0 || totalColumns < 0){
             totalRows = DEFAULT_DIMENSION;
             totalColumns = DEFAULT_DIMENSION;
-            new ErrorThrow(BAD_DIMENSIONS, DEFAULT_DIMENSION);
         }
         return new int[]{totalRows, totalColumns};
     }
@@ -117,16 +117,17 @@ public class ParameterLoader {
      * does not contain an integer, then a default integer value is used.
      */
     private Integer getFirstElementInteger(Element myElement, String TagName){
-        String myValue = myElement.getElementsByTagName(TagName).item(0).getTextContent();
+        Node myValue = myElement.getElementsByTagName(TagName).item(0);
         if(myValue == null){
-           throw new XMLSimulationException(NOT_FOUND, TagName);
+           new ErrorThrow(NOT_FOUND, TagName);
+           return DEFAULT_INT;
         }
         try{
-            int x = Integer.parseInt(myValue);
+            int x = Integer.parseInt(myValue.getTextContent());
             return x;
         } catch (Exception e){
             try{
-                int x = Integer.parseInt(myValue.replaceAll("\\s+", ""));
+                int x = Integer.parseInt(myValue.getTextContent().replaceAll("\\s+", ""));
                 return x;
             } catch (Exception e2){
                 new ErrorThrow(e2.getMessage());
