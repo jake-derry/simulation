@@ -110,7 +110,7 @@ public final class Configurer{
             int myRow = getFirstElementInteger(myCell, CELL_ROW_TAG);
             int myColumn = getFirstElementInteger(myCell, CELL_COLUMN_TAG);
             int myState = getFirstElementInteger(myCell, CELL_STATE_TAG);
-            myArray[myRow-1][myColumn-1] = new Cell(myState);
+            myArray[myRow-1][myColumn-1] = new Cell();
             activeCells.add((myRow-1) * totalCols + myColumn-1);
         }
         return activeCells;

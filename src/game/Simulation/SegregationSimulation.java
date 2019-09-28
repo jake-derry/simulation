@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Random;
 
 import static game.Simulation.State.EMPTY;
+import static game.Simulation.State.GROUP_A;
+import static game.Simulation.State.GROUP_B;
 
 /**
  * This simulation runs a Segregation simulation which

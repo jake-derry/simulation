@@ -1,6 +1,8 @@
 package game.Simulation;
 
 import game.Simulation.Cell.Cell;
+import static game.Simulation.State.EMPTY;
+import static game.Simulation.State.WATER;
 
 import static game.Simulation.State.EMPTY;
 import static game.Simulation.State.WATER;

@@ -73,7 +73,7 @@ public class Cell {
      */
     public void stepState(Color[] palette) {
         myState = myNextState;
-        myRectangle.setFill(palette[myState.]);
+        //myRectangle.setFill(palette[myState]);
     }
 
     /**
