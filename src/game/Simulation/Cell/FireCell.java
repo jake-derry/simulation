@@ -13,8 +13,8 @@ public class FireCell extends Cell {
     private double myProbCatch;
     private Random random;
 
-    public FireCell(State state, Iterator<Cell> neighborIterator, double probCatch) {
-        super(state, neighborIterator);
+    public FireCell(State state, double probCatch) {
+        super(state);
         myProbCatch = probCatch;
         random = new Random();
     }

@@ -29,10 +29,13 @@ abstract public class Cell {
      *
      * @param state         Initial state of the Cell
      */
-    public Cell(State state, Iterator<Cell> neighbors) {
+    public Cell(State state) {
         myState = state;
-        myNeighbors = neighbors;
 
+    }
+
+    public void setNeighbors(Iterator<Cell> neighbors) {
+        myNeighbors = neighbors;
     }
 
     /**

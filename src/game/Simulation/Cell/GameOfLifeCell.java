@@ -14,10 +14,9 @@ public class GameOfLifeCell extends Cell {
      * cell.
      *
      * @param state     Initial state of the Cell
-     * @param neighbors
      */
-    public GameOfLifeCell(State state, Iterator<Cell> neighbors) {
-        super(state, neighbors);
+    public GameOfLifeCell(State state) {
+        super(state);
     }
 
     @Override
