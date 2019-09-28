@@ -57,7 +57,8 @@ The following errors are specifically checked for when reading an XML file. If t
 invalid type, then default parameters will be assigned for each of these. 
 * Cell Array Parameters: Ensures that the cell array has valid dimensions. If either 
 of the dimensions are not specified correctly (not an integer or is negative), the 
-default dimension will be set for both # of columns and # of rows. 
+default dimension will be set for both # of columns and # of rows. For integer entries, spaces in or 
+around the entry will not affect the ability for it to be read. 
 * Active Cell Parameters: Ensures that the cell states are valid, based on the 
 type of parameter that is input. Also ensures that each of the cell positions are 
 valid, given the dimensions of the grid given above. 

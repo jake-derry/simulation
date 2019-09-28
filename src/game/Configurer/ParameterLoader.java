@@ -118,19 +118,16 @@ public class ParameterLoader {
                 .boxed().collect(Collectors.toList());
         for(int i = 0 ; i < nList.getLength(); i++){
             Element myDistribution = (Element) nList.item(i);
-            int totalCells;
-            int myState;
+            int myState = getFirstElementInteger(myDistribution, CELL_STATE_TAG);
             switch (distributionType){
                 case RANDOM_DISTRIBUTION:
-                    totalCells = getFirstElementInteger(myDistribution, DISTRIBUTION_VALUE_TAG);
-                    myState = getFirstElementInteger(myDistribution, CELL_STATE_TAG);
-                    getRandomCells(activeCells, openCells, totalCells, myState);
+                    getRandomCells(activeCells, openCells, myState,
+                            getFirstElementInteger(myDistribution, DISTRIBUTION_VALUE_TAG));
                     break;
                 case CONCENTRATION_DISTRIBUTION:
-                    totalCells = totalRows * totalColumns *
+                    int totalCells = totalRows * totalColumns *
                             getFirstElementInteger(myDistribution, DISTRIBUTION_VALUE_TAG) / 100;
-                    myState = getFirstElementInteger(myDistribution, CELL_STATE_TAG);
-                    getRandomCells(activeCells, openCells, totalCells, myState);
+                    getRandomCells(activeCells, openCells, myState, totalCells);
                     break;
                 default:
                     getSpecificCells(myDistribution, activeCells);
@@ -158,10 +155,10 @@ public class ParameterLoader {
      * Method used to generate a random distribution of cells, based on either the concentration of
      * each state or the type of
      */
-    private void getRandomCells(Map<Integer, Integer> activeCells, List<Integer> openCells, int totalCells, int state) {
+    private void getRandomCells(Map<Integer, Integer> activeCells, List<Integer> openCells, int state, int totalCells) {
         int total = 0;
         System.out.println(totalCells);
-        if(openCells.size() > 0){
+        if(openCells.size() > 0 && state >= 0 && state <= highestState && totalCells > 0){
             for(int i = 0; i < totalCells; i++){
                 total++;
                 int randomCell = (int)(Math.random() * openCells.size());

@@ -13,7 +13,7 @@
     <cellDistribution>concentration</cellDistribution>
     <activeCells>
         <concentration>
-            <state>1</state> <value>1</value>
+            <state>1 </state> <value> 1 </value>
         </concentration>
         <random>
             <state>1</state> <value>10</value>
