@@ -1,6 +1,11 @@
 package game.Simulation;
 
 import game.Simulation.Cell.Cell;
+import static game.Simulation.State.EMPTY;
+import static game.Simulation.State.WATER;
+
+import static game.Simulation.State.EMPTY;
+import static game.Simulation.State.WATER;
 
 /**
  * This simulation runs a Percolation simulation which
@@ -16,8 +21,6 @@ import game.Simulation.Cell.Cell;
  * @author Jake Derry
  */
 public class PercolationSimulation extends Simulation {
-    private static final int WALL = 1;
-    private static final int WATER = 2;
 
     /**
      * Initializes a percolation simulation
@@ -35,16 +38,16 @@ public class PercolationSimulation extends Simulation {
         }
     }
 
-    private int percolate(int i, int j) {
-        int state = getCell(i, j).getState();
+    private State percolate(int i, int j) {
+        State state = getCell(i, j).getState();
         if (state != EMPTY) {
             return state;
         }
         return wetNeighbor(getEightNeighborStates(i, j));
     }
 
-    private int wetNeighbor(int[] neighbors) {
-        for (int neighbor : neighbors) {
+    private State wetNeighbor(State[] neighbors) {
+        for (State neighbor : neighbors) {
             if (neighbor == WATER) {
                 return WATER;
             }

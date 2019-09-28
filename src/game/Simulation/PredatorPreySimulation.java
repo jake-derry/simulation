@@ -5,6 +5,10 @@ import util.ArrayUtils;
 import java.util.List;
 import java.util.Random;
 
+import static game.Simulation.State.PREDATOR;
+import static game.Simulation.State.PREY;
+import static game.Simulation.State.EMPTY;
+
 /**
  * This simulation runs a Predator-Prey Simulation which
  * has rules that simulate a small food chain. Only able
@@ -19,8 +23,6 @@ import java.util.Random;
  */
 public class PredatorPreySimulation extends Simulation {
     private static final boolean WRAP_AROUND = true;
-    private static final int PREDATOR = 1;
-    private static final int PREY = 2;
 
     private static final int NO_ENERGY = -1;
 
@@ -77,19 +79,19 @@ public class PredatorPreySimulation extends Simulation {
     }
 
     private void nextState(int i, int j) {
-        int state = getCell(i, j, WRAP_AROUND).getState();
+        State state = getCell(i, j, WRAP_AROUND).getState();
         if (state == PREY) getCell(i, j, WRAP_AROUND).setNextState(run(i, j));
         else if (state == PREDATOR) getCell(i, j, WRAP_AROUND).setNextState(hunt(i, j));
     }
 
-    private int run(int i, int j) {
+    private State run(int i, int j) {
         Random random = new Random();
         int emptyCount = ArrayUtils.countIf(getEightNeighborStates(i, j), EMPTY);
         if (emptyCount > 0) {
             int randomEmptyIndex = random.nextInt(emptyCount);
 
             List<Cell> neighbors = getEightNeighbors(i, j);
-            int[] acceptableStates = {EMPTY};
+            State[] acceptableStates = {EMPTY};
             Cell newPreyLocation = neighbors.get(
                     findOccurrence(neighbors, randomEmptyIndex, acceptableStates)
             );
@@ -115,10 +117,10 @@ public class PredatorPreySimulation extends Simulation {
         return PREY;
     }
 
-    private int findOccurrence(List<Cell> neighbors, int index, int[] acceptableStates) {
+    private int findOccurrence(List<Cell> neighbors, int index, State[] acceptableStates) {
         int count = 0;
         for (int x = 0; x < neighbors.size(); x++) {
-            for (int state : acceptableStates) {
+            for (State state : acceptableStates) {
                 if (neighbors.get(x).getState() == state) {
                     if (count < index) {
                         count++;
@@ -132,7 +134,7 @@ public class PredatorPreySimulation extends Simulation {
         return -1;
     }
 
-    private int hunt(int i, int j) {
+    private State hunt(int i, int j) {
         Random random = new Random();
 
         int emptyCount = ArrayUtils.countIf(getEightNeighborStates(i, j), EMPTY);
@@ -149,7 +151,7 @@ public class PredatorPreySimulation extends Simulation {
             int randomIndex = random.nextInt(availableCellCount);
 
             List<Cell> neighbors = getEightNeighbors(i, j);
-            int[] acceptableStates = {EMPTY, PREY};
+            State[] acceptableStates = {EMPTY, PREY};
             Cell newPredatorLocation = neighbors.get(
                     findOccurrence(neighbors, randomIndex, acceptableStates)
             );
@@ -178,7 +180,7 @@ public class PredatorPreySimulation extends Simulation {
                 energyChange(newPredatorChildLocation.getState());
     }
 
-    private int energyChange(int state) {
+    private int energyChange(State state) {
         if (state == EMPTY) return -1;
         return 1;
     }

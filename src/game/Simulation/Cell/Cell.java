@@ -1,7 +1,6 @@
 package game.Simulation.Cell;
 
 import game.Simulation.State;
-
 import java.util.Iterator;
 import java.util.List;
 
@@ -31,6 +30,7 @@ abstract public class Cell {
     public Cell(State state, Iterator<Cell> neighbors) {
         myState = state;
         myNeighbors = neighbors;
+
     }
 
     /**

@@ -19,7 +19,7 @@ import org.w3c.dom.NodeList;
  * The purpose of the Configurer class is to take an XML file as an input and return a simulation
  * as its output. This simulation will be based on the contents of the XML file.
  */
-public class Configurer{
+public final class Configurer{
     //Tags used within XML file
     private static final String COLUMN_TAG = "columns";
     private static final String ROW_TAG = "rows";
@@ -90,7 +90,7 @@ public class Configurer{
             return simDocumentBuilder.parse(simFile);
         } catch (Exception e) {
             errorAlert(e.getMessage());
-    }
+        }
         return null;
     }
 
@@ -110,7 +110,7 @@ public class Configurer{
             int myRow = getFirstElementInteger(myCell, CELL_ROW_TAG);
             int myColumn = getFirstElementInteger(myCell, CELL_COLUMN_TAG);
             int myState = getFirstElementInteger(myCell, CELL_STATE_TAG);
-            myArray[myRow-1][myColumn-1] = new Cell(myState);
+            myArray[myRow-1][myColumn-1] = new Cell();
             activeCells.add((myRow-1) * totalCols + myColumn-1);
         }
         return activeCells;
