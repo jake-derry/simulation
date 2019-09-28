@@ -45,6 +45,7 @@ public class ParameterLoader {
         totalColumns = getFirstElementInteger(mainElement, COLUMN_TAG);
         simType = getFirstElementString(TYPE_TAG);
         highestState = getFirstElementInteger(mainElement, MAX_STATE_TAG);
+        if(highestState == -1){ highestState = 1;}
     }
 
     /**Checks the validity of dimensions supplied by the XML file. If the dimensions are not supported,

@@ -49,7 +49,7 @@ public class Configurer {
     private static final String PREDATOR_ENERGY_THRESHOLD = "energyThreshold";
 
     //Default Simulation File
-    private static final String DEFAULT_SIM = "Fire.xml";
+    private static final String DEFAULT_SIM = "././Fire.xml";
 
     //XML Parsing Errors
     private static final String ERROR_DEFAULT = "XML type \"%s\" not supported. Loading Default File.";
@@ -91,7 +91,7 @@ public class Configurer {
 
         }
         new ErrorThrow(SIMULATION_ERROR_DEFAULT);
-        return getSimulation("././Fire.xml");
+        return getSimulation(DEFAULT_SIM);
     }
 
     /**
