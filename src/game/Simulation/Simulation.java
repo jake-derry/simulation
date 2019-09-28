@@ -46,7 +46,7 @@ abstract public class Simulation implements Playable {
      * @param title         Title of the simulation
      * @param initialGrid   Initial grid of the simulation
      */
-    public Simulation(String title, Cell[][] initialGrid){
+    public Simulation(String title, Cell[][] initialGrid) {
         running = true;
         simTitle = title;
         grid = initialGrid;
