@@ -1,15 +1,6 @@
 package game.Simulation;
 
-import game.Playable;
 import game.Simulation.Cell.Cell;
-import game.visualization.Visualization;
-import javafx.animation.Timeline;
-import javafx.scene.Group;
-import javafx.stage.Stage;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * This abstract class runs a simulation of any
@@ -30,7 +21,7 @@ import java.util.List;
  *
  * @author Jake Derry
  */
-public class Simulation implements Playable {
+public class Simulation {
 
     private CellGrid grid;
     private boolean running;

@@ -41,8 +41,7 @@ public class CAApp extends Application {
         displayGroup = new Group();
         myAnimation = new Timeline();
 
-        mySim = Configurer.getSimulation("Segregation.xml", WINDOW_SIZE, language);
-        mySim.setVisualization(myAnimation, displayGroup, myStage, WINDOW_SIZE, language);
+        mySim = Configurer.getSimulation("Segregation.xml", WINDOW_SIZE, language);\
         myStage.setScene(new Scene(displayGroup, WINDOW_SIZE, WINDOW_SIZE, BACKGROUND_COLOR));
         myStage.setTitle(mySim.getSimTitle());
         myStage.show();
