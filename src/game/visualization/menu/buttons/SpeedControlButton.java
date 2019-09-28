@@ -15,10 +15,10 @@ public class SpeedControlButton extends MenuButton {
         multiplier = speed;
         mySim = sim;
         if (multiplier < 1){
-            myButton.setText(myResources.getString("Faster"));
+            myButton.setText(resources.getString("Faster"));
         }
         else{
-            myButton.setText(myResources.getString("Slower"));
+            myButton.setText(resources.getString("Slower"));
         }
         setButtonAction();
     }

@@ -18,17 +18,15 @@ public class LoadNewSimButton extends MenuButton {
     private Simulation mySim;
     private int WINDOW_SIZE;
     private Group myGroup;
-    private Timeline myAnimation;
     private String myLanguage;
 
     public LoadNewSimButton(int xPos, int yPos, int height, ResourceBundle resources, Stage stage, Group group, Simulation sim, int windowSize, String language){
         super(xPos, yPos, height, resources);
-        myButton.setText(myResources.getString("LoadNewSim"));
+        myButton.setText(resources.getString("LoadNewSim"));
         myStage = stage;
         mySim = sim;
         myGroup = group;
         WINDOW_SIZE = windowSize;
-        myAnimation = mySim.getAnimation();
         myLanguage = language;
         setButtonAction();
     }

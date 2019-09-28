@@ -1,20 +1,18 @@
 package game.visualization.menu.buttons;
 
 import game.Simulation.Simulation;
-import game.visualization.menu.buttons.MenuButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 import java.util.ResourceBundle;
 
 public class PausePlayButton extends MenuButton {
-    private boolean simRunning;
     private Simulation mySim;
 
     public PausePlayButton(int xPos, int yPos, int height, ResourceBundle resources, Simulation sim) {
         super(xPos, yPos, height, resources);
         mySim = sim;
-        myButton.setText(myResources.getString("Pause"));
+        myButton.setText(resources.getString("Pause"));
         setButtonAction();
     }
 
