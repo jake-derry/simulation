@@ -2,6 +2,8 @@ package game.Simulation;
 
 import game.Simulation.Cell.Cell;
 
+import java.util.Map;
+
 /**
  * This abstract class runs a simulation of any
  * type. This type changes how the simulation is
@@ -25,20 +27,19 @@ public class Simulation {
 
     private CellGrid grid;
     private boolean running;
-    private String simTitle;
+    private Map<String, Object> parameterMap;
     private int millisecondDelay;
 
     /**
      * Initializes a simulation running.
-     * @param title         Title of the simulation
+     * @param parameterMap  A map of the parameter name and
+     *                      the parameter object
      * @param initialGrid   Initial grid of the simulation
      */
-    public Simulation(String title, CellGrid initialGrid) {
+    public Simulation(Map<String, Object> parameterMap, int[][] initialGrid) {
         running = true;
-        simTitle = title;
-        grid = initialGrid;
-        //TODO CHANGE THIS
-        millisecondDelay = 500;
+        grid = new CellGrid(parameterMap, initialGrid);
+        millisecondDelay = (int) parameterMap.get("millisecondDelay");
     }
 
 
@@ -88,7 +89,7 @@ public class Simulation {
      * Gets the simTitle for a sim
      */
     public String getSimTitle() {
-        return simTitle;
+        return parameterMap.get("Title").toString();
     }
 
     /**
