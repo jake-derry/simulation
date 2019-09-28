@@ -46,8 +46,9 @@ public class Visualization{
         colorList[1] = Color.RED;
         colorList[2] = Color.YELLOW;
         myResources = ResourceBundle.getBundle(language);
-        myMenuHandler = new MenuHandler(myGroup, mySim, WINDOW_SIZE, stage, myAnimation, language);
-        RectangleList = GridHandler.setUpRectangles(windowDimension, sim.getGridRowCount(), sim.getGridColumnCount());
+        MenuHandler.addMenuButtonsToDisplayGroup(stage, group, sim, windowDimension, language);
+        MenuHandler.addTitleTextToDisplayGroup(group, windowDimension, sim.getSimTitle());
+        rectangleIterator = GridHandler.setUpRectangles(windowDimension, sim.getGridRowCount(), sim.getGridColumnCount(), myGroup);
     }
 
     public void visualize(){
