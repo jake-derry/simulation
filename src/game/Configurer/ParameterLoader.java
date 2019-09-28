@@ -1,7 +1,6 @@
 package game.Configurer;
 
 import game.Configurer.ExceptionHandlers.ErrorThrow;
-import game.Configurer.ExceptionHandlers.XMLSimulationException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -29,6 +28,8 @@ public class ParameterLoader {
     private static final String CELL_STATE_TAG = "state";
     private static final String TYPE_TAG = "type";
     private static final String DISTRIBUTION_TAG = "cellDistribution";
+    private static final String NEIGHBORS_TAG = "";
+    private static final String GRID_SHAPE_TAG = "";
 
     //Types of distributions supported
     private static final String SPECIFIC_DISTRIBUTION = "cell";
@@ -47,17 +48,17 @@ public class ParameterLoader {
     private int totalRows;
     private int totalColumns;
     private String simType;
-    private int highestState;
+    private int numStates;
     private String distributionType;
 
     ParameterLoader(Element mainDocumentElement){
         mainElement = mainDocumentElement;
         totalRows = getFirstElementInteger(mainElement, ROW_TAG);
         totalColumns = getFirstElementInteger(mainElement, COLUMN_TAG);
-        simType = getFirstElementString(TYPE_TAG);
-        highestState = getFirstElementInteger(mainElement, MAX_STATE_TAG);
-        if(highestState == -1){ highestState = 1;}
-        distributionType = getFirstElementString(DISTRIBUTION_TAG);
+        simType = getFirstElementString(mainElement, TYPE_TAG);
+        numStates = getFirstElementInteger(mainElement, MAX_STATE_TAG);
+        if(numStates == -1){ numStates = 1;}
+        distributionType = getFirstElementString(mainElement, DISTRIBUTION_TAG);
     }
 
     /**
@@ -79,8 +80,8 @@ public class ParameterLoader {
      *
      * @return default state, as defined in the XML file
      */
-    public int getDefaultState(){
-        return getFirstElementInteger(mainElement, STATE_TAG);
+    public String getDefaultState(){
+        return getFirstElementString(mainElement, STATE_TAG);
     }
 
     /**
@@ -111,14 +112,14 @@ public class ParameterLoader {
      *
      * @return a Map containing active cells as Keys and their corresponding states as Values.
      */
-    public Map<Integer, Integer> getActiveCells(){
-        HashMap <Integer, Integer> activeCells = new HashMap<>();
+    public Map<Integer, String> getActiveCells(){
+        HashMap <Integer, String> activeCells = new HashMap<>();
         NodeList nList = mainElement.getElementsByTagName(distributionType);
         List<Integer> openCells = IntStream.rangeClosed(0, totalRows*totalColumns-1)
                 .boxed().collect(Collectors.toList());
         for(int i = 0 ; i < nList.getLength(); i++){
             Element myDistribution = (Element) nList.item(i);
-            int myState = getFirstElementInteger(myDistribution, CELL_STATE_TAG);
+            String myState = getFirstElementString(myDistribution, CELL_STATE_TAG);
             switch (distributionType){
                 case RANDOM_DISTRIBUTION:
                     getRandomCells(activeCells, openCells, myState,
@@ -141,11 +142,11 @@ public class ParameterLoader {
     /**
      * Method used to read the active cells within the XML file
      */
-    private void getSpecificCells(Element myCell, Map<Integer, Integer> activeCells) {
+    private void getSpecificCells(Element myCell, Map<Integer, String> activeCells) {
         int myRow = getFirstElementInteger(myCell, CELL_ROW_TAG);
         int myColumn = getFirstElementInteger(myCell, CELL_COLUMN_TAG);
-        int myState = getFirstElementInteger(myCell, CELL_STATE_TAG);
-        if(myRow != -1 && myColumn != -1 && myState <= highestState){
+        String myState = getFirstElementString(myCell, CELL_STATE_TAG);
+        if(myRow != -1 && myColumn != -1 ){
             activeCells.put((myRow-1) * totalColumns + myColumn-1, myState);
         }
 
@@ -155,9 +156,9 @@ public class ParameterLoader {
      * Method used to generate a random distribution of cells, based on either the concentration of
      * each state or the type of
      */
-    private void getRandomCells(Map<Integer, Integer> activeCells, List<Integer> openCells, int state, int totalCells) {
+    private void getRandomCells(Map<Integer, String> activeCells, List<Integer> openCells, String state, int totalCells) {
         int total = 0;
-        if(openCells.size() > 0 && state >= 0 && state <= highestState && totalCells > 0){
+        if(openCells.size() > 0 && totalCells > 0){
             for(int i = 0; i < totalCells; i++){
                 total++;
                 int randomCell = (int)(Math.random() * openCells.size());
@@ -193,8 +194,8 @@ public class ParameterLoader {
     /**
      * Returns a String containing the name of the first sub-element of an element
      */
-    private String getFirstElementString(String TagName){
-        Node myValue = mainElement.getElementsByTagName(TagName).item(0);
+    private String getFirstElementString(Element myElement, String TagName){
+        Node myValue = myElement.getElementsByTagName(TagName).item(0);
         if(myValue == null){
             new ErrorThrow(NOT_FOUND, TagName);
             return "Unspecified";

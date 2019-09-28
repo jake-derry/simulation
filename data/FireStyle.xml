@@ -1,24 +1,9 @@
 <?xml version="1.0"?>
-<Simulation>
-    <type>fire</type>
-    <author>
-        Jonah Knapp
-    </author>
-    <size>
-        <rows>200</rows>
-        <columns>200</columns>
-    </size>
-    <highestState>2</highestState>
-    <defaultState>2</defaultState>
-    <cellDistribution>concentration</cellDistribution>
-    <activeCells>
-        <concentration>
-            <state>1 </state> <value> 1 </value>
-        </concentration>
-        <random>
-            <state>1</state> <value>1</value>
-        </random>
-        <cell> <row>25</row> <col>25</col> <state>1</state></cell>
-    </activeCells>
-    <probCatch>50</probCatch>
-</Simulation>
+<Style>
+    <author> Jonah Knapp </author>
+    <cellSize></cellSize>
+    <outline></outline>
+    <ColorDefining>
+        <colorDeclaration></colorDeclaration>
+    </ColorDefining>
+</Style>

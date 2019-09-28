@@ -11,6 +11,7 @@ import game.Simulation.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -33,6 +34,9 @@ public class Configurer {
     private static final String PREDATOR_PREY = "predatorPrey";
     private static final String FIRE = "fire";
     private static final String PERCOLATION = "percolation";
+    private static final String DELAY_TAG = "delay";
+
+    private static final int DEFAULT_DELAY = 500;
 
     //Simulation-Specific Tags
     private static final String SATISFACTION_PERCENT = "satisfaction";
@@ -61,34 +65,40 @@ public class Configurer {
         Element mainElement = simDoc.getDocumentElement();
         ParameterLoader myParams = new ParameterLoader(mainElement);
         int[] dimensionsRC = myParams.getDimensions();
-        int defaultState = myParams.getDefaultState();
-        Cell[][] myCellArray = new Cell[dimensionsRC[0]][dimensionsRC[1]];
-        initializeCells(defaultState, myParams, myCellArray);
-        switch (myParams.getSimType()) {
-            case LIFE:
-                return new GameOfLifeSimulation(LIFE, myCellArray);
-            case SEGREGATION:
-                double satisfaction = myParams.getSpecialValue(SATISFACTION_PERCENT, 1);
-                return new SegregationSimulation(SEGREGATION, myCellArray, satisfaction / 100);
-            case PREDATOR_PREY:
-                int breedTime = myParams.getSpecialValue(BREED_TIME, 0);
-                int initialEnergy = myParams.getSpecialValue(PREDATOR_INITIAL_ENERGY, 0);
-                int energyThreshold = myParams.getSpecialValue(PREDATOR_ENERGY_THRESHOLD, 0);
-                return new PredatorPreySimulation(PREDATOR_PREY, myCellArray, breedTime,
-                        initialEnergy, energyThreshold);
-            case FIRE:
-                double chance = myParams.getSpecialValue(CATCH_PERCENT, 1);
-                return new FireSimulation(FIRE, myCellArray, chance / 100);
-            case PERCOLATION:
-                return new PercolationSimulation(PERCOLATION, myCellArray);
-
+        String defaultState = myParams.getDefaultState();
+        String[][] myStateArray = new String[dimensionsRC[0]][dimensionsRC[1]];
+        initializeCells(defaultState, myParams, myStateArray);
+        HashMap<String, Object> mySpecialValues = new HashMap<>();
+        if (!(myParams.getSpecialValue(DELAY_TAG, 0)<0)){
+            mySpecialValues.put(DELAY_TAG, DEFAULT_DELAY);
         }
-        new ErrorThrow(SIMULATION_ERROR_DEFAULT);
-        return getSimulation(DEFAULT_SIM);
+        else{mySpecialValues.put(DELAY_TAG, myParams.getSpecialValue(DELAY_TAG, 0));};
+        mySpecialValues.put(SIMULATION_TAG, myParams.getSimType());
+        switch (myParams.getSimType()) {
+            case PERCOLATION:
+            case LIFE:
+                break;
+            case SEGREGATION:
+                mySpecialValues.put(SATISFACTION_PERCENT, myParams.getSpecialValue(SATISFACTION_PERCENT, 1));
+                break;
+            case PREDATOR_PREY:
+                mySpecialValues.put(BREED_TIME, myParams.getSpecialValue(BREED_TIME, 0));
+                mySpecialValues.put(PREDATOR_INITIAL_ENERGY, myParams.getSpecialValue(PREDATOR_INITIAL_ENERGY, 0));
+                mySpecialValues.put(PREDATOR_ENERGY_THRESHOLD, myParams.getSpecialValue(PREDATOR_ENERGY_THRESHOLD, 0));
+                break;
+            case FIRE:
+                mySpecialValues.put(CATCH_PERCENT, myParams.getSpecialValue(CATCH_PERCENT, 1));
+                break;
+            default:
+                new ErrorThrow(SIMULATION_ERROR_DEFAULT);
+                return getSimulation(DEFAULT_SIM);
+        }
+        //return new Simulation(mySpecialValues, myStateArray);
+        return null;
     }
 
     public static Map<String, String> getStyling(String myStyleFile){
-        Document styleDoc = readFile(myStyleFile, );
+        Document styleDoc = readFile(myStyleFile, STYLE_TAG);
         Element mainElement = styleDoc.getDocumentElement();
         StylingLoader myStyling = new StylingLoader(mainElement);
         return myStyling.getStyling();
@@ -118,23 +128,23 @@ public class Configurer {
         } catch (Exception e) {
             new ErrorThrow(e.getMessage());
         }
-        return readFile(DEFAULT_SIM);
+        return readFile(DEFAULT_SIM, FileType);
     }
 
     /**
      * Initializes the cells in the Cellular Array
      */
-    private static void initializeCells(int defaultState, ParameterLoader myParams, Cell[][] myArray) {
+    private static void initializeCells(String defaultState, ParameterLoader myParams, String[][] myArray) {
         int totalRows = myParams.getDimensions()[0];
         int totalColumns = myParams.getDimensions()[1];
-        Map<Integer, Integer> activeCells = myParams.getActiveCells();
+        Map<Integer, String> activeCells = myParams.getActiveCells();
         for (int i = 0; i < totalRows; i++) {
             for (int j = 0; j < totalColumns; j++) {
                 int myIndex = (i * totalColumns) + j;
                 if (activeCells.containsKey(myIndex)) {
-                    myArray[i][j] = new Cell(activeCells.get(myIndex));
+                    myArray[i][j] = activeCells.get(myIndex);
                 } else {
-                    myArray[i][j] = new Cell(defaultState);
+                    myArray[i][j] = defaultState;
                 }
             }
 
