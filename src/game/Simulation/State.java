@@ -56,34 +56,14 @@ public enum State {
         return getStateMap().get(stateCode);
     }
 
-    /**
-     * Gets the index that corresponds with the simulation type and
-     * state.
-     *
-     * @param simulationType                    String that represents which simulation the index
-     *                                          needs to be retrieved for
-     * @throws StateIncompatibleException       when the simulation does not have a state code
-     *                                          that corresponds to the state called on
-     * @return
-     */
-    public int getIndex (String simulationType) {
-        for (String stateCode : myStateCodes) {
-            if (stateCode.startsWith(simulationType)) {
-                return Integer.parseInt(stateCode.substring(stateCode.length()-1));
-            }
-        }
-        throw new StateIncompatibleException("This state is incompatible with a running simulation\n" +
-                                             "Make sure that the correct stateCode is listed in the" +
-                                             "State enum.");
-    }
 
     /**
-     * Getter for the list of state codes for some state.
+     * Getter for the state code for some state.
      *
-     * @return                                  Array of state codes
+     * @return                                  State code
      */
-    private String[] getStateCodes() {
-        return myStateCodes;
+    private String getStateCode() {
+        return myStateCode;
     }
 
     /**
@@ -94,9 +74,7 @@ public enum State {
     private static Map<String, State> getStateMap() {
         Map<String, State> newStateMap = new TreeMap<>();
         for (State state : State.values()) {
-            for (String stateCode : state.getStateCodes()) {
-                newStateMap.put(stateCode, state);
-            }
+            newStateMap.put(state.getStateCode(), state);
         }
         return newStateMap;
     }
