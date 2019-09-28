@@ -1,5 +1,6 @@
 package game.Simulation;
 
+import game.Playable;
 import game.Simulation.Cell.Cell;
 import game.visualization.Visualization;
 import javafx.animation.KeyFrame;
@@ -30,7 +31,7 @@ import java.util.List;
  *
  * @author Jake Derry
  */
-abstract public class Simulation {
+abstract public class Simulation implements Playable {
     protected static final int BEYOND_EDGE = -1;
     protected static final int EMPTY = 0;
 
