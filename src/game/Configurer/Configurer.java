@@ -24,17 +24,8 @@ import java.util.Map;
  * @author Jonah Knapp
  */
 public class Configurer {
-    //Tags used within XML file
-    private static final String SIMULATION_TAG = "Simulation";
-    private static final String COLUMN_TAG = "columns";
-    private static final String ROW_TAG = "rows";
-    private static final String STATE_TAG = "defaultState";
-    private static final String CELL_COLUMN_TAG = "col";
-    private static final String CELL_ROW_TAG = "row";
-    private static final String CELL_STATE_TAG = "state";
-    private static final String TYPE_TAG = "type";
-
     //Simulations Supported
+    private static final String SIMULATION_TAG = "Simulation";
     private static final String LIFE = "gameOfLife";
     private static final String SEGREGATION = "segregation";
     private static final String PREDATOR_PREY = "predatorPrey";

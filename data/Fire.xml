@@ -5,12 +5,19 @@
         Jonah Knapp
     </author>
     <size>
-        <rows>50</rows>
-        <columns>50</columns>
+        <rows>100</rows>
+        <columns>100</columns>
     </size>
     <highestState>2</highestState>
     <defaultState>2</defaultState>
+    <cellDistribution>concentration</cellDistribution>
     <activeCells>
+        <concentration>
+            <state>1</state> <value>1</value>
+        </concentration>
+        <random>
+            <state>1</state> <value>10</value>
+        </random>
         <cell> <row>25</row> <col>25</col> <state>1</state></cell>
     </activeCells>
     <probCatch>50</probCatch>

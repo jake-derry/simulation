@@ -7,7 +7,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * This class handles loading in parameters from the XML file. It contains default values for each of the parameters,
@@ -25,13 +28,19 @@ public class ParameterLoader {
     private static final String CELL_ROW_TAG = "row";
     private static final String CELL_STATE_TAG = "state";
     private static final String TYPE_TAG = "type";
+    private static final String DISTRIBUTION_TAG = "cellDistribution";
+
+    //Types of distributions supported
+    private static final String SPECIFIC_DISTRIBUTION = "cell";
+    private static final String RANDOM_DISTRIBUTION = "random";
+    private static final String CONCENTRATION_DISTRIBUTION = "concentration";
+    private static final String DISTRIBUTION_VALUE_TAG = "value";
 
     private static final int DEFAULT_INT = -1;
     private static final int DEFAULT_DIMENSION = 10;
     private static final int DEFAULT_GENERIC = 5;
     private static final int DEFAULT_PERCENTAGE = 50;
 
-    private static final String BAD_DIMENSIONS = "Unsupported dimensions specified. Using default value of %s x %s.";
     private static final String NOT_FOUND = "Parameter type %s not found. Default value will be used.";
 
     private Element mainElement;
@@ -39,6 +48,7 @@ public class ParameterLoader {
     private int totalColumns;
     private String simType;
     private int highestState;
+    private String distributionType;
 
     ParameterLoader(Element mainDocumentElement){
         mainElement = mainDocumentElement;
@@ -47,9 +57,11 @@ public class ParameterLoader {
         simType = getFirstElementString(TYPE_TAG);
         highestState = getFirstElementInteger(mainElement, MAX_STATE_TAG);
         if(highestState == -1){ highestState = 1;}
+        distributionType = getFirstElementString(DISTRIBUTION_TAG);
     }
 
-    /**Checks the validity of dimensions supplied by the XML file. If the dimensions are not supported,
+    /**
+     * Checks the validity of dimensions supplied by the XML file. If the dimensions are not supported,
      * then the method will return corrected values. Note: If any one of the dimension values is incorrect,
      * the default value will apply to BOTH dimensions.
      *
@@ -94,26 +106,73 @@ public class ParameterLoader {
     }
 
     /**
+     * Finds active cells based on the distribution type, which is specified within the XML file. If no distribution
+     * is specified, it is defaulted to the specific distribution type.
      *
-     * @return a Map containing active cells as Keys and their corresponding states as Values. If the specified state is
-     * not valid.
+     * @return a Map containing active cells as Keys and their corresponding states as Values.
      */
     public Map<Integer, Integer> getActiveCells(){
-        NodeList nList = mainElement.getElementsByTagName("cell");
         HashMap <Integer, Integer> activeCells = new HashMap<>();
+        NodeList nList = mainElement.getElementsByTagName(distributionType);
+        List<Integer> openCells = IntStream.rangeClosed(0, totalRows*totalColumns-1)
+                .boxed().collect(Collectors.toList());
         for(int i = 0 ; i < nList.getLength(); i++){
-            Element myCell = (Element) nList.item(i);
-            int myRow = getFirstElementInteger(myCell, CELL_ROW_TAG);
-            int myColumn = getFirstElementInteger(myCell, CELL_COLUMN_TAG);
-            int myState = getFirstElementInteger(myCell, CELL_STATE_TAG);
-            if(myRow != -1 && myColumn != -1 && myState <= highestState){
-                activeCells.put((myRow-1) * totalColumns + myColumn-1, myState);
+            Element myDistribution = (Element) nList.item(i);
+            int totalCells;
+            int myState;
+            switch (distributionType){
+                case RANDOM_DISTRIBUTION:
+                    totalCells = getFirstElementInteger(myDistribution, DISTRIBUTION_VALUE_TAG);
+                    myState = getFirstElementInteger(myDistribution, CELL_STATE_TAG);
+                    getRandomCells(activeCells, openCells, totalCells, myState);
+                    break;
+                case CONCENTRATION_DISTRIBUTION:
+                    totalCells = totalRows * totalColumns *
+                            getFirstElementInteger(myDistribution, DISTRIBUTION_VALUE_TAG) / 100;
+                    myState = getFirstElementInteger(myDistribution, CELL_STATE_TAG);
+                    getRandomCells(activeCells, openCells, totalCells, myState);
+                    break;
+                default:
+                    getSpecificCells(myDistribution, activeCells);
+                    break;
             }
+
         }
         return activeCells;
     }
 
-    /** Returns a Integer representation of the first sub-element of an element. If the specified element
+    /**
+     * Method used to read the active cells within the XML file
+     */
+    private void getSpecificCells(Element myCell, Map<Integer, Integer> activeCells) {
+        int myRow = getFirstElementInteger(myCell, CELL_ROW_TAG);
+        int myColumn = getFirstElementInteger(myCell, CELL_COLUMN_TAG);
+        int myState = getFirstElementInteger(myCell, CELL_STATE_TAG);
+        if(myRow != -1 && myColumn != -1 && myState <= highestState){
+            activeCells.put((myRow-1) * totalColumns + myColumn-1, myState);
+        }
+
+    }
+
+    /**
+     * Method used to generate a random distribution of cells, based on either the concentration of
+     * each state or the type of
+     */
+    private void getRandomCells(Map<Integer, Integer> activeCells, List<Integer> openCells, int totalCells, int state) {
+        int total = 0;
+        System.out.println(totalCells);
+        if(openCells.size() > 0){
+            for(int i = 0; i < totalCells; i++){
+                total++;
+                int randomCell = (int)(Math.random() * openCells.size());
+                int myIndex = openCells.remove(randomCell);
+                System.out.println(total + ":" + myIndex + " "+  state);
+                activeCells.put(myIndex, state);
+            }
+        }
+    }
+    /**
+     * Returns a Integer representation of the first sub-element of an element. If the specified element
      * does not contain an integer, then a default integer value is used.
      */
     private Integer getFirstElementInteger(Element myElement, String TagName){
@@ -136,9 +195,15 @@ public class ParameterLoader {
         return DEFAULT_INT;
     }
 
-    /** Returns a String containing the name of the first sub-element of an element
+    /**
+     * Returns a String containing the name of the first sub-element of an element
      */
     private String getFirstElementString(String TagName){
+        Node myValue = mainElement.getElementsByTagName(TagName).item(0);
+        if(myValue == null){
+            new ErrorThrow(NOT_FOUND, TagName);
+            return "Unspecified";
+        }
         return mainElement.getElementsByTagName(TagName).item(0).getTextContent();
     }
 

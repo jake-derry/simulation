@@ -2,11 +2,18 @@
 <Simulation>
     <type>gameOfLife</type>
     <author> Jonah Knapp </author>
-    <rows>21</rows>
-    <columns>21</columns>
+    <rows>100</rows>
+    <columns>100</columns>
     <highestState>1</highestState>
     <defaultState>0</defaultState>
+    <cellDistribution>concentration</cellDistribution>
     <activeCells>
+        <concentration>
+            <state>1</state> <value>50</value>
+        </concentration>
+        <random>
+            <state>1</state> <value>50</value>
+        </random>
         <cell>
             <row>9</row> <col>11</col> <state>1</state>
         </cell>
