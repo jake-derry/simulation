@@ -86,6 +86,13 @@ public class Configurer {
     }
 
     /**
+     * Saving XML file:
+     */
+    public static void saveStates(String myFile, Cell[][] CellArray){
+
+    }
+
+    /**
      * Creates a documentBuilder from an XML file then parses it into a document. If the type of document is not
      * a simulation, the simulation will default to a Fire simulation.
      */
