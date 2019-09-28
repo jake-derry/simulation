@@ -1,7 +1,6 @@
 package game.Configurer;
 
 import java.io.File;
-import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -9,7 +8,6 @@ import game.Configurer.ExceptionHandlers.ErrorThrow;
 import game.Configurer.ExceptionHandlers.XMLSimulationException;
 import game.Simulation.Cell.Cell;
 import game.Simulation.*;
-import javafx.util.Pair;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -25,7 +23,7 @@ import java.util.Map;
  *
  * @author Jonah Knapp
  */
-public class Configurer{
+public class Configurer {
     //Tags used within XML file
     private static final String SIMULATION_TAG = "Simulation";
     private static final String COLUMN_TAG = "columns";
@@ -58,13 +56,14 @@ public class Configurer{
     private static final String SIMULATION_ERROR_DEFAULT = "Simulation type not supported. Loading Default File.";
 
 
-    /**Reads XML file. First creates a document using the DocumentBuilder class. Uses this information to create a
+    /**
+     * Reads XML file. First creates a document using the DocumentBuilder class. Uses this information to create a
      * cellular array and ultimately passes this information, along with WindowSize, to a new Simulation.
      *
      * @param myFile XML to be read
      * @return Simulation created based on XML file
      */
-    public static Simulation getSimulation(String myFile){
+    public static Simulation getSimulation(String myFile) {
         Document simDoc = readFile(myFile);
         Element mainElement = simDoc.getDocumentElement();
         ParameterLoader myParams = new ParameterLoader(mainElement);
@@ -72,12 +71,12 @@ public class Configurer{
         int defaultState = myParams.getDefaultState();
         Cell[][] myCellArray = new Cell[dimensionsRC[0]][dimensionsRC[1]];
         initializeCells(defaultState, myParams, myCellArray);
-        switch (myParams.getSimType()){
+        switch (myParams.getSimType()) {
             case LIFE:
                 return new GameOfLifeSimulation(LIFE, myCellArray);
             case SEGREGATION:
                 double satisfaction = myParams.getSpecialValue(SATISFACTION_PERCENT, 1);
-                return new SegregationSimulation(SEGREGATION, myCellArray, satisfaction/100);
+                return new SegregationSimulation(SEGREGATION, myCellArray, satisfaction / 100);
             case PREDATOR_PREY:
                 int breedTime = myParams.getSpecialValue(BREED_TIME, 0);
                 int initialEnergy = myParams.getSpecialValue(PREDATOR_INITIAL_ENERGY, 0);
@@ -86,13 +85,12 @@ public class Configurer{
                         initialEnergy, energyThreshold);
             case FIRE:
                 double chance = myParams.getSpecialValue(CATCH_PERCENT, 1);
-                return new FireSimulation(FIRE, myCellArray, chance/100);
+                return new FireSimulation(FIRE, myCellArray, chance / 100);
             case PERCOLATION:
                 return new PercolationSimulation(PERCOLATION, myCellArray);
 
         }
         new ErrorThrow(SIMULATION_ERROR_DEFAULT);
-        //errorAlert(SIMULATION_ERROR_DEFAULT);
         return getSimulation("././Fire.xml");
     }
 
@@ -100,15 +98,14 @@ public class Configurer{
      * Creates a documentBuilder from an XML file then parses it into a document. If the type of document is not
      * a simulation, the simulation will default to a Fire simulation.
      */
-    private static Document readFile(String myFile){
-        try{
+    private static Document readFile(String myFile) {
+        try {
             File simFile = new File("data/" + myFile);
             DocumentBuilder simDocumentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document myDocument = simDocumentBuilder.parse(simFile);
-            if(!myDocument.getFirstChild().getNodeName().equals(SIMULATION_TAG)){
+            if (!myDocument.getFirstChild().getNodeName().equals(SIMULATION_TAG)) {
                 throw new XMLSimulationException(ERROR_DEFAULT, myDocument.getFirstChild().getNodeName());
-            }
-            else{
+            } else {
                 return myDocument;
             }
         } catch (Exception e) {
@@ -116,39 +113,24 @@ public class Configurer{
         }
         return readFile(DEFAULT_SIM);
     }
+
     /**
-     *Initializes the cells in the Cellular Array
+     * Initializes the cells in the Cellular Array
      */
-    private static void initializeCells(int defaultState, ParameterLoader myParams, Cell[][] myArray){
+    private static void initializeCells(int defaultState, ParameterLoader myParams, Cell[][] myArray) {
         int totalRows = myParams.getDimensions()[0];
         int totalColumns = myParams.getDimensions()[1];
-        Map<Integer, Integer> activeCells =  myParams.getActiveCells();
-        for(int i = 0 ; i < totalRows; i++){
-            for(int j = 0 ; j < totalColumns ; j++){
-                int myIndex = (i*totalColumns) + j;
-                if(activeCells.containsKey(myIndex)){
+        Map<Integer, Integer> activeCells = myParams.getActiveCells();
+        for (int i = 0; i < totalRows; i++) {
+            for (int j = 0; j < totalColumns; j++) {
+                int myIndex = (i * totalColumns) + j;
+                if (activeCells.containsKey(myIndex)) {
                     myArray[i][j] = new Cell(activeCells.get(myIndex));
-                }
-                else{
+                } else {
                     myArray[i][j] = new Cell(defaultState);
                 }
             }
 
-        }
-    }
-
-    /**
-     * Initializes default cells in the Cellular Array
-     */
-    private static void initializeDefaultCells(int state, List<Pair<Integer, Integer>> activeCells, Cell[][] myArray){
-        int Rows = myArray[0].length;
-        int Cols = myArray.length;
-        for(int i = 0; i < Rows; i++){
-            for(int j = 0; j<Cols; j++){
-                if(!(activeCells.contains((i*Cols) + j))){
-                    myArray[i][j] = new Cell(state);
-                }
-            }
         }
     }
 }
