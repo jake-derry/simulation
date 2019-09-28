@@ -24,8 +24,10 @@ import java.util.Map;
  * @author Jonah Knapp
  */
 public class Configurer {
-    //Simulations Supported
+    //Files Supported
     private static final String SIMULATION_TAG = "Simulation";
+    private static final String STYLE_TAG = "Style";
+    //Simulations Supported
     private static final String LIFE = "gameOfLife";
     private static final String SEGREGATION = "segregation";
     private static final String PREDATOR_PREY = "predatorPrey";
@@ -55,7 +57,7 @@ public class Configurer {
      * @return Simulation created based on XML file
      */
     public static Simulation getSimulation(String myFile) {
-        Document simDoc = readFile(myFile);
+        Document simDoc = readFile(myFile, SIMULATION_TAG);
         Element mainElement = simDoc.getDocumentElement();
         ParameterLoader myParams = new ParameterLoader(mainElement);
         int[] dimensionsRC = myParams.getDimensions();
@@ -86,10 +88,10 @@ public class Configurer {
     }
 
     public static Map<String, String> getStyling(String myStyleFile){
-        Document styleDoc = readFile(myStyleFile);
+        Document styleDoc = readFile(myStyleFile, );
         Element mainElement = styleDoc.getDocumentElement();
         StylingLoader myStyling = new StylingLoader(mainElement);
-        return myStyling.getStylings();
+        return myStyling.getStyling();
     }
 
     /**
@@ -103,12 +105,12 @@ public class Configurer {
      * Creates a documentBuilder from an XML file then parses it into a document. If the type of document is not
      * a simulation, the simulation will default to a Fire simulation.
      */
-    private static Document readFile(String myFile) {
+    private static Document readFile(String myFile, String FileType) {
         try {
             File simFile = new File("data/" + myFile);
             DocumentBuilder simDocumentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document myDocument = simDocumentBuilder.parse(simFile);
-            if (!myDocument.getFirstChild().getNodeName().equals(SIMULATION_TAG)) {
+            if (!myDocument.getFirstChild().getNodeName().equals(FileType)) {
                 throw new XMLSimulationException(ERROR_DEFAULT, myDocument.getFirstChild().getNodeName());
             } else {
                 return myDocument;

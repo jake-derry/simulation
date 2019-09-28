@@ -157,13 +157,11 @@ public class ParameterLoader {
      */
     private void getRandomCells(Map<Integer, Integer> activeCells, List<Integer> openCells, int state, int totalCells) {
         int total = 0;
-        System.out.println(totalCells);
         if(openCells.size() > 0 && state >= 0 && state <= highestState && totalCells > 0){
             for(int i = 0; i < totalCells; i++){
                 total++;
                 int randomCell = (int)(Math.random() * openCells.size());
                 int myIndex = openCells.remove(randomCell);
-                System.out.println(total + ":" + myIndex + " "+  state);
                 activeCells.put(myIndex, state);
             }
         }
