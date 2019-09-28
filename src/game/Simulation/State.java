@@ -11,41 +11,36 @@ import java.util.TreeMap;
  * EXAMPLE:
  *      Cell.setNextState(State.EMPTY);
  *
+ * use a string "EMPTY" to represent an EMPTY state
  */
 public enum State {
-    EMPTY(new String[]{"gameOfLife0",
-                       "segregation0",
-                       "predatorPrey0",
-                       "fire0",
-                       "percolation0"}),
-    LIVE(new String[]{"gameOfLife1"}),
-    WALL(new String[]{"percolation1"}),
-    WATER(new String[]{"percolation2"}),
-    PREDATOR(new String[]{"predatorPrey1"}),
-    PREY(new String[]{"predatorPrey2"}),
-    GROUP_A(new String[]{"segregation1"}),
-    GROUP_B(new String[]{"segregation2"}),
-    BURNING(new String[]{"fire1"}),
-    TREE(new String[]{"fire2"}),
-    BEYOND_EDGE(new String[]{});
+    EMPTY(""),
+    LIVE(""),
+    WALL(""),
+    WATER(""),
+    PREDATOR(""),
+    PREY(""),
+    GROUP_A(""),
+    GROUP_B(""),
+    BURNING(""),
+    TREE(""),
+    BEYOND_EDGE("");
 
     /**
-     * An array that stores all of the codes which are formatted
-     * in a string as the name of the simulation plus the number
-     * used to represent that state in XML.
+     * A string representation of the state which is how a state
+     * is represented in an XML file.
      */
-    private String[] myStateCodes;
+    private String myStateCode;
 
 
     /**
      * A constructor that takes in an array of the state codes.
      *
-     * @param stateCodes                        State codes enumerate all simulations
-     *                                          and numbers that represent the state
-     *                                          in that simulation.
+     * @param stateCode                        A string representation of the
+     *                                         state.
      */
-    State(String[] stateCodes) {
-        myStateCodes = stateCodes;
+    State(String stateCode) {
+        myStateCode = stateCode;
     }
 
     /**

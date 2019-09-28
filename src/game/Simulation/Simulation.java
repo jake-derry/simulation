@@ -36,7 +36,7 @@ public class Simulation {
      *                      the parameter object
      * @param initialGrid   Initial grid of the simulation
      */
-    public Simulation(Map<String, Object> parameterMap, int[][] initialGrid) {
+    public Simulation(Map<String, Object> parameterMap, String[][] initialGrid) {
         running = true;
         grid = new CellGrid(parameterMap, initialGrid);
         millisecondDelay = (int) parameterMap.get("millisecondDelay");
