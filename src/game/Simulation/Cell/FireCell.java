@@ -1,6 +1,7 @@
 package game.Simulation.Cell;
 
 import game.Simulation.State;
+import game.Simulation.StateIncompatibleException;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -25,17 +26,13 @@ public class FireCell extends Cell {
     public void updateNext() {
         updateCountMap();
         State nextState;
-        switch (getState()) {
-            case (EMPTY) :
-            case (BURNING) :{
+        if (getState() == EMPTY || getState() == BURNING) {
                 nextState = EMPTY;
-            }
-            case (TREE) : {
-                nextState = (burning() ? BURNING : TREE);
-
-            }
         }
 
+        else if (getState() == TREE) {
+                nextState = (burning() ? BURNING : TREE);
+        }
 
     }
 

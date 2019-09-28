@@ -7,7 +7,9 @@ import java.util.Iterator;
 public class CellGrid implements Iterable<Cell> {
     private Cell[][] myCellGrid;
 
-    public CellGrid() {}
+    public CellGrid(Cell[][] cellGrid) {
+        myCellGrid = cellGrid;
+    }
 
     @Override
     public Iterator<Cell> iterator() {

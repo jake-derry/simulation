@@ -90,7 +90,7 @@ public class Visualization{
      */
     private void startAnimation(){
         myAnimation.pause();
-        var frame = new KeyFrame(Duration.millis(mySim.getMILLISECOND_DELAY()), e -> mySim.step());
+        var frame = new KeyFrame(Duration.millis(mySim.getMillisecondDelay()), e -> mySim.step());
         myAnimation = new Timeline();
         myAnimation.setCycleCount(Timeline.INDEFINITE);
         myAnimation.getKeyFrames().add(frame);

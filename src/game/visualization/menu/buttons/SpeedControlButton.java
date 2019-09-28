@@ -1,7 +1,6 @@
 package game.visualization.menu.buttons;
 
 import game.Simulation.Simulation;
-import game.visualization.menu.buttons.MenuButton;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -41,8 +40,8 @@ public class SpeedControlButton extends MenuButton {
             public void handle(final ActionEvent e) {
                 myAnimation.pause();
                 myAnimation = new Timeline();
-                if (mySim.getMILLISECOND_DELAY() > 50 || multiplier > 1){
-                    mySim.setMILLISECOND_DELAY((int) (multiplier*mySim.getMILLISECOND_DELAY()));
+                if (mySim.getMillisecondDelay() > 50 || multiplier > 1){
+                    mySim.setMillisecondDelay((int) (multiplier*mySim.getMillisecondDelay()));
                     startAnimation();
                 }
             }
@@ -56,7 +55,7 @@ public class SpeedControlButton extends MenuButton {
         myAnimation.pause();
         myAnimation = new Timeline();
         myAnimation.setCycleCount(Timeline.INDEFINITE);
-        myAnimation.getKeyFrames().add(new KeyFrame(Duration.millis(mySim.getMILLISECOND_DELAY()), e -> mySim.step()));
+        myAnimation.getKeyFrames().add(new KeyFrame(Duration.millis(mySim.getMillisecondDelay()), e -> mySim.step()));
         myAnimation.play();
     }
 }
