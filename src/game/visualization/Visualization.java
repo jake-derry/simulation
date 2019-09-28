@@ -6,8 +6,10 @@ import game.visualization.menu.MenuHandler;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 /**
@@ -27,9 +29,8 @@ public class Visualization{
     private ResourceBundle myResources;
     private Timeline myAnimation;
     private Group myGroup;
-    private MenuHandler myMenuHandler;
-    private GridHandler myGridHandler;
     private Simulation mySim;
+    private Iterator<Rectangle> rectangleIterator;
     
     public Visualization(Timeline animation, Group group, Simulation sim, Stage stage, int windowDimension, String language){
         myAnimation = animation;
@@ -46,19 +47,10 @@ public class Visualization{
         colorList[2] = Color.YELLOW;
         myResources = ResourceBundle.getBundle(language);
         myMenuHandler = new MenuHandler(myGroup, mySim, WINDOW_SIZE, stage, myAnimation, language);
-        myGridHandler = new GridHandler(mySim, myGroup, WINDOW_SIZE);
+        RectangleList = GridHandler.setUpRectangles(windowDimension, sim.getGridRowCount(), sim.getGridColumnCount());
     }
 
-    /**
-     * visualize: step through cells and update colors accordingly
-     * Assumptions: N/A
-     */
     public void visualize(){
-        for (Cell[] cellRow : mySim.getGrid()){
-            for (Cell cell : cellRow){
-                cell.stepState(colorList);
-            }
-        }
+        GridHandler.visualizeCells(rectangleIterator, mySim, colorList);
     }
-
 }
