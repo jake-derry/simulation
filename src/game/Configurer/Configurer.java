@@ -38,7 +38,6 @@ public class Configurer {
     private static final String PERCOLATION = "percolation";
 
     //Simulation Values and default parameters
-    private static final String DELAY = "delay";
     private static final String STYLE = "StylingFile";
     private static final String SHAPE = "shape";
     private static final String NEIGHBORS = "neighbors";
@@ -117,12 +116,11 @@ public class Configurer {
     }
 
     /**
-     * Gets the values for Delay, Shape, Neighbors, Style, and Simulation Type, which is common to all
+     * Gets the values for Shape, Neighbors, Style, and Simulation Type, which is common to all
      *
      */
     private static void getCommonValues(ParameterLoader myParams, HashMap<String, Object> mySpecialValues) {
         mySpecialValues.put(SIMULATION_TAG, myParams.getSimType());
-        mySpecialValues.put(DELAY, myParams.getValueInt(DELAY, DEFAULT_DELAY));
         mySpecialValues.put(SHAPE, myParams.getValueString(SHAPE, DEFAULT_SHAPE));
         mySpecialValues.put(NEIGHBORS, myParams.getNeighbors(DEFAULT_NEIGHBORS));
         mySpecialValues.put(STYLE, myParams.getValueString(STYLE_TAG, DEFAULT_STYLE));
@@ -134,8 +132,6 @@ public class Configurer {
      */
     private static Element readFile(String myFile, String FileType) {
         try {
-            System.out.println(myFile);
-            System.out.println(FileType);
             File simFile = new File("data/" + myFile);
             DocumentBuilder simDocumentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document myDocument = simDocumentBuilder.parse(simFile);

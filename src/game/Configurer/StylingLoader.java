@@ -17,9 +17,13 @@ import static game.Configurer.XMLReaders.getFirstElementInteger;
  * @author Jonah Knapp
  */
 public class StylingLoader {
-    //Tags used within XML styling file
+    //These Tags are automatically added to the parameters
     private static final String CELL_SIZE_TAG = "cellSize";
     private static final String OUTLINE_TAG = "outline";
+    private static final String WINDOW_DIMENSION_TAG = "windowDimension";
+    private static final String DELAY_TAG = "delay";
+
+    //Tags used within XML styling file
     private static final String CELL_COLOR_TAG = "color";
     private static final String CELL_IDENTIFIER_TAG = "state";
     private static final String OPTION_IDENTIFIER_TAG = "option";
@@ -27,8 +31,6 @@ public class StylingLoader {
     private static final String OPTION_VALUE_TAG = "value";
     private static final String COLOR_MAP_TAG = "colorMap";
 
-
-    //Default Values
 
     private static final String NOT_FOUND = "Parameter type %s not found. Default value will be used.";
 

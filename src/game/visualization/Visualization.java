@@ -1,13 +1,11 @@
 package game.visualization;
 
 import game.Simulation.Simulation;
-import game.Simulation.State;
 import game.visualization.menu.MenuHandler;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.*;
