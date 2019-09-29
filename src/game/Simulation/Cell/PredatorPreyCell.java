@@ -7,6 +7,9 @@ import game.Simulation.State;
 
 import java.util.*;
 
+/**
+ * Idk if this works?
+ */
 public class PredatorPreyCell extends Cell {
     private Mover mover;
     private Mover nextMover;
@@ -17,13 +20,14 @@ public class PredatorPreyCell extends Cell {
      *
      * @param state Initial state of the Cell
      */
-    public PredatorPreyCell(State state, int initialEnergy, int breedTime) {
+    public PredatorPreyCell(State state, int initialEnergy, int foodBoost, int breedThreshold,
+                            int breedTime) {
         super(state);
         if (getState() == State.PREY) {
             mover = new Prey(breedTime);
 
         } else if (getState() == State.PREDATOR) {
-            mover = new Predator(initialEnergy);
+            mover = new Predator(initialEnergy, foodBoost, breedThreshold);
 
         } else {
             mover = null;
@@ -32,7 +36,19 @@ public class PredatorPreyCell extends Cell {
 
     @Override
     public void stepState() {
-
+        if (getNextState() == null) {
+            setState(null);
+        }
+        else {
+            if (getNextMover().isLiving()) {
+                setState(getNextMover().moverState());
+                stepMover();
+            }
+            else {
+                setState(null);
+                setMover(null);
+            }
+        }
     }
 
     @Override
@@ -48,17 +64,47 @@ public class PredatorPreyCell extends Cell {
         }
     }
 
+    /**
+     *
+     */
     private void updatePredator() {
+        Predator predator = (Predator) mover;
+        PredatorPreyCell randomCell = (PredatorPreyCell) getNeighborhood().
+                chooseNeighbor(new State[] {State.EMPTY, State.PREY});
 
+        randomCell.setNextMover(mover);
+
+        Mover oldMover = randomCell.getMover();
+        predator.eat(oldMover);
+
+        getMover().step();
+
+        replicateIfReady(randomCell);
+
+        setNextMover(null);
     }
 
+    /**
+     *
+     */
     private void updatePrey() {
         PredatorPreyCell randomCell = (PredatorPreyCell) getNeighborhood().
                 chooseNeighbor(new State[] {State.EMPTY});
         randomCell.setNextMover(mover);
 
-        ((Prey) getMover()).step();
-        
+        getMover().step();
+
+        replicateIfReady(randomCell);
+
+        setNextMover(null);
+    }
+
+    /**
+     *
+     *
+     * @param randomCell
+     */
+    private void replicateIfReady(PredatorPreyCell randomCell) {
         if (mover.readyToBreed()) {
             Mover newMover = mover.offspring();
 
@@ -71,14 +117,25 @@ public class PredatorPreyCell extends Cell {
             offspringCell.setNextMover(newMover);
 
         }
-        setNextMover(null);
     }
 
-    public Mover setNextMover(Mover newMover) {
-        return null;
+    private void stepMover() {
+        mover = nextMover;
     }
 
-    public Mover getMover() {
+    private void setNextMover(Mover newMover) {
+        nextMover = newMover;
+    }
+
+    private void setMover(Mover newMover) {
+        mover = newMover;
+    }
+
+    private Mover getNextMover() {
+        return nextMover;
+    }
+
+    private Mover getMover() {
         return mover;
     }
 }

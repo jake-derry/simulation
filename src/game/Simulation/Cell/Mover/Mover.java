@@ -1,5 +1,7 @@
 package game.Simulation.Cell.Mover;
 
+import game.Simulation.State;
+
 public interface Mover {
 
     /**
@@ -13,4 +15,26 @@ public interface Mover {
      * @return
      */
     public Mover offspring();
+
+    /**
+     *
+     */
+    public void step();
+
+    /**
+     *
+     * @return
+     */
+    public boolean isLiving();
+
+    /**
+     *
+     * @return
+     */
+    public State moverState();
+
+    /**
+     *
+     */
+    public void kill();
 }

@@ -1,5 +1,7 @@
 package game.Simulation.Cell.Mover;
 
+import game.Simulation.State;
+
 public class Prey implements Mover {
     private final int myBreedTime;
     private int clock;
@@ -10,6 +12,7 @@ public class Prey implements Mover {
         clock = 0;
     }
 
+    @Override
     public void step () {
         clock++;
     }
@@ -27,5 +30,14 @@ public class Prey implements Mover {
 
     public boolean isLiving() {
         return living;
+    }
+
+    public void kill() {
+        living = false;
+    }
+
+    @Override
+    public State moverState() {
+        return State.PREY;
     }
 }
