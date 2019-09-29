@@ -15,10 +15,10 @@ public class PercolationCell extends Cell{
     }
 
     @Override
-    public State updateNext() {
+    public void updateNext() {
         if (getState() == State.EMPTY && getCountMap().get(State.WATER) > 0) {
-            return State.WATER;
+            setNextState(State.WATER);
         }
-        return getState();
+        setNextState(getState());
     }
 }

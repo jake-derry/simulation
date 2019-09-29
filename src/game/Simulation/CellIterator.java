@@ -19,6 +19,7 @@ public class CellIterator implements Iterator<Cell> {
         myCellGrid = cellGrid;
     }
 
+
     @Override
     public boolean hasNext() {
         boolean rowInRange = currentRow + 1 < myCellGrid.length && currentRow + 1 >= 0;
@@ -31,4 +32,5 @@ public class CellIterator implements Iterator<Cell> {
         currentRow++; currentColumn++;
         return myCellGrid[currentRow][currentColumn];
     }
+
 }

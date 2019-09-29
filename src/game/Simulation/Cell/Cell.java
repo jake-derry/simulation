@@ -1,5 +1,6 @@
 package game.Simulation.Cell;
 
+import game.Simulation.Neighborhood;
 import game.Simulation.State;
 import java.util.Iterator;
 import java.util.List;
@@ -21,7 +22,7 @@ abstract public class Cell {
     private State myState;
     private State myNextState;
     private Map<State, Integer> countMap;
-    private Iterator<Cell> myNeighbors;
+    private Iterable<Cell> myNeighborhood;
 
     /**
      * Constructor for Cell. Initializes the state of the
@@ -31,11 +32,12 @@ abstract public class Cell {
      */
     public Cell(State state) {
         myState = state;
+        myNextState = state;
 
     }
 
-    public void setNeighbors(Iterator<Cell> neighbors) {
-        myNeighbors = neighbors;
+    public void setNeighbors(Iterable<Cell> neighborhood) {
+        myNeighborhood = neighborhood;
     }
 
     /**
@@ -43,7 +45,7 @@ abstract public class Cell {
      * the next state of the cell. Sets the next
      * state of the cell using setNextState.
      */
-    abstract public State updateNext();
+    abstract public void updateNext();
 
     /**
      * Sets the current state to the next state, stepping the state
@@ -70,8 +72,8 @@ abstract public class Cell {
      *
      * @return          the cell's neighbors in an Iterator
      */
-    protected Iterator<Cell> getNeighbors() {
-        return myNeighbors;
+    protected Iterable<Cell> getNeighbors() {
+        return myNeighborhood;
     }
 
     /**
@@ -92,9 +94,17 @@ abstract public class Cell {
      * number of neighbors of each state.
      *
      */
-    public void setNextState() {
+    public void setNextState(State next) {
         countMap = CellUtils.countMap(getNeighbors());
-        myNextState = updateNext();
+        myNextState = next;
+    }
+
+    /**
+     *
+     * @return
+     */
+    protected State getNextState() {
+        return myNextState;
     }
 
     /**
