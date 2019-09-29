@@ -1,7 +1,6 @@
 package game.Simulation;
 
 import game.Simulation.Cell.Cell;
-import game.Simulation.Cell.CellUtils;
 
 import java.util.Map;
 
@@ -25,7 +24,6 @@ import java.util.Map;
  * @author Jake Derry
  */
 public class Simulation {
-
     private CellGrid grid;
     private boolean running;
     private Map<String, Object> myParameterMap;
@@ -42,6 +40,7 @@ public class Simulation {
         running = true;
         grid = new CellGrid(parameterMap, initialGrid);
         stepCount = 0;
+        myParameterMap.put("StylingFile", "FireStyle.xml");
     }
 
     /**
@@ -108,5 +107,9 @@ public class Simulation {
         for (Cell cell : grid) {
             cell.stepState();
         }
+    }
+
+    public Map<String, Object> getParameterMap(){
+        return myParameterMap;
     }
 }

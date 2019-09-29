@@ -1,11 +1,10 @@
 package game.visualization;
 
 import game.Simulation.Cell.Cell;
-import game.Simulation.CellIterator;
-import game.Simulation.Simulation;
 import game.Simulation.State;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -39,9 +38,11 @@ public class GridHandler {
      * visualize: step through cells and update colors accordingly
      * Assumptions: N/A
      */
-    public static void visualizeCells(Iterator<Rectangle> rectangleIterator, Iterator<Cell> cellIterator, Map<State, Color> colorMap){
+    public static void visualizeCells(Iterator<Rectangle> rectangleIterator, Iterator<Cell> cellIterator, Map colorMap){
             while (rectangleIterator.hasNext() && cellIterator.hasNext()){
-                rectangleIterator.next().setFill(colorMap.get(cellIterator.next().getState()));
+                String stateKey = cellIterator.next().getState().toString();
+                String colorVal = colorMap.get(stateKey).toString();
+                rectangleIterator.next().setFill(Paint.valueOf(colorVal));
             }
     }
 }

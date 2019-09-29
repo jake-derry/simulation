@@ -39,7 +39,6 @@ public class CAApp extends Application {
     private static Visualization myVisualization;
 
     private Stage myStage;
-    private int x;
 
     /**
      * start: Starts the simulation and animation of the app. Here the display group, display handler, simulation, and animation are all defined and started.
@@ -51,7 +50,8 @@ public class CAApp extends Application {
         displayGroup = new Group();
         mySim = Configurer.getSimulation("Fire.xml");
         Timeline myAnimation = new Timeline();
-        myVisualization = new Visualization(displayGroup, mySim, myStage, WINDOW_HEIGHT, language, myAnimation);
+        Map stylingMap = Configurer.getStyling(mySim.getParameterMap().get("StylingFile").toString());
+        myVisualization = new Visualization(displayGroup, mySim, myStage, WINDOW_HEIGHT, language, myAnimation, stylingMap);
         myStage.setScene(new Scene(displayGroup, WINDOW_WIDTH, WINDOW_HEIGHT, BACKGROUND_COLOR));
         myStage.setTitle(mySim.getSimTitle());
         myStage.show();
