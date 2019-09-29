@@ -36,11 +36,8 @@ public class Visualization{
         seriesList = new ArrayList<XYChart.Series>();
         MenuHandler.addMenuButtonsToDisplayGroup(stage, group, sim, windowHeight, millisecondDelay, animation, language, cellGraph, seriesList);
         MenuHandler.addTitleTextToDisplayGroup(group, windowHeight, sim.getSimTitle());
-        rectangleList = GridHandler.setUpRectangles(windowHeight, sim.getGrid().getCellRows(), sim.getGrid().getCellColumns(), myGroup);
-
-        //TODO: DUMMY COLOR MAP
+        rectangleList = GridHandler.setUpRectangles(windowHeight, sim.getGrid().getCellRows(), sim.getGrid().getCellColumns(), myGroup, stylingMap);
         colorMap = stylingMap.get("colorMap");
-        int x = 0;
     }
 
     public void visualize(){

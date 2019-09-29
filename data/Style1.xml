@@ -4,7 +4,7 @@
     <color><state>EMPTY</state> <color>BLACK</color></color>
     <color><state>BURNING</state> <color>PURPLE</color></color>
     <color><state>TREE</state> <color>LIMEGREEN</color></color>
-    <option><type>cellSize</type> <value>10</value></option>
+    <option><type>cellSize</type> <value>30</value></option>
     <option><type>outline</type> <value>1</value></option>
     <option><type>windowDimension</type> <value>600</value></option>
     <option><type>delay</type> <value>500</value></option>
