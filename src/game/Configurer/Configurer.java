@@ -140,11 +140,7 @@ public class Configurer {
         for (int i = 0; i < totalRows; i++) {
             for (int j = 0; j < totalColumns; j++) {
                 int myIndex = (i * totalColumns) + j;
-                if (activeCells.containsKey(myIndex)) {
-                    myArray[i][j] = activeCells.get(myIndex);
-                } else {
-                    myArray[i][j] = defaultState;
-                }
+                myArray[i][j] = activeCells.getOrDefault(myIndex, defaultState);
             }
 
         }

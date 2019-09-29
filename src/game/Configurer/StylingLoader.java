@@ -27,7 +27,6 @@ public class StylingLoader {
     private static final String OPTION_VALUE_TAG = "value";
     private static final String COLOR_MAP_TAG = "colorMap";
 
-    //Tags used within default color file
 
     //Default Values
 
@@ -38,6 +37,12 @@ public class StylingLoader {
     private Map<String, Object> colorMap;
     private Map<String, Object> myStyling;
 
+    /**
+     * Constructor for the StylingLoader Class
+     *
+     * @param defaultStyle Element, taken from XML, of the default file for state colors
+     * @param mainDocumentElement Element, taken from XML, of the style file to be read from
+     */
     StylingLoader(Element defaultStyle, Element mainDocumentElement){
         defaultElement = defaultStyle;
         mainElement = mainDocumentElement;
@@ -45,6 +50,11 @@ public class StylingLoader {
         myStyling = new HashMap<>();
     }
 
+    /**
+     * Creates a Map of state colors and optional styling parameters
+     *
+     * @return Map containing the style parameters, as read in the XML file
+     */
     public Map<String, Object> getStyling(){
         addElements(defaultElement);
         addElements(mainElement);
@@ -52,17 +62,17 @@ public class StylingLoader {
         return myStyling;
     }
 
+    /**
+     * Adds nodes within the Element to the style Map
+     */
     private void addElements(Element myElement){
-        System.out.println("NEW");
         NodeList styleList = myElement.getChildNodes();
         for(int i = 0 ; i < styleList.getLength(); i++){
-            System.out.println(styleList.item(i).getNodeType());
             if(styleList.item(i).getNodeType() == Node.ELEMENT_NODE) {
                 Element myStyle = (Element) styleList.item(i);
-                if (myStyle.getTagName() == CELL_COLOR_TAG) {
-                    System.out.println("NEW COLOR");
+                if (myStyle.getTagName().equals(CELL_COLOR_TAG)) {
                     addColor(myStyle);
-                } else if (myStyle.getTagName() == OPTION_IDENTIFIER_TAG) {
+                } else if (myStyle.getTagName().equals(OPTION_IDENTIFIER_TAG)) {
                     addStyle(myStyle);
                 }
             }
@@ -86,11 +96,4 @@ public class StylingLoader {
         if(myValue > 0) {myStyling.put(myState,myValue);}
     }
 
-    /**
-     * Reads all nodes within the style file and adds them to the Map to be sent back to Visualization.
-     */
-    private Map<String, Object> readStyling(){
-        Map<String, Object> myStyling = new HashMap<>();
-        return null;
-    }
 }
