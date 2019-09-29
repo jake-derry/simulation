@@ -8,6 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * CAApp: Main JavaFX application. Calls Configurer to read in XML file and create simulation of proper type, Simulation to calculate and step through
  * states of cells based on the rules, and DisplayHandler to create and position menu assets to be displayed.
@@ -35,7 +38,7 @@ public class CAApp extends Application {
     public void start(Stage stage){
         myStage = stage;
         displayGroup = new Group();
-
+        Map<String, Object> myMap = Configurer.getStyling("FireStyle.xml");
         mySim = Configurer.getSimulation("Fire.xml");
         mySim.setVisualization(displayGroup, myStage, WINDOW_HEIGHT, language);
         myStage.setScene(new Scene(displayGroup, WINDOW_HEIGHT, WINDOW_HEIGHT, BACKGROUND_COLOR));

@@ -28,7 +28,7 @@ public class Configurer {
     //Files Supported
     private static final String SIMULATION_TAG = "Simulation";
     private static final String STYLE_TAG = "Style";
-    private static final String DEFAULT_TAG = "defaultColors";
+    private static final String DEFAULT_TAG = "defaults";
 
     //Simulations Supported
     private static final String LIFE = "gameOfLife";
@@ -48,7 +48,7 @@ public class Configurer {
 
     //Default Simulation Files
     private static final String DEFAULT_SIM = "././Fire.xml";
-    private static final String DEFAULT_COLORS_FILE = "defaultColors";
+    private static final String DEFAULT_COLORS_FILE = "defaultColors.xml";
 
     //XML Parsing Errors
     private static final String ERROR_DEFAULT = "XML type \"%s\" not supported. Loading Default File.";
@@ -129,6 +129,7 @@ public class Configurer {
         }
         return readFile(DEFAULT_SIM, FileType);
     }
+
     /**
      * Initializes the cells in the Cellular Array
      */

@@ -11,6 +11,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static game.Configurer.XMLReaders.getFirstElementString;
+import static game.Configurer.XMLReaders.getFirstElementInteger;
+
 /**
  * This class handles loading in parameters from the XML file. It contains default values for each of the parameters,
  * which is set when the specified values in the XML are not supported.

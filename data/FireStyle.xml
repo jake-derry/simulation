@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <Style>
     <author> Jonah Knapp </author>
-    <cellSize></cellSize>
-    <outline></outline>
-    <ColorDefining>
-        <colorDeclaration></colorDeclaration>
-    </ColorDefining>
+    <color><state>EMPTY</state> <color>BLACK</color></color>
+    <color><state>BURNING</state> <color>PURPLE</color></color>
+    <color><state>TREE</state> <color>LIMEGREEN</color></color>
+    <option><type>cellSize</type> <value>10</value></option>
+    <option><type>outline</type> <value>1</value></option>
 </Style>
