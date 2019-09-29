@@ -49,7 +49,6 @@ public class CAApp extends Application {
         myStage.setScene(new Scene(displayGroup, myVisualization.getWindowWidth(), myVisualization.getWindowHeight(), BACKGROUND_COLOR));
         myStage.setTitle(mySim.getSimTitle());
         myStage.show();
-        //TODO: This should be gotten from styling and from visualization
         int millisecondDelay = myVisualization.getDelay();
         var frame = new KeyFrame(Duration.millis(millisecondDelay), e -> step());
         myAnimation.setCycleCount(Timeline.INDEFINITE);
