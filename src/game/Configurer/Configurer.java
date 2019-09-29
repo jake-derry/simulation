@@ -12,6 +12,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -27,9 +28,8 @@ import java.util.Map;
 public class Configurer {
     //Files Supported
     private static final String SIMULATION_TAG = "Simulation";
-    private static final String STYLE_TAG = "Style";
     private static final String DEFAULT_TAG = "defaults";
-
+    private static final String STYLE_TAG = "Style";
     //Simulations Supported
     private static final String LIFE = "gameOfLife";
     private static final String SEGREGATION = "segregation";
@@ -37,9 +37,18 @@ public class Configurer {
     private static final String FIRE = "fire";
     private static final String PERCOLATION = "percolation";
 
+    //Simulation Values and default parameters
+    private static final String DELAY = "delay";
+    private static final String STYLE = "StylingFile";
+    private static final String SHAPE = "shape";
+    private static final String NEIGHBORS = "neighbors";
+
+    private static final int DEFAULT_DELAY = 500;
+    private static final String DEFAULT_STYLE = "Style1.xml";
+    private static final String DEFAULT_SHAPE = "rectangle";
+    private static final int[] DEFAULT_NEIGHBORS = new int[]{0, 1, 2, 3, 4, 5, 6, 7};
 
     //Simulation-Specific Tags
-    private static final String DELAY = "delay";
     private static final String SATISFACTION_PERCENT = "satisfaction";
     private static final String CATCH_PERCENT = "probCatch";
     private static final String BREED_TIME = "breedTime";
@@ -70,8 +79,7 @@ public class Configurer {
         String[][] myStateArray = new String[dimensionsRC[0]][dimensionsRC[1]];
         initializeCells(defaultState, myParams, myStateArray);
         HashMap<String, Object> mySpecialValues = new HashMap<>();
-        mySpecialValues.put(DELAY, myParams.getDelay());
-        mySpecialValues.put(SIMULATION_TAG, myParams.getSimType());
+        getCommonValues(myParams, mySpecialValues);
         switch (myParams.getSimType()) {
             case PERCOLATION:
             case LIFE:
@@ -94,7 +102,6 @@ public class Configurer {
         return new Simulation(mySpecialValues, myStateArray);
     }
 
-
     public static Map<String, Object> getStyling(String myStyleFile){
         Element colorElement = readFile(DEFAULT_COLORS_FILE, DEFAULT_TAG);
         Element mainElement = readFile(myStyleFile, STYLE_TAG);
@@ -109,6 +116,17 @@ public class Configurer {
 
     }
 
+    /**
+     * Gets the values for Delay, Shape, Neighbors, Style, and Simulation Type, which is common to all
+     *
+     */
+    private static void getCommonValues(ParameterLoader myParams, HashMap<String, Object> mySpecialValues) {
+        mySpecialValues.put(SIMULATION_TAG, myParams.getSimType());
+        mySpecialValues.put(DELAY, myParams.getValueInt(DELAY, DEFAULT_DELAY));
+        mySpecialValues.put(SHAPE, myParams.getValueString(SHAPE, DEFAULT_SHAPE));
+        mySpecialValues.put(NEIGHBORS, myParams.getNeighbors(DEFAULT_NEIGHBORS));
+        mySpecialValues.put(STYLE, myParams.getValueString(STYLE_TAG, DEFAULT_STYLE));
+    }
 
     /**
      * Creates a documentBuilder from an XML file then parses it into a document. If the type of document is not
@@ -116,6 +134,8 @@ public class Configurer {
      */
     private static Element readFile(String myFile, String FileType) {
         try {
+            System.out.println(myFile);
+            System.out.println(FileType);
             File simFile = new File("data/" + myFile);
             DocumentBuilder simDocumentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document myDocument = simDocumentBuilder.parse(simFile);
@@ -127,7 +147,10 @@ public class Configurer {
         } catch (Exception e) {
             new ErrorThrow(e.getMessage());
         }
-        return readFile(DEFAULT_SIM, FileType);
+        if(FileType.equals(SIMULATION_TAG)){
+            return readFile(DEFAULT_SIM, FileType);
+        }
+        else{return readFile(DEFAULT_STYLE, FileType);}
     }
 
     /**

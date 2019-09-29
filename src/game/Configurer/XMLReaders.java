@@ -49,4 +49,14 @@ public class XMLReaders {
         }
         return myElement.getElementsByTagName(TagName).item(0).getTextContent();
     }
+
+    public static int[] getIntegerArray(Element myElement, String TagName){
+        Node myValue = myElement.getElementsByTagName(TagName).item(0);
+        if(myValue == null){
+            new ErrorThrow(NOT_FOUND, TagName);
+            return new int[]{0};
+        }
+        System.out.println(myElement.getElementsByTagName(TagName).item(0).getTextContent());
+        return new int[]{0};
+    }
 }

@@ -5,6 +5,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,9 +32,8 @@ public class ParameterLoader {
     private static final String CELL_STATE_TAG = "state";
     private static final String TYPE_TAG = "type";
     private static final String DISTRIBUTION_TAG = "cellDistribution";
-    private static final String NEIGHBORS_TAG = "";
-    private static final String GRID_SHAPE_TAG = "";
-    private static final String DELAY_TAG = "delay";
+    private static final String NEIGHBORS_TAG = "neighbor";
+    private static final String INDEX_TAG = "index";
 
     //Types of distributions supported
     private static final String SPECIFIC_DISTRIBUTION = "cell";
@@ -44,27 +44,20 @@ public class ParameterLoader {
     private static final int DEFAULT_DIMENSION = 10;
     private static final int DEFAULT_GENERIC = 5;
     private static final int DEFAULT_PERCENTAGE = 50;
-    private static final int DEFAULT_DELAY = 500;
 
-
+    //Variables that all simulations have
     private Element mainElement;
     private int totalRows;
     private int totalColumns;
     private String simType;
-    private int numStates;
     private String distributionType;
-    private int delay;
 
-    ParameterLoader(Element mainDocumentElement){
+    public ParameterLoader(Element mainDocumentElement){
         mainElement = mainDocumentElement;
         totalRows = getFirstElementInteger(mainElement, ROW_TAG);
         totalColumns = getFirstElementInteger(mainElement, COLUMN_TAG);
-        simType = getFirstElementString(mainElement, TYPE_TAG);
-        numStates = getFirstElementInteger(mainElement, MAX_STATE_TAG);
         distributionType = getFirstElementString(mainElement, DISTRIBUTION_TAG);
-        delay = getFirstElementInteger(mainElement, DELAY_TAG);
-        if(numStates == -1){ numStates = 1;}
-        if(delay < 0 ){delay = DEFAULT_DELAY;}
+        simType = getFirstElementString(mainElement, TYPE_TAG);
     }
 
     /**
@@ -88,22 +81,6 @@ public class ParameterLoader {
      */
     public String getDefaultState(){
         return getFirstElementString(mainElement, STATE_TAG);
-    }
-
-    /**
-     *
-     * @return type of simulation, as described in the XML file
-     */
-    public String getSimType(){
-        return simType;
-    }
-
-    /**
-     *
-     * @return delay of simulation, as described in the XML file
-     */
-    public int getDelay(){
-        return delay;
     }
 
     /**
@@ -153,6 +130,39 @@ public class ParameterLoader {
         return activeCells;
     }
 
+    public int getValueInt(String myTag, int DefaultValue){
+        int myVal = getFirstElementInteger(mainElement, myTag);
+        if(myVal < 0){
+            return DefaultValue;
+        }
+        return myVal;
+    }
+
+    public String getValueString(String myTag, String DefaultValue){
+        String myVal = getFirstElementString(mainElement, myTag);
+        if(myVal.equals("Unspecified")){
+            return DefaultValue;
+        }
+        return myVal;
+    }
+
+    public String getSimType() {
+        return simType;
+    }
+
+    public int[] getNeighbors(int[] Default) {
+        NodeList nList = mainElement.getElementsByTagName(NEIGHBORS_TAG);
+        List<Integer> myNeighbors = new ArrayList<>();
+        if (nList.getLength() < 0){
+            return Default;
+        }
+        for(int i = 0 ; i < nList.getLength(); i++){
+            Element neighbor = (Element) nList.item(i);
+            int myIndex = getFirstElementInteger(neighbor, INDEX_TAG);
+            if(myIndex > 0){ myNeighbors.add(myIndex);}
+        }
+        return myNeighbors.stream().mapToInt(i -> i).toArray();
+    }
     /**
      * Method used to read the active cells within the XML file
      */
@@ -179,5 +189,4 @@ public class ParameterLoader {
             }
         }
     }
-
 }
