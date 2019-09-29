@@ -1,15 +1,8 @@
 package game.visualization.menu.buttons;
 
 import game.Simulation.Simulation;
-<<<<<<< HEAD
-<<<<<<< HEAD
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-=======
->>>>>>> master
-=======
-import javafx.animation.Timeline;
->>>>>>> origin/master
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
