@@ -1,13 +1,11 @@
 package game.visualization;
 
 import game.Simulation.Simulation;
-import game.Simulation.State;
 import game.visualization.menu.MenuHandler;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.*;
@@ -38,11 +36,8 @@ public class Visualization{
         seriesList = new ArrayList<XYChart.Series>();
         MenuHandler.addMenuButtonsToDisplayGroup(stage, group, sim, windowHeight, millisecondDelay, animation, language, cellGraph, seriesList);
         MenuHandler.addTitleTextToDisplayGroup(group, windowHeight, sim.getSimTitle());
-        rectangleList = GridHandler.setUpRectangles(windowHeight, sim.getGrid().getCellRows(), sim.getGrid().getCellColumns(), myGroup);
-
-        //TODO: DUMMY COLOR MAP
+        rectangleList = GridHandler.setUpRectangles(windowHeight, sim.getGrid().getCellRows(), sim.getGrid().getCellColumns(), myGroup, stylingMap);
         colorMap = stylingMap.get("colorMap");
-        int x = 0;
     }
 
     public void visualize(){
