@@ -13,7 +13,7 @@ public class Pair<K, V> {
         return myKey;
     }
 
-    public V getMyValue() {
+    public V getValue() {
         return myValue;
     }
 }
