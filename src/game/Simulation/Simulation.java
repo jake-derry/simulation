@@ -1,6 +1,12 @@
 package game.Simulation;
 
 import game.Simulation.Cell.Cell;
+import game.visualization.Visualization;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.scene.Group;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.Map;
 
@@ -28,7 +34,10 @@ public class Simulation {
     private CellGrid grid;
     private boolean running;
     private Map<String, Object> parameterMap;
-    private int millisecondDelay;
+    private int delay;
+    private Visualization myVisualization;
+    private Timeline myAnimation;
+    private String simTitle;
 
     /**
      * Initializes a simulation running.
@@ -39,7 +48,27 @@ public class Simulation {
     public Simulation(Map<String, Object> parameterMap, String[][] initialGrid) {
         running = true;
         grid = new CellGrid(parameterMap, initialGrid);
-        millisecondDelay = (int) parameterMap.get("millisecondDelay");
+        delay = (int) parameterMap.get("millisecondDelay");
+        simTitle = parameterMap.get("title").toString();
+        myAnimation = new Timeline();
+        startAnimation();
+    }
+
+    public void setVisualization(Group group, Stage stage, int windowSize, String language){
+        myVisualization = new Visualization(group, this, stage, windowSize, language);
+    }
+
+    public Timeline getAnimation(){
+        return myAnimation;
+    }
+
+    public void startAnimation(){
+        myAnimation.pause();
+        myAnimation = new Timeline();
+        var frame = new KeyFrame(Duration.millis(delay), e -> step());
+        myAnimation.setCycleCount(Timeline.INDEFINITE);
+        myAnimation.getKeyFrames().add(frame);
+        myAnimation.play();
     }
 
 
@@ -77,12 +106,8 @@ public class Simulation {
         return running;
     }
 
-    public int getMillisecondDelay(){
-        return millisecondDelay;
-    }
-
-    public void setMillisecondDelay(int delay){
-        millisecondDelay = delay;
+    public int getDelay(){
+        return delay;
     }
 
     /**

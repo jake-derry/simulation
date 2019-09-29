@@ -2,7 +2,6 @@ package game;
 
 import game.Configurer.Configurer;
 import game.Simulation.Simulation;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -21,12 +20,9 @@ import javafx.stage.Stage;
 public class CAApp extends Application {
     private static final int WINDOW_SIZE = 600;
     private static final Color BACKGROUND_COLOR = Color.LIGHTGRAY;
-    private static int FRAMES_PER_SECOND = 3;
-    private static int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private String language = "English";
 
     private Group displayGroup;
-    private Timeline myAnimation;
     private static Simulation mySim;
 
     private Stage myStage;
@@ -39,9 +35,9 @@ public class CAApp extends Application {
     public void start(Stage stage){
         myStage = stage;
         displayGroup = new Group();
-        myAnimation = new Timeline();
 
         mySim = Configurer.getSimulation("Segregation.xml", WINDOW_SIZE, language);
+        mySim.setVisualization(displayGroup, myStage, WINDOW_SIZE, language);
         myStage.setScene(new Scene(displayGroup, WINDOW_SIZE, WINDOW_SIZE, BACKGROUND_COLOR));
         myStage.setTitle(mySim.getSimTitle());
         myStage.show();
