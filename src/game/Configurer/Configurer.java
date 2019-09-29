@@ -28,6 +28,7 @@ public class Configurer {
     //Files Supported
     private static final String SIMULATION_TAG = "Simulation";
     private static final String STYLE_TAG = "Style";
+    private static final String DEFAULT_TAG = "defaultColors";
 
     //Simulations Supported
     private static final String LIFE = "gameOfLife";
@@ -35,19 +36,19 @@ public class Configurer {
     private static final String PREDATOR_PREY = "predatorPrey";
     private static final String FIRE = "fire";
     private static final String PERCOLATION = "percolation";
-    private static final String DELAY_TAG = "delay";
 
-    private static final int DEFAULT_DELAY = 500;
 
     //Simulation-Specific Tags
+    private static final String DELAY = "delay";
     private static final String SATISFACTION_PERCENT = "satisfaction";
     private static final String CATCH_PERCENT = "probCatch";
     private static final String BREED_TIME = "breedTime";
     private static final String PREDATOR_INITIAL_ENERGY = "initEnergy";
     private static final String PREDATOR_ENERGY_THRESHOLD = "energyThreshold";
 
-    //Default Simulation File
+    //Default Simulation Files
     private static final String DEFAULT_SIM = "././Fire.xml";
+    private static final String DEFAULT_COLORS_FILE = "defaultColors";
 
     //XML Parsing Errors
     private static final String ERROR_DEFAULT = "XML type \"%s\" not supported. Loading Default File.";
@@ -62,18 +63,14 @@ public class Configurer {
      * @return Simulation created based on XML file
      */
     public static Simulation getSimulation(String myFile) {
-        Document simDoc = readFile(myFile, SIMULATION_TAG);
-        Element mainElement = simDoc.getDocumentElement();
+        Element mainElement = readFile(myFile, SIMULATION_TAG);
         ParameterLoader myParams = new ParameterLoader(mainElement);
         int[] dimensionsRC = myParams.getDimensions();
         String defaultState = myParams.getDefaultState();
         String[][] myStateArray = new String[dimensionsRC[0]][dimensionsRC[1]];
         initializeCells(defaultState, myParams, myStateArray);
         HashMap<String, Object> mySpecialValues = new HashMap<>();
-        if (!(myParams.getSpecialValue(DELAY_TAG, 0)<0)){
-            mySpecialValues.put(DELAY_TAG, DEFAULT_DELAY);
-        }
-        else{mySpecialValues.put(DELAY_TAG, myParams.getSpecialValue(DELAY_TAG, 0));}
+        mySpecialValues.put(DELAY, myParams.getDelay());
         mySpecialValues.put(SIMULATION_TAG, myParams.getSimType());
         switch (myParams.getSimType()) {
             case PERCOLATION:
@@ -97,10 +94,11 @@ public class Configurer {
         return new Simulation(mySpecialValues, myStateArray);
     }
 
-    public static Map<String, String> getStyling(String myStyleFile){
-        Document styleDoc = readFile(myStyleFile, STYLE_TAG);
-        Element mainElement = styleDoc.getDocumentElement();
-        StylingLoader myStyling = new StylingLoader(mainElement);
+
+    public static Map<String, Object> getStyling(String myStyleFile){
+        Element colorElement = readFile(DEFAULT_COLORS_FILE, DEFAULT_TAG);
+        Element mainElement = readFile(myStyleFile, STYLE_TAG);
+        StylingLoader myStyling = new StylingLoader(colorElement, mainElement);
         return myStyling.getStyling();
     }
 
@@ -111,11 +109,12 @@ public class Configurer {
 
     }
 
+
     /**
      * Creates a documentBuilder from an XML file then parses it into a document. If the type of document is not
      * a simulation, the simulation will default to a Fire simulation.
      */
-    private static Document readFile(String myFile, String FileType) {
+    private static Element readFile(String myFile, String FileType) {
         try {
             File simFile = new File("data/" + myFile);
             DocumentBuilder simDocumentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -123,14 +122,13 @@ public class Configurer {
             if (!myDocument.getFirstChild().getNodeName().equals(FileType)) {
                 throw new XMLSimulationException(ERROR_DEFAULT, myDocument.getFirstChild().getNodeName());
             } else {
-                return myDocument;
+                return myDocument.getDocumentElement();
             }
         } catch (Exception e) {
             new ErrorThrow(e.getMessage());
         }
         return readFile(DEFAULT_SIM, FileType);
     }
-
     /**
      * Initializes the cells in the Cellular Array
      */

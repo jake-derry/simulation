@@ -30,6 +30,7 @@ public class ParameterLoader {
     private static final String DISTRIBUTION_TAG = "cellDistribution";
     private static final String NEIGHBORS_TAG = "";
     private static final String GRID_SHAPE_TAG = "";
+    private static final String DELAY_TAG = "delay";
 
     //Types of distributions supported
     private static final String SPECIFIC_DISTRIBUTION = "cell";
@@ -37,12 +38,11 @@ public class ParameterLoader {
     private static final String CONCENTRATION_DISTRIBUTION = "concentration";
     private static final String DISTRIBUTION_VALUE_TAG = "value";
 
-    private static final int DEFAULT_INT = -1;
     private static final int DEFAULT_DIMENSION = 10;
     private static final int DEFAULT_GENERIC = 5;
     private static final int DEFAULT_PERCENTAGE = 50;
+    private static final int DEFAULT_DELAY = 500;
 
-    private static final String NOT_FOUND = "Parameter type %s not found. Default value will be used.";
 
     private Element mainElement;
     private int totalRows;
@@ -50,6 +50,7 @@ public class ParameterLoader {
     private String simType;
     private int numStates;
     private String distributionType;
+    private int delay;
 
     ParameterLoader(Element mainDocumentElement){
         mainElement = mainDocumentElement;
@@ -57,8 +58,10 @@ public class ParameterLoader {
         totalColumns = getFirstElementInteger(mainElement, COLUMN_TAG);
         simType = getFirstElementString(mainElement, TYPE_TAG);
         numStates = getFirstElementInteger(mainElement, MAX_STATE_TAG);
-        if(numStates == -1){ numStates = 1;}
         distributionType = getFirstElementString(mainElement, DISTRIBUTION_TAG);
+        delay = getFirstElementInteger(mainElement, DELAY_TAG);
+        if(numStates == -1){ numStates = 1;}
+        if(delay < 0 ){delay = DEFAULT_DELAY;}
     }
 
     /**
@@ -90,6 +93,14 @@ public class ParameterLoader {
      */
     public String getSimType(){
         return simType;
+    }
+
+    /**
+     *
+     * @return delay of simulation, as described in the XML file
+     */
+    public int getDelay(){
+        return delay;
     }
 
     /**
@@ -157,50 +168,13 @@ public class ParameterLoader {
      * each state or the type of
      */
     private void getRandomCells(Map<Integer, String> activeCells, List<Integer> openCells, String state, int totalCells) {
-        int total = 0;
         if(openCells.size() > 0 && totalCells > 0){
             for(int i = 0; i < totalCells; i++){
-                total++;
                 int randomCell = (int)(Math.random() * openCells.size());
                 int myIndex = openCells.remove(randomCell);
                 activeCells.put(myIndex, state);
             }
         }
-    }
-    /**
-     * Returns a Integer representation of the first sub-element of an element. If the specified element
-     * does not contain an integer, then a default integer value is used.
-     */
-    private Integer getFirstElementInteger(Element myElement, String TagName){
-        Node myValue = myElement.getElementsByTagName(TagName).item(0);
-        if(myValue == null){
-           new ErrorThrow(NOT_FOUND, TagName);
-           return DEFAULT_INT;
-        }
-        try{
-            int x = Integer.parseInt(myValue.getTextContent());
-            return x;
-        } catch (Exception e){
-            try{
-                int x = Integer.parseInt(myValue.getTextContent().replaceAll("\\s+", ""));
-                return x;
-            } catch (Exception e2){
-                new ErrorThrow(e2.getMessage());
-            }
-        }
-        return DEFAULT_INT;
-    }
-
-    /**
-     * Returns a String containing the name of the first sub-element of an element
-     */
-    private String getFirstElementString(Element myElement, String TagName){
-        Node myValue = myElement.getElementsByTagName(TagName).item(0);
-        if(myValue == null){
-            new ErrorThrow(NOT_FOUND, TagName);
-            return "Unspecified";
-        }
-        return mainElement.getElementsByTagName(TagName).item(0).getTextContent();
     }
 
 }

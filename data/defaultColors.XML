@@ -1,0 +1,13 @@
+<defaultColors>
+    <default><state>EMPTY</state> <color>BLACK</color></default>
+    <default><state>LIVE</state> <color>CORNFLOWERBLUE</color></default>
+    <default><state>WALL</state> <color>GRAY</color></default>
+    <default><state>WATER</state> <color>LIGHTSKYBLUE</color></default>
+    <default><state>PREDATOR</state> <color>RED</color></default>
+    <default><state>PREY</state> <color>GREEN</color></default>
+    <default><state>GROUP_A</state> <color>RED</color></default>
+    <default><state>GROUP_B</state> <color>GREEN</color></default>
+    <default><state>BURNING</state> <color>RED</color></default>
+    <default><state>TREE</state> <color>GREEN</color></default>
+    <default><state>BEYOND_EDGE</state> <color>BLACK</color></default>
+</defaultColors>
