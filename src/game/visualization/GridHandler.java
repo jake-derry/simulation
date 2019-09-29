@@ -1,12 +1,16 @@
 package game.visualization;
 
 import game.Simulation.Cell.Cell;
+import game.Simulation.CellIterator;
 import game.Simulation.Simulation;
+import game.Simulation.State;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class GridHandler {
 
@@ -14,7 +18,7 @@ public class GridHandler {
      * setUpRectangles: sets width, height, x, and y coordinates of rectangles for cells
      * Assumptions: constant cellWidth / height
      */
-    public static Iterator<Rectangle> setUpRectangles(int windowSize, int numRows, int numCols, Group group){
+    public static List setUpRectangles(int windowSize, int numRows, int numCols, Group group){
         ArrayList rectangleList = new ArrayList<Rectangle>();
         int MENU_HEIGHT = windowSize/4;
         int CELL_HEIGHT = (windowSize - MENU_HEIGHT) / numRows;
@@ -28,18 +32,16 @@ public class GridHandler {
                 group.getChildren().add(rectangle);
             }
         }
-        return rectangleList.iterator();
+        return rectangleList;
     }
 
     /**
      * visualize: step through cells and update colors accordingly
      * Assumptions: N/A
      */
-    public static void visualizeCells(Iterator<Rectangle> rectangleIterator, Simulation sim, Color[] colorList){
-        Iterator<Cell> cellIterator = sim.getGrid().iterator();
-        while (rectangleIterator.hasNext() && cellIterator.hasNext()){
-            //rectangleIterator.next().setFill(colorList[cellIterator.next().getState()]);
-            rectangleIterator.next().setFill(Color.BLUE);
-        }
+    public static void visualizeCells(Iterator<Rectangle> rectangleIterator, Iterator<Cell> cellIterator, Map<State, Color> colorMap){
+            while (rectangleIterator.hasNext() && cellIterator.hasNext()){
+                rectangleIterator.next().setFill(colorMap.get(cellIterator.next().getState()));
+            }
     }
 }

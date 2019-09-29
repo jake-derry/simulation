@@ -1,12 +1,7 @@
 package game.Simulation;
 
 import game.Simulation.Cell.Cell;
-import game.visualization.Visualization;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.scene.Group;
-import javafx.stage.Stage;
-import javafx.util.Duration;
+import game.Simulation.Cell.CellUtils;
 
 import java.util.Map;
 
@@ -34,9 +29,6 @@ public class Simulation {
     private CellGrid grid;
     private boolean running;
     private Map<String, Object> myParameterMap;
-    private int millisecondDelay;
-    private Visualization myVisualization;
-    private Timeline myAnimation;
 
     /**
      * Initializes a simulation running.
@@ -48,26 +40,8 @@ public class Simulation {
         myParameterMap = parameterMap;
         running = true;
         grid = new CellGrid(parameterMap, initialGrid);
-        millisecondDelay = (int) parameterMap.get("delay");
-        myAnimation = new Timeline();
-        startAnimation(millisecondDelay);
-
+        int x = 0;
     }
-
-    public void setVisualization(Group group, Stage stage, int windowSize, String language){
-        myVisualization = new Visualization(group, this, stage, windowSize, language);
-    }
-
-    public void startAnimation(int delay){
-        millisecondDelay = delay;
-        myAnimation.pause();
-        myAnimation = new Timeline();
-        var frame = new KeyFrame(Duration.millis(delay), e -> step());
-        myAnimation.setCycleCount(Timeline.INDEFINITE);
-        myAnimation.getKeyFrames().add(frame);
-        myAnimation.play();
-    }
-
 
     /**
      * Calls the update() method when the running
@@ -99,18 +73,6 @@ public class Simulation {
         return running;
     }
 
-    public void setSimRunning(boolean bool){
-        running = bool;
-    }
-
-    public int getMillisecondDelay(){
-        return millisecondDelay;
-    }
-
-    public void setMillisecondDelay(int delay){
-        millisecondDelay = delay;
-    }
-
     /**
      * Gets the simTitle for a sim
      */
@@ -133,11 +95,10 @@ public class Simulation {
      * to true.
      */
     public void update() {
-
+        int x = 0;
         for (Cell cell : grid) {
             cell.updateNext();
         }
-
         for (Cell cell : grid) {
             cell.stepState();
         }

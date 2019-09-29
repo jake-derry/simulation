@@ -18,6 +18,7 @@ public class CellUtils {
             countValue = countMap.get(state) + 1;
             countMap.put(state, countValue);
         }
+        int x = 0;
         return countMap;
     }
 }

@@ -6,8 +6,8 @@
     </author>
     <delay>500</delay>
     <size>
-        <rows>200</rows>
-        <columns>200</columns>
+        <rows>20</rows>
+        <columns>20</columns>
     </size>
     <highestState>2</highestState>
     <defaultState>tree</defaultState>
