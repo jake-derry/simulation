@@ -2,10 +2,14 @@ package game.visualization.menu.buttons;
 
 import game.Simulation.Simulation;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 =======
 >>>>>>> master
+=======
+import javafx.animation.Timeline;
+>>>>>>> origin/master
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -14,16 +18,20 @@ import java.util.ResourceBundle;
 public class SpeedControlButton extends MenuButton {
     private double multiplier;
     private Simulation mySim;
+    private int millisecondDelay;
+    private Timeline myAnimation;
 
-    public SpeedControlButton(int xPos, int yPos, int height, ResourceBundle resources, Simulation sim, double speed){
+    public SpeedControlButton(int xPos, int yPos, int height, ResourceBundle resources, Simulation sim, int delay, Timeline animation, double speed){
         super(xPos, yPos, height, resources);
         multiplier = speed;
         mySim = sim;
+        millisecondDelay = delay;
+        myAnimation = animation;
         if (multiplier < 1){
-            myButton.setText(myResources.getString("Faster"));
+            myButton.setText(resources.getString("Faster"));
         }
         else{
-            myButton.setText(myResources.getString("Slower"));
+            myButton.setText(resources.getString("Slower"));
         }
         setButtonAction();
     }
@@ -38,6 +46,7 @@ public class SpeedControlButton extends MenuButton {
         myButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(final ActionEvent e) {
+<<<<<<< HEAD
 <<<<<<< HEAD
                 myAnimation.pause();
                 myAnimation = new Timeline();
@@ -66,4 +75,10 @@ public class SpeedControlButton extends MenuButton {
     }
 =======
 >>>>>>> master
+=======
+                    myAnimation.setRate(multiplier);
+            }
+        });
+    }
+>>>>>>> origin/master
 }

@@ -3,11 +3,11 @@ package game.Simulation;
 import game.Simulation.Cell.Cell;
 
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class CellIterator implements Iterator<Cell> {
-    private Cell[][] myCellGrid;
-    private int currentRow;
-    private int currentColumn;
+    private Queue<Cell> myCellQueue;
 
     /**
      * Constructor of CellIterator that sets the
@@ -16,21 +16,23 @@ public class CellIterator implements Iterator<Cell> {
      * @param cellGrid      grid of cells
      */
     CellIterator(Cell[][] cellGrid) {
-        myCellGrid = cellGrid;
+        myCellQueue = new LinkedList<>();
+        for(Cell[] cellRow : cellGrid) {
+            for (Cell cell : cellRow){
+                myCellQueue.add(cell);
+            }
+        }
     }
 
 
     @Override
     public boolean hasNext() {
-        boolean rowInRange = currentRow + 1 < myCellGrid.length && currentRow + 1 >= 0;
-        boolean columnInRange = currentColumn + 1 < myCellGrid[0].length && currentColumn + 1 >= 0;
-        return (rowInRange && columnInRange);
+        return !myCellQueue.isEmpty();
     }
 
     @Override
     public Cell next() {
-        currentRow++; currentColumn++;
-        return myCellGrid[currentRow][currentColumn];
+        return myCellQueue.remove();
     }
 
 }

@@ -12,15 +12,13 @@ public class CellUtils {
         for (Cell cell : cells) {
             State state = cell.getState();
             int countValue;
-            if (countMap.containsKey(state)) {
-                countValue = countMap.get(state);
-            }
-            else {
+            if (! countMap.containsKey(state)) {
                 countMap.put(state, 0);
-                countValue = countMap.get(state);
             }
-            countMap.put(state, countValue++);
+            countValue = countMap.get(state) + 1;
+            countMap.put(state, countValue);
         }
+        int x = 0;
         return countMap;
     }
 }

@@ -12,7 +12,7 @@ public class StepButton extends MenuButton {
     public StepButton(int xPos, int yPos, int height, ResourceBundle resources, Simulation sim){
         super(xPos, yPos, height, resources);
         mySim = sim;
-        myButton.setText(myResources.getString("Step"));
+        myButton.setText(resources.getString("Step"));
         setButtonAction();
     }
 

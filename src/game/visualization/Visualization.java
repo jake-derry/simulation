@@ -1,11 +1,22 @@
 package game.visualization;
 
 import game.Simulation.Cell.Cell;
+import game.Simulation.Cell.CellUtils;
+import game.Simulation.CellGrid;
 import game.Simulation.Simulation;
+import game.Simulation.State;
 import game.visualization.menu.MenuHandler;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
+import javafx.scene.chart.LineChart;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Visualization: created by a simulation in order to display the states in the cell grid.
@@ -16,23 +27,51 @@ import javafx.stage.Stage;
  */
 public class Visualization{
     private String DEFAULT_RESOURCE_PACKAGE = "/data/";
-    private Color[] colorList;
+    private int WINDOW_HEIGHT;
+    private int MENU_HEIGHT;
 
     private Group myGroup;
-    private MenuHandler myMenuHandler;
-    private GridHandler myGridHandler;
     private Simulation mySim;
-    
-    public Visualization(Group group, Simulation sim, Stage stage, int windowDimension, String language){
+    private Iterator<Rectangle> rectangleIterator;
+    private LineChart cellGraph;
+    private HashMap<State,Color> colorMap;
+    private int stepCount;
+    private int millisecondDelay;
+    private List rectangleList;
+
+    public Visualization(Group group, Simulation sim, Stage stage, int windowHeight, String language, Timeline animation){
         myGroup = group;
         myGroup.getChildren().clear();
         mySim = sim;
-        colorList = new Color[4];
-        colorList[0] = Color.BLACK;
-        colorList[1] = Color.RED;
-        colorList[2] = Color.YELLOW;
-        myMenuHandler = new MenuHandler(myGroup, mySim, windowDimension, stage, language);
-        myGridHandler = new GridHandler(mySim, myGroup, windowDimension);
+        WINDOW_HEIGHT = windowHeight;
+        cellGraph = GraphHandler.setUpStateGraph(group, windowHeight);
+        //TODO: Dummy delay (should read from styling)
+        millisecondDelay = 500;
+        MenuHandler.addMenuButtonsToDisplayGroup(stage, group, sim, windowHeight, millisecondDelay, animation, language);
+        MenuHandler.addTitleTextToDisplayGroup(group, windowHeight, sim.getSimTitle());
+        rectangleList = GridHandler.setUpRectangles(windowHeight, sim.getGrid().getCellRows(), sim.getGrid().getCellColumns(), myGroup);
+
+        //TODO: DUMMY COLOR MAP
+        colorMap= new HashMap<>();
+        colorMap.put(State.EMPTY, Color.BLACK);
+        colorMap.put(State.BURNING, Color.RED);
+        colorMap.put(State.TREE, Color.GREEN);
+
+        stepCount = 0;
     }
 
+    public void visualize() {
+        Iterator<Cell> cellIterator = mySim.getGrid().iterator();
+        GridHandler.visualizeCells(rectangleList.iterator(), cellIterator, colorMap);
+        GraphHandler.updateGraph(cellGraph, mySim.getGrid().iterator(), stepCount);
+        stepCount++;
+    }
+
+    public void setMillisecondDelay(int delay){
+        millisecondDelay = delay;
+    }
+
+    public int getDelay(){
+        return millisecondDelay;
+    }
 }

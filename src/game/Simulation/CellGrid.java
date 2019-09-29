@@ -2,7 +2,6 @@ package game.Simulation;
 
 import game.Simulation.Cell.Cell;
 import game.Simulation.Cell.FireCell;
-import game.Simulation.Cell.GameOfLifeCell;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -29,10 +28,12 @@ public class CellGrid implements Iterable<Cell> {
         connectNeighbors(cellGrid);
     }
 
+    //TODO WE DONT WANT TO HARD CODE TYPES
     private void createCellGrid(String[][] cellGrid) {
+        myCellGrid = new Cell[cellGrid.length][cellGrid[0].length];
         for (int i = 0; i < cellGrid.length; i++) {
             for (int j = 0; j < cellGrid[0].length; j++) {
-                myCellGrid[i][j] = new GameOfLifeCell(State.getState(cellGrid[i][j]));
+                myCellGrid[i][j] = new FireCell(State.getState(cellGrid[i][j]), 0.7);
             }
         }
     }
@@ -40,7 +41,6 @@ public class CellGrid implements Iterable<Cell> {
     private void connectNeighbors(String[][] cellGrid) {
         for (int i = 0; i < cellGrid.length; i++) {
             for (int j = 0; j < cellGrid[0].length; j++) {
-
                 List<Cell> neighborhood = new ArrayList<>();
                 for (int neighborDisplacement : NEIGHBORS) {
                     int[] displacement = DISPLACEMENTS[neighborDisplacement];
@@ -52,7 +52,7 @@ public class CellGrid implements Iterable<Cell> {
                     }
                 }
 
-                myCellGrid[i][j].setNeighbors(neighborhood.iterator());
+                myCellGrid[i][j].setNeighbors(neighborhood);
             }
         }
     }
@@ -68,5 +68,13 @@ public class CellGrid implements Iterable<Cell> {
     @Override
     public Iterator<Cell> iterator() {
         return new CellIterator(myCellGrid);
+    }
+
+    public int getCellRows(){
+        return myCellGrid.length;
+    }
+
+    public int getCellColumns(){
+        return myCellGrid[0].length;
     }
 }

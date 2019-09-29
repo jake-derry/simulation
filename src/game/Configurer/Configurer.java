@@ -1,33 +1,33 @@
 package game.Configurer;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import game.Configurer.ExceptionHandlers.ErrorThrow;
+import game.Configurer.ExceptionHandlers.XMLSimulationException;
 import game.Simulation.Cell.Cell;
 import game.Simulation.*;
 import org.w3c.dom.Document;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 
 /**
  * The purpose of the Configurer class is to take an XML file as an input and return a simulation
- * as its output. This simulation will be based on the contents of the XML file.
+ * as its output. This simulation will be based on the contents of the XML file. The configurer class
+ * also checks to make sure that XML parameters are valid. If parameters are not valid, default ones will
+ * be used.
+ *
+ * @author Jonah Knapp
  */
-public final class Configurer{
-    //Tags used within XML file
-    private static final String COLUMN_TAG = "columns";
-    private static final String ROW_TAG = "rows";
-    private static final String STATE_TAG = "defaultState";
-    private static final String CELL_COLUMN_TAG = "col";
-    private static final String CELL_ROW_TAG = "row";
-    private static final String CELL_STATE_TAG = "state";
-    private static final String TYPE_TAG = "type";
+public class Configurer {
+    //Files Supported
+    private static final String SIMULATION_TAG = "Simulation";
+    private static final String STYLE_TAG = "Style";
 
     //Simulations Supported
     private static final String LIFE = "gameOfLife";
@@ -35,6 +35,9 @@ public final class Configurer{
     private static final String PREDATOR_PREY = "predatorPrey";
     private static final String FIRE = "fire";
     private static final String PERCOLATION = "percolation";
+    private static final String DELAY_TAG = "delay";
+
+    private static final int DEFAULT_DELAY = 500;
 
     //Simulation-Specific Tags
     private static final String SATISFACTION_PERCENT = "satisfaction";
@@ -43,123 +46,108 @@ public final class Configurer{
     private static final String PREDATOR_INITIAL_ENERGY = "initEnergy";
     private static final String PREDATOR_ENERGY_THRESHOLD = "energyThreshold";
 
-    /**Reads XML file. First creates a document using the DocumentBuilder class. Uses this information to create a
+    //Default Simulation File
+    private static final String DEFAULT_SIM = "././Fire.xml";
+
+    //XML Parsing Errors
+    private static final String ERROR_DEFAULT = "XML type \"%s\" not supported. Loading Default File.";
+    private static final String SIMULATION_ERROR_DEFAULT = "Simulation type not supported. Loading Default File.";
+
+
+    /**
+     * Reads XML file. First creates a document using the DocumentBuilder class. Uses this information to create a
      * cellular array and ultimately passes this information, along with WindowSize, to a new Simulation.
      *
      * @param myFile XML to be read
      * @return Simulation created based on XML file
      */
-    public static Simulation getSimulation(String myFile, int WindowSize, String language){
-        Document simDoc = readFile(myFile);
+    public static Simulation getSimulation(String myFile) {
+        Document simDoc = readFile(myFile, SIMULATION_TAG);
         Element mainElement = simDoc.getDocumentElement();
-        int totalColumns = getFirstElementInteger(mainElement,  COLUMN_TAG);
-        int totalRows = getFirstElementInteger(mainElement,  ROW_TAG);
-        int defaultState = getFirstElementInteger(mainElement,  STATE_TAG);
-        Cell[][] myCellArray = new Cell[totalRows][totalColumns];
-        List<Integer> activeCells = initializeActiveCells(simDoc, myCellArray);
-        initializeDefaultCells(totalRows, totalColumns, defaultState, activeCells, myCellArray);
-        switch (getFirstElementString(mainElement, TYPE_TAG)){
-            case LIFE:
-                return new GameOfLifeSimulation(LIFE, myCellArray);
-            case SEGREGATION:
-                double satisfaction = getFirstElementInteger(mainElement,  SATISFACTION_PERCENT);
-                return new SegregationSimulation(SEGREGATION, myCellArray, satisfaction/100);
-            case PREDATOR_PREY:
-                int breedTime = getFirstElementInteger(mainElement, BREED_TIME);
-                int initialEnergy = getFirstElementInteger(mainElement, PREDATOR_INITIAL_ENERGY);
-                int energyThreshold = getFirstElementInteger(mainElement, PREDATOR_ENERGY_THRESHOLD);
-                return new PredatorPreySimulation(PREDATOR_PREY, myCellArray, breedTime,
-                        initialEnergy, energyThreshold);
-            case FIRE:
-                double chance = getFirstElementInteger(mainElement,  CATCH_PERCENT);
-                return new FireSimulation(FIRE, myCellArray, chance/100);
-            case PERCOLATION:
-                return new PercolationSimulation(PERCOLATION, myCellArray);
-
+        ParameterLoader myParams = new ParameterLoader(mainElement);
+        int[] dimensionsRC = myParams.getDimensions();
+        String defaultState = myParams.getDefaultState();
+        String[][] myStateArray = new String[dimensionsRC[0]][dimensionsRC[1]];
+        initializeCells(defaultState, myParams, myStateArray);
+        HashMap<String, Object> mySpecialValues = new HashMap<>();
+        if (!(myParams.getSpecialValue(DELAY_TAG, 0)<0)){
+            mySpecialValues.put(DELAY_TAG, DEFAULT_DELAY);
         }
-        return null;
+        else{mySpecialValues.put(DELAY_TAG, myParams.getSpecialValue(DELAY_TAG, 0));}
+        mySpecialValues.put(SIMULATION_TAG, myParams.getSimType());
+        switch (myParams.getSimType()) {
+            case PERCOLATION:
+            case LIFE:
+                break;
+            case SEGREGATION:
+                mySpecialValues.put(SATISFACTION_PERCENT, myParams.getSpecialValue(SATISFACTION_PERCENT, 1));
+                break;
+            case PREDATOR_PREY:
+                mySpecialValues.put(BREED_TIME, myParams.getSpecialValue(BREED_TIME, 0));
+                mySpecialValues.put(PREDATOR_INITIAL_ENERGY, myParams.getSpecialValue(PREDATOR_INITIAL_ENERGY, 0));
+                mySpecialValues.put(PREDATOR_ENERGY_THRESHOLD, myParams.getSpecialValue(PREDATOR_ENERGY_THRESHOLD, 0));
+                break;
+            case FIRE:
+                mySpecialValues.put(CATCH_PERCENT, myParams.getSpecialValue(CATCH_PERCENT, 1));
+                break;
+            default:
+                new ErrorThrow(SIMULATION_ERROR_DEFAULT);
+                return getSimulation(DEFAULT_SIM);
+        }
+        return new Simulation(mySpecialValues, myStateArray);
+    }
+
+    public static Map<String, String> getStyling(String myStyleFile){
+        Document styleDoc = readFile(myStyleFile, STYLE_TAG);
+        Element mainElement = styleDoc.getDocumentElement();
+        StylingLoader myStyling = new StylingLoader(mainElement);
+        return myStyling.getStyling();
     }
 
     /**
-     * Creates a documentBuilder from an XML file then parses it into a document
+     * Saving XML file:
      */
-    private static Document readFile(String myFile){
-        try{
+    public static void saveStates(String myFile, Cell[][] CellArray){
+
+    }
+
+    /**
+     * Creates a documentBuilder from an XML file then parses it into a document. If the type of document is not
+     * a simulation, the simulation will default to a Fire simulation.
+     */
+    private static Document readFile(String myFile, String FileType) {
+        try {
             File simFile = new File("data/" + myFile);
             DocumentBuilder simDocumentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            return simDocumentBuilder.parse(simFile);
+            Document myDocument = simDocumentBuilder.parse(simFile);
+            if (!myDocument.getFirstChild().getNodeName().equals(FileType)) {
+                throw new XMLSimulationException(ERROR_DEFAULT, myDocument.getFirstChild().getNodeName());
+            } else {
+                return myDocument;
+            }
         } catch (Exception e) {
-            errorAlert(e.getMessage());
+            new ErrorThrow(e.getMessage());
         }
-        return null;
+        return readFile(DEFAULT_SIM, FileType);
     }
 
     /**
-     *
-     * @param myDoc Document to be read
-     * @param myArray Array to save initialized cells in
-     *
-     * @return List of integers containing the indexes of cells that have been initialized
+     * Initializes the cells in the Cellular Array
      */
-    private static List<Integer> initializeActiveCells(Document myDoc, Cell[][] myArray){
-        NodeList nList = myDoc.getElementsByTagName("cell");
-        List<Integer> activeCells = new ArrayList<>();
-        int totalCols = myArray.length;
-        for(int i = 0 ; i < nList.getLength(); i++){
-            Element myCell = (Element) nList.item(i);
-            int myRow = getFirstElementInteger(myCell, CELL_ROW_TAG);
-            int myColumn = getFirstElementInteger(myCell, CELL_COLUMN_TAG);
-            int myState = getFirstElementInteger(myCell, CELL_STATE_TAG);
-            myArray[myRow-1][myColumn-1] = new Cell();
-            activeCells.add((myRow-1) * totalCols + myColumn-1);
-        }
-        return activeCells;
-    }
-
-    /**
-     * Initializes default cells in the Cellular Array
-     */
-    private static void initializeDefaultCells(int Rows, int Cols, int state, List<Integer> activeCells, Cell[][] myArray){
-        for(int i = 0; i < Rows; i++){
-            for(int j = 0; j<Cols; j++){
-                if(!(activeCells.contains((i*Cols) + j))){
-                    myArray[i][j] = new Cell(state);
+    private static void initializeCells(String defaultState, ParameterLoader myParams, String[][] myArray) {
+        int totalRows = myParams.getDimensions()[0];
+        int totalColumns = myParams.getDimensions()[1];
+        Map<Integer, String> activeCells = myParams.getActiveCells();
+        for (int i = 0; i < totalRows; i++) {
+            for (int j = 0; j < totalColumns; j++) {
+                int myIndex = (i * totalColumns) + j;
+                if (activeCells.containsKey(myIndex)) {
+                    myArray[i][j] = activeCells.get(myIndex);
+                } else {
+                    myArray[i][j] = defaultState;
                 }
             }
+
         }
-    }
-
-    /**
-     * Prints cells that have been initialized, as specified by the XML application
-     */
-    private static void printActiveCells(Document myDoc) {
-        NodeList nList = myDoc.getElementsByTagName("cell");
-        for(int i = 0 ; i < nList.getLength(); i++){
-            Element myCell = (Element) nList.item(i);
-            System.out.println("Cell " + i + ":");
-            System.out.println(CELL_ROW_TAG + " " + getFirstElementString(myCell, CELL_ROW_TAG));
-            System.out.println(CELL_COLUMN_TAG + " " + getFirstElementString(myCell, CELL_COLUMN_TAG));
-            System.out.println(CELL_STATE_TAG + " " + getFirstElementString(myCell, CELL_STATE_TAG));
-        }
-    }
-
-
-    /** Returns a String containing the name of the first sub-element of an element
-     */
-    private static String getFirstElementString(Element myElement, String TagName){
-        return myElement.getElementsByTagName(TagName).item(0).getTextContent();
-    }
-
-    /** Returns a Integer representation of the first sub-element of an element
-     */
-    private static Integer getFirstElementInteger(Element myElement, String TagName){
-        return Integer.parseInt(myElement.getElementsByTagName(TagName).item(0).getTextContent());
-    }
-
-
-    /**Displays an alert on the screen that requires handling by the user
-     */
-    private static void errorAlert(String myErrorMessage){
-        new Alert(AlertType.ERROR, myErrorMessage).showAndWait();
     }
 }

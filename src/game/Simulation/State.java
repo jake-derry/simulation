@@ -22,8 +22,8 @@ public enum State {
     PREY(""),
     GROUP_A(""),
     GROUP_B(""),
-    BURNING(""),
-    TREE(""),
+    BURNING("fire"),
+    TREE("tree"),
     BEYOND_EDGE("");
 
     /**

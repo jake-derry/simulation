@@ -33,7 +33,13 @@ public class FireCell extends Cell {
     }
 
     private boolean burning() {
-        for (int i = 0; i < getCountMap().get(EMPTY); i++) {
+        int burningCount;
+        if (getCountMap().containsKey(BURNING)) {
+            burningCount = getCountMap().get(BURNING);
+        } else {
+            burningCount = 0;
+        }
+        for (int i = 0; i < burningCount; i++) {
             if (random.nextDouble() <= myProbCatch) {
                 return true;
             }
