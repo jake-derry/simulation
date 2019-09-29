@@ -1,8 +1,5 @@
 package game.visualization;
 
-import game.Simulation.Cell.Cell;
-import game.Simulation.Cell.CellUtils;
-import game.Simulation.CellGrid;
 import game.Simulation.Simulation;
 import game.Simulation.State;
 import game.visualization.menu.MenuHandler;
@@ -11,7 +8,6 @@ import javafx.scene.Group;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.util.*;
@@ -24,16 +20,10 @@ import java.util.*;
  * @author Matt Harris
  */
 public class Visualization{
-    private String DEFAULT_RESOURCE_PACKAGE = "/data/";
-    private int WINDOW_HEIGHT;
-    private int MENU_HEIGHT;
-
     private Group myGroup;
     private Simulation mySim;
-    private Iterator<Rectangle> rectangleIterator;
     private LineChart cellGraph;
     private HashMap<State,Color> colorMap;
-    private int stepCount;
     private int millisecondDelay;
     private List rectangleList;
     private List seriesList;
@@ -42,11 +32,11 @@ public class Visualization{
         myGroup = group;
         myGroup.getChildren().clear();
         mySim = sim;
-        WINDOW_HEIGHT = windowHeight;
         cellGraph = GraphHandler.setUpStateGraph(group, windowHeight);
         //TODO: Dummy delay (should read from styling)
         millisecondDelay = 500;
-        MenuHandler.addMenuButtonsToDisplayGroup(stage, group, sim, windowHeight, millisecondDelay, animation, language);
+        seriesList = new ArrayList<XYChart.Series>();
+        MenuHandler.addMenuButtonsToDisplayGroup(stage, group, sim, windowHeight, millisecondDelay, animation, language, cellGraph, seriesList);
         MenuHandler.addTitleTextToDisplayGroup(group, windowHeight, sim.getSimTitle());
         rectangleList = GridHandler.setUpRectangles(windowHeight, sim.getGrid().getCellRows(), sim.getGrid().getCellColumns(), myGroup);
 
@@ -55,23 +45,11 @@ public class Visualization{
         colorMap.put(State.EMPTY, Color.BLACK);
         colorMap.put(State.BURNING, Color.RED);
         colorMap.put(State.TREE, Color.GREEN);
-
-        stepCount = 0;
-        seriesList = new ArrayList<XYChart.Series>();
     }
 
     public void visualize(){
-        if (mySim.getSimRunning()){
-            Map<State, Integer> x = CellUtils.countMap(mySim.getGrid().iterator());
-            Iterator<Cell> cellIterator = mySim.getGrid().iterator();
-            GridHandler.visualizeCells(rectangleList.iterator(), cellIterator, colorMap);
-            GraphHandler.updateGraph(cellGraph, seriesList, mySim.getGrid().iterator(), stepCount);
-            stepCount++;
-        }
-    }
-
-    public void setMillisecondDelay(int delay){
-        millisecondDelay = delay;
+        GridHandler.visualizeCells(rectangleList.iterator(), mySim.getGrid().iterator(), colorMap);
+        GraphHandler.updateGraph(cellGraph, seriesList, mySim.getGrid().iterator(), mySim.getStepCount());
     }
 
     public int getDelay(){

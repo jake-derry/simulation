@@ -20,10 +20,10 @@ public class SpeedControlButton extends MenuButton {
         millisecondDelay = delay;
         myAnimation = animation;
         if (multiplier < 1){
-            myButton.setText(resources.getString("Faster"));
+            myButton.setText(resources.getString("Slower"));
         }
         else{
-            myButton.setText(resources.getString("Slower"));
+            myButton.setText(resources.getString("Faster"));
         }
         setButtonAction();
     }
@@ -38,7 +38,7 @@ public class SpeedControlButton extends MenuButton {
         myButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(final ActionEvent e) {
-                    myAnimation.setRate(multiplier);
+                    myAnimation.setRate(myAnimation.getRate()*multiplier);
             }
         });
     }

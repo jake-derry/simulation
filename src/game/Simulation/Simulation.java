@@ -29,6 +29,7 @@ public class Simulation {
     private CellGrid grid;
     private boolean running;
     private Map<String, Object> myParameterMap;
+    private int stepCount;
 
     /**
      * Initializes a simulation running.
@@ -40,7 +41,7 @@ public class Simulation {
         myParameterMap = parameterMap;
         running = true;
         grid = new CellGrid(parameterMap, initialGrid);
-        int x = 0;
+        stepCount = 0;
     }
 
     /**
@@ -50,7 +51,12 @@ public class Simulation {
     public void step() {
         if (running){
             update();
+            stepCount++;
         }
+    }
+
+    public int getStepCount(){
+        return stepCount;
     }
 
     /**
