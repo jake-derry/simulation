@@ -19,7 +19,6 @@ abstract public class Cell {
 
     private State myState;
     private State myNextState;
-    private Map<State, Integer> countMap;
     private List<Cell> myNeighbors;
 
     /**
@@ -34,7 +33,6 @@ abstract public class Cell {
 
     public void setNeighbors(Iterable<Cell> neighbors) {
         myNeighbors = new ArrayList<>((Collection<? extends Cell>) neighbors);
-        countMap = CellUtils.countMap(getNeighbors());
     }
 
     /**
@@ -97,7 +95,6 @@ abstract public class Cell {
      * @param next  sets the next state
      */
     public void setNextState(State next) {
-        countMap = CellUtils.countMap(getNeighbors());
         myNextState = next;
     }
 
@@ -108,7 +105,7 @@ abstract public class Cell {
      * @return      map of state counts of neighbors
      */
     protected Map<State, Integer> getCountMap() {
-        return countMap;
+        return CellUtils.countMap(getNeighbors());
     }
 
 }

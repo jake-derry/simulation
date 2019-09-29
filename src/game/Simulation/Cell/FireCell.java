@@ -35,7 +35,6 @@ public class FireCell extends Cell {
 
     private boolean burning() {
         int burningCount;
-        Map<State, Integer> x = getCountMap();
         if (getCountMap().containsKey(BURNING)) {
             burningCount = getCountMap().get(BURNING);
         } else {
