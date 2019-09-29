@@ -39,8 +39,8 @@ public class LoadNewSimButton extends MenuButton {
             public void handle(final ActionEvent e) {
                 File file = fileChooser.showOpenDialog(myStage);
                 if (file != null) {
-                    mySim = Configurer.getSimulation(file.getName(), WINDOW_SIZE, myLanguage);
-                    mySim.setVisualization(mySim.getAnimation(), myGroup, myStage, WINDOW_SIZE, myLanguage);
+                    mySim = Configurer.getSimulation(file.getName());
+                    mySim.setVisualization(myGroup, myStage, WINDOW_SIZE, myLanguage);
                     CAApp.setSim(mySim);
                 }
             }

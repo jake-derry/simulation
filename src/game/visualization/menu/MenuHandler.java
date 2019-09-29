@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 import java.util.ResourceBundle;
 
 public class MenuHandler {
-
     /**
      * addTitleTextToDisplayGroup: Adds the Title text to the display group
     */

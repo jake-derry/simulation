@@ -4,13 +4,22 @@
     <author>
         Jonah Knapp
     </author>
+    <delay>500</delay>
     <size>
-        <rows>50</rows>
-        <columns>50</columns>
+        <rows>200</rows>
+        <columns>200</columns>
     </size>
-    <defaultState>2</defaultState>
+    <highestState>2</highestState>
+    <defaultState>tree</defaultState>
+    <cellDistribution>concentration</cellDistribution>
     <activeCells>
-        <cell> <row>25</row> <col>25</col> <state>1</state></cell>
+        <concentration>
+            <state>fire</state> <value> 1 </value>
+        </concentration>
+        <random>
+            <state>fire</state> <value>1</value>
+        </random>
+        <cell> <row>25</row> <col>25</col> <state>fire</state></cell>
     </activeCells>
     <probCatch>50</probCatch>
 </Simulation>

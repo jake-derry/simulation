@@ -33,8 +33,8 @@ public class SpeedControlButton extends MenuButton {
         myButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(final ActionEvent e) {
-                if (mySim.getDelay() > 50 || multiplier > 1){
-                    mySim.startAnimation((int) (multiplier*mySim.getDelay()));
+                if (mySim.getMillisecondDelay() > 50 || multiplier > 1){
+                    mySim.startAnimation((int) (multiplier*mySim.getMillisecondDelay()));
                 }
             }
         });

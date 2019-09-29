@@ -2,6 +2,7 @@ package game.visualization;
 
 import game.Simulation.Cell.Cell;
 import game.Simulation.Cell.CellUtils;
+import game.Simulation.State;
 import javafx.scene.Group;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -27,8 +28,8 @@ public class GraphHandler {
     }
 
     public static void updateGraph(LineChart stateGraph, Iterator<Cell> cellIterator){
-        Map<Integer, Integer> stateMap = CellUtils.countMap(cellIterator);
-        for (Integer key:stateMap.keySet()){
+        Map<State, Integer> stateMap = CellUtils.countMap(cellIterator);
+        for (State key:stateMap.keySet()){
             XYChart.Series series = new XYChart.Series();
             series.getData().add(new XYChart.Data(key, stateMap.get(key)));
             stateGraph.getData().add(series);

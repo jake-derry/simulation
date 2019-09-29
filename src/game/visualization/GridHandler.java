@@ -36,9 +36,10 @@ public class GridHandler {
      * Assumptions: N/A
      */
     public static void visualizeCells(Iterator<Rectangle> rectangleIterator, Simulation sim, Color[] colorList){
-        Iterator<Cell> cellIterator = sim.getCellIterator();
+        Iterator<Cell> cellIterator = sim.getGrid().iterator();
         while (rectangleIterator.hasNext() && cellIterator.hasNext()){
-            rectangleIterator.next().setFill(colorList[cellIterator.next().getState()]);
+            //rectangleIterator.next().setFill(colorList[cellIterator.next().getState()]);
+            rectangleIterator.next().setFill(Color.BLUE);
         }
     }
 }

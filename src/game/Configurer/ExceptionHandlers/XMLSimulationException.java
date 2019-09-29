@@ -1,8 +1,8 @@
-package game.Configurer;
+package game.Configurer.ExceptionHandlers;
 
 
 /**
- * This class handles any errors that are have to do with the configuration XML file
+ * This class handles errors that are have to do with the configuration XML file
  */
 public class XMLSimulationException extends RuntimeException {
     // for serialization
