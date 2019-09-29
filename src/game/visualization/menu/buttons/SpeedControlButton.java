@@ -1,6 +1,7 @@
 package game.visualization.menu.buttons;
 
 import game.Simulation.Simulation;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -9,11 +10,15 @@ import java.util.ResourceBundle;
 public class SpeedControlButton extends MenuButton {
     private double multiplier;
     private Simulation mySim;
+    private int millisecondDelay;
+    private Timeline myAnimation;
 
-    public SpeedControlButton(int xPos, int yPos, int height, ResourceBundle resources, Simulation sim, double speed){
+    public SpeedControlButton(int xPos, int yPos, int height, ResourceBundle resources, Simulation sim, int delay, Timeline animation, double speed){
         super(xPos, yPos, height, resources);
         multiplier = speed;
         mySim = sim;
+        millisecondDelay = delay;
+        myAnimation = animation;
         if (multiplier < 1){
             myButton.setText(resources.getString("Faster"));
         }
@@ -33,9 +38,7 @@ public class SpeedControlButton extends MenuButton {
         myButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(final ActionEvent e) {
-                if (mySim.getMillisecondDelay() > 50 || multiplier > 1){
-                    mySim.startAnimation((int) (multiplier*mySim.getMillisecondDelay()));
-                }
+                    myAnimation.setRate(multiplier);
             }
         });
     }

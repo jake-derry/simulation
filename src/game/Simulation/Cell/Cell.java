@@ -2,10 +2,7 @@ package game.Simulation.Cell;
 
 import game.Simulation.State;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This class represents a single cell in a cellular
@@ -22,8 +19,7 @@ abstract public class Cell {
 
     private State myState;
     private State myNextState;
-    private Map<State, Integer> countMap;
-    private Iterator<Cell> myNeighbors;
+    private List<Cell> myNeighbors;
 
     /**
      * Constructor for Cell. Initializes the state of the
@@ -35,9 +31,8 @@ abstract public class Cell {
         myState = state;
     }
 
-    public void setNeighbors(Iterator<Cell> neighbors) {
-        myNeighbors = neighbors;
-        countMap = CellUtils.countMap(getNeighbors());
+    public void setNeighbors(Iterable<Cell> neighbors) {
+        myNeighbors = new ArrayList<>((Collection<? extends Cell>) neighbors);
     }
 
     /**
@@ -73,7 +68,7 @@ abstract public class Cell {
      * @return          the cell's neighbors in an Iterator
      */
     protected Iterator<Cell> getNeighbors() {
-        return myNeighbors;
+        return myNeighbors.iterator();
     }
 
     /**
@@ -100,7 +95,6 @@ abstract public class Cell {
      * @param next  sets the next state
      */
     public void setNextState(State next) {
-        countMap = CellUtils.countMap(getNeighbors());
         myNextState = next;
     }
 
@@ -111,7 +105,7 @@ abstract public class Cell {
      * @return      map of state counts of neighbors
      */
     protected Map<State, Integer> getCountMap() {
-        return countMap;
+        return CellUtils.countMap(getNeighbors());
     }
 
 }

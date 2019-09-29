@@ -5,6 +5,7 @@ import game.visualization.menu.buttons.LoadNewSimButton;
 import game.visualization.menu.buttons.PausePlayButton;
 import game.visualization.menu.buttons.SpeedControlButton;
 import game.visualization.menu.buttons.StepButton;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -29,7 +30,7 @@ public class MenuHandler {
      * @return- an ArrayList<Button> to be added to the display group in CAApp
      * Assumptions- the functions of these buttons will be set in CAApp before adding them to the display group
      */
-    public static void addMenuButtonsToDisplayGroup(Stage stage, Group group, Simulation sim, int windowSize, String language){
+    public static void addMenuButtonsToDisplayGroup(Stage stage, Group group, Simulation sim, int windowSize, int delay, Timeline animation, String language){
         ResourceBundle myResources = ResourceBundle.getBundle(language);
         int NEW_SIM_X = windowSize/32;
         int PAUSE_PLAY_X = windowSize*7/32;
@@ -38,15 +39,15 @@ public class MenuHandler {
         int SLOWER_X = windowSize*19/32;
         int BUTTON_Y = windowSize*3/20;
         int BUTTON_HEIGHT = windowSize/30;
-        LoadNewSimButton newSimButton = new LoadNewSimButton(NEW_SIM_X, BUTTON_Y, BUTTON_HEIGHT, myResources, stage, group, sim, windowSize, language);
+        LoadNewSimButton newSimButton = new LoadNewSimButton(NEW_SIM_X, BUTTON_Y, BUTTON_HEIGHT, myResources, stage, group, sim, windowSize, language, animation);
         group.getChildren().add(newSimButton.getButton());
         PausePlayButton pausePlayButton = new PausePlayButton(PAUSE_PLAY_X, BUTTON_Y, BUTTON_HEIGHT, myResources, sim);
         group.getChildren().add(pausePlayButton.getButton());
         StepButton stepButton = new StepButton(STEP_X, BUTTON_Y, BUTTON_HEIGHT, myResources, sim);
         group.getChildren().add(stepButton.getButton());
-        SpeedControlButton fasterButton = new SpeedControlButton(FASTER_X, BUTTON_Y, BUTTON_HEIGHT, myResources, sim, 0.5);
+        SpeedControlButton fasterButton = new SpeedControlButton(FASTER_X, BUTTON_Y, BUTTON_HEIGHT, myResources, sim, delay, animation,0.5);
         group.getChildren().add(fasterButton.getButton());
-        SpeedControlButton slowerButton = new SpeedControlButton(SLOWER_X, BUTTON_Y, BUTTON_HEIGHT, myResources, sim, 2.0);
+        SpeedControlButton slowerButton = new SpeedControlButton(SLOWER_X, BUTTON_Y, BUTTON_HEIGHT, myResources, sim, delay, animation,2.0);
         group.getChildren().add(slowerButton.getButton());
     }
 
