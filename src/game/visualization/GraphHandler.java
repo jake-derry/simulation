@@ -7,6 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.chart.*;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class GraphHandler {
@@ -21,16 +22,30 @@ public class GraphHandler {
         stateGraph.setPrefWidth(windowHeight*3/4);
         stateGraph.setLayoutX(windowHeight*9/8);
         stateGraph.setLayoutY(windowHeight*1/8);
+        stateGraph.setAnimated(false);
         group.getChildren().add(stateGraph);
         return stateGraph;
     }
 
-    public static void updateGraph(LineChart stateGraph, Iterator<Cell> cellIterator, int stepCount){
+    public static void updateGraph(LineChart stateGraph, List<XYChart.Series> seriesList, Iterator<Cell> cellIterator, int stepCount){
         Map<State, Integer> stateMap = CellUtils.countMap(cellIterator);
         for (State key:stateMap.keySet()){
-            XYChart.Series series = new XYChart.Series();
-            series.getData().add(new XYChart.Data(stepCount, stateMap.get(key)));
-            stateGraph.getData().add(series);
+            boolean newSeries = true;
+            for (XYChart.Series series : seriesList){
+                if (key.toString().equals(series.getName())){
+                    series.getData().add(new XYChart.Data(stepCount, stateMap.get(key)));
+                    newSeries = false;
+                }
+            }
+            if (newSeries){
+                XYChart.Series newDataSeries = new XYChart.Series();
+                newDataSeries.setName(key.toString());
+                newDataSeries.getData().add(new XYChart.Data(stepCount, stateMap.get(key)));
+                seriesList.add(newDataSeries);
+            }
         }
+        stateGraph.getData().clear();
+        stateGraph.getData().addAll(seriesList);
     }
 }
+

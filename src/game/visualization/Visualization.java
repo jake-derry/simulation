@@ -9,14 +9,12 @@ import game.visualization.menu.MenuHandler;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Visualization: created by a simulation in order to display the states in the cell grid.
@@ -38,6 +36,7 @@ public class Visualization{
     private int stepCount;
     private int millisecondDelay;
     private List rectangleList;
+    private List seriesList;
 
     public Visualization(Group group, Simulation sim, Stage stage, int windowHeight, String language, Timeline animation){
         myGroup = group;
@@ -58,14 +57,17 @@ public class Visualization{
         colorMap.put(State.TREE, Color.GREEN);
 
         stepCount = 0;
+        seriesList = new ArrayList<XYChart.Series>();
     }
 
     public void visualize(){
-        Map<State, Integer> x = CellUtils.countMap(mySim.getGrid().iterator());
-        Iterator<Cell> cellIterator = mySim.getGrid().iterator();
-        GridHandler.visualizeCells(rectangleList.iterator(), cellIterator, colorMap);
-        GraphHandler.updateGraph(cellGraph, mySim.getGrid().iterator(), stepCount);
-        stepCount++;
+        if (mySim.getSimRunning()){
+            Map<State, Integer> x = CellUtils.countMap(mySim.getGrid().iterator());
+            Iterator<Cell> cellIterator = mySim.getGrid().iterator();
+            GridHandler.visualizeCells(rectangleList.iterator(), cellIterator, colorMap);
+            GraphHandler.updateGraph(cellGraph, seriesList, mySim.getGrid().iterator(), stepCount);
+            stepCount++;
+        }
     }
 
     public void setMillisecondDelay(int delay){
