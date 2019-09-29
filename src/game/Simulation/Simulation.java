@@ -1,15 +1,8 @@
 package game.Simulation;
 
 import game.Simulation.Cell.Cell;
-import game.visualization.Visualization;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.scene.Group;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 /**
  * This abstract class runs a simulation of any
@@ -30,51 +23,23 @@ import java.util.List;
  *
  * @author Jake Derry
  */
-abstract public class Simulation {
-    protected static final int BEYOND_EDGE = -1;
-    protected static final int EMPTY = 0;
+public class Simulation {
 
-    private Cell[][] grid;
+    private CellGrid grid;
     private boolean running;
-    private Visualization myVisualization;
-    private String simTitle;
-    private int myDelay;
-    private Timeline myAnimation;
-
-    private List<Cell> emptyCells;
+    private Map<String, Object> parameterMap;
+    private int millisecondDelay;
 
     /**
      * Initializes a simulation running.
-     * @param title         Title of the simulation
+     * @param parameterMap  A map of the parameter name and
+     *                      the parameter object
      * @param initialGrid   Initial grid of the simulation
      */
-    public Simulation(String title, Cell[][] initialGrid){
+    public Simulation(Map<String, Object> parameterMap, String[][] initialGrid) {
         running = true;
-        simTitle = title;
-        grid = initialGrid;
-        emptyCells = findMatches(EMPTY);
-        //TODO CHANGE THIS
-        myDelay = 500;
-        myAnimation = new Timeline();
-        startAnimation(myDelay);
-    }
-
-    public void setVisualization(Group group, Stage stage, int windowSize, String language){
-        myVisualization = new Visualization(group, this, stage, windowSize, language);
-    }
-
-    public Timeline getAnimation(){
-        return myAnimation;
-    }
-
-    public void startAnimation(int delay){
-        myDelay = delay;
-        myAnimation.pause();
-        myAnimation = new Timeline();
-        var frame = new KeyFrame(Duration.millis(delay), e -> step());
-        myAnimation.setCycleCount(Timeline.INDEFINITE);
-        myAnimation.getKeyFrames().add(frame);
-        myAnimation.play();
+        grid = new CellGrid(parameterMap, initialGrid);
+        millisecondDelay = (int) parameterMap.get("millisecondDelay");
     }
 
 
@@ -85,7 +50,6 @@ abstract public class Simulation {
     public void step() {
         if (running){
             update();
-            myVisualization.visualize();
         }
     }
 
@@ -113,168 +77,43 @@ abstract public class Simulation {
         return running;
     }
 
-    public int getDelay(){
-        return myDelay;
+    public int getMillisecondDelay(){
+        return millisecondDelay;
+    }
+
+    public void setMillisecondDelay(int delay){
+        millisecondDelay = delay;
     }
 
     /**
      * Gets the simTitle for a sim
      */
     public String getSimTitle() {
-        return simTitle;
+        return parameterMap.get("Title").toString();
     }
 
     /**
      * Gets the grid of Cells of the Simulation.
      *
-     * @return  grid of Cells
+     * @return  CellGrid object of the Simulation
      */
-    public Cell[][] getGrid() {
+    public CellGrid getGrid() {
         return grid;
     }
-
-    /**
-     * Gets the row count of the grid in cell.s
-     *
-     * @return      grid height
-     */
-    public int getGridRowCount() {
-        return grid.length;
-    }
-
-    /**
-     * Gets the column count of the grid in cells.
-     *
-     * Assumes that the grid has at least 1 row.
-     *
-     * @return      grid width
-     */
-    public int getGridColumnCount() {
-        return grid[0].length;
-    }
-
-    /**
-     * Gets the visualization of the simulation.
-     *
-     * @return  Visualization object of the simulation
-     */
-    public Visualization getVisualization() {
-        return myVisualization;
-    }
-
 
     /**
      * Sets the next state of all cells in the
      * grid. Only runs when the running variable is set
      * to true.
      */
-    protected abstract void update();
+    public void update() {
 
-    /**
-     * Gets the cell at x, y in the 2D array (grid) of cells. If the cell
-     * does not exist, like in the case of an edge cell, a cell is returned
-     * with a placeholder state.
-     * @param x         x index of grid
-     * @param y         y index of grid
-     * @return          Cell at x, y
-     */
-    protected Cell getCell(int x, int y) {
-        try {
-            return grid[x][y];
+        for (Cell cell : grid) {
+            cell.updateNext();
         }
-        catch (IndexOutOfBoundsException e) {
-            return new Cell(BEYOND_EDGE);
+
+        for (Cell cell : grid) {
+            cell.stepState();
         }
     }
-
-    /**
-     * Gets the cell at x, y in the 2D array (grid) of cells. Options of how to handle
-     * out of bound indices
-     * @param x         x index of grid
-     * @param y         y index of grid
-     * @param wrapAround    choose between the grid being (true) wrap around where
-     *                  out of bound indices reach to the opposite side of the grid
-     *                  or (false) surrounded by a border of cells that have
-     *                  a specific state
-     * @return          Cell at x, y
-     */
-    protected Cell getCell(int x, int y, boolean wrapAround) {
-        if (wrapAround) {
-            if (x > getGridRowCount()) {
-                x -= getGridRowCount();
-            }
-            else if (x < 0) {
-                x = getGridRowCount() - x;
-            }
-
-            if (y > getGridColumnCount()) {
-                y -= getGridColumnCount();
-            }
-            else if (y < 0) {
-                y = getGridRowCount() - y;
-            }
-
-            return grid[x][y];
-        }
-        return getCell(x, y);
-    }
-
-    protected List<Cell> getEightNeighbors(int i, int j) {
-        List<Cell> neighbors= new ArrayList<>();
-        neighbors.add(getCell(i - 1, j));
-        neighbors.add(getCell(i + 1, j));
-        neighbors.add(getCell(i - 1, j - 1));
-        neighbors.add(getCell(i + 1, j - 1));
-        neighbors.add(getCell(i, j - 1));
-        neighbors.add(getCell(i - 1, j + 1));
-        neighbors.add(getCell(i + 1, j + 1));
-        neighbors.add(getCell(i, j + 1));
-        return neighbors;
-    }
-
-    protected List<Cell> getFourNeighbors(int i, int j) {
-        List<Cell> neighbors= new ArrayList<>();
-        neighbors.add(getCell(i - 1, j));
-        neighbors.add(getCell(i + 1, j));
-        neighbors.add(getCell(i, j - 1));
-        neighbors.add(getCell(i, j + 1));
-        return neighbors;
-    }
-
-    protected int[] getEightNeighborStates(int i, int j) {
-        List<Cell> neighbors = getEightNeighbors(i, j);
-        int[] neighborStates = new int[neighbors.size()];
-        for (int x = 0; x < neighbors.size(); x++) {
-            neighborStates[x] = neighbors.get(x).getState();
-        }
-        return neighborStates;
-    }
-
-    protected int[] getFourNeighborStates(int i, int j) {
-        List<Cell> neighbors = getFourNeighbors(i, j);
-        int[] neighborStates = new int[neighbors.size()];
-        for (int x = 0; x < neighbors.size(); x++) {
-            neighborStates[x] = neighbors.get(x).getState();
-        }
-        return neighborStates;
-    }
-
-    protected List<Cell> findMatches(int state) {
-        List<Cell> matches = new ArrayList<>();
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                Cell cell = getCell(i, j);
-                if (cell.getState() == state) {
-                    matches.add(cell);
-                }
-            }
-        }
-        return matches;
-    }
-
-
-    protected List<Cell> getEmptyCells() {
-        return emptyCells;
-    }
-
 }

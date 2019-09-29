@@ -36,8 +36,12 @@ public class CAApp extends Application {
         myStage = stage;
         displayGroup = new Group();
 
+<<<<<<< HEAD
         mySim = Configurer.getSimulation("././Fire.xml");
         mySim.setVisualization(displayGroup, myStage, WINDOW_SIZE, language);
+=======
+        mySim = Configurer.getSimulation("Segregation.xml", WINDOW_SIZE, language);
+>>>>>>> origin/jake-simulation
         myStage.setScene(new Scene(displayGroup, WINDOW_SIZE, WINDOW_SIZE, BACKGROUND_COLOR));
         myStage.setTitle(mySim.getSimTitle());
         myStage.show();

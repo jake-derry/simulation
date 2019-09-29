@@ -39,5 +39,4 @@ public class SpeedControlButton extends MenuButton {
             }
         });
     }
-
 }

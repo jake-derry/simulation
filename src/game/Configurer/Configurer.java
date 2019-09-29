@@ -28,6 +28,7 @@ public class Configurer {
     //Files Supported
     private static final String SIMULATION_TAG = "Simulation";
     private static final String STYLE_TAG = "Style";
+
     //Simulations Supported
     private static final String LIFE = "gameOfLife";
     private static final String SEGREGATION = "segregation";
