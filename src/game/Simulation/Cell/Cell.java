@@ -20,7 +20,7 @@ abstract public class Cell {
 
     private State myState;
     private State myNextState;
-    private Iterable<Cell> myNeighborhood;
+    private Neighborhood myNeighborhood;
 
     /**
      * Constructor for Cell. Initializes the state of the
@@ -34,7 +34,7 @@ abstract public class Cell {
 
     }
 
-    public void setNeighbors(Iterable<Cell> neighborhood) {
+    public void setNeighborhood(Neighborhood neighborhood) {
         myNeighborhood = neighborhood;
     }
 
@@ -70,7 +70,7 @@ abstract public class Cell {
      *
      * @return          the cell's neighbors in an Iterator
      */
-    protected Iterable<Cell> getNeighbors() {
+    protected Neighborhood getNeighborhood() {
         return myNeighborhood;
     }
 
@@ -111,7 +111,7 @@ abstract public class Cell {
      * @return      map of state counts of neighbors
      */
     protected Map<State, Integer> getCountMap() {
-        return CellUtils.countMap(getNeighbors());
+        return CellUtils.countMap(getNeighborhood());
     }
 
 }

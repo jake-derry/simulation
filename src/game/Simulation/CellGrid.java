@@ -41,18 +41,23 @@ public class CellGrid implements Iterable<Cell> {
     private void connectNeighbors(String[][] cellGrid) {
         for (int i = 0; i < cellGrid.length; i++) {
             for (int j = 0; j < cellGrid[0].length; j++) {
-                List<Cell> neighborhood = new ArrayList<>();
+                List<Cell> neighborList = new ArrayList<>();
+
                 for (int neighborDisplacement : NEIGHBORS) {
                     int[] displacement = DISPLACEMENTS[neighborDisplacement];
+
                     int iNeighbor = i + displacement[0];
                     int jNeighbor = j + displacement[1];
+
                     if (inXRange(iNeighbor) && inYRange(jNeighbor)) {
                         Cell neighbor = myCellGrid[iNeighbor][jNeighbor];
-                        neighborhood.add(neighbor);
+                        neighborList.add(neighbor);
+
                     }
+
                 }
 
-                myCellGrid[i][j].setNeighbors(neighborhood);
+                myCellGrid[i][j].setNeighborhood(new Neighborhood(neighborList));
             }
         }
     }

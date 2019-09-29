@@ -4,6 +4,7 @@ import game.Simulation.Cell.Cell;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 public class CellIterator implements Iterator<Cell> {
@@ -24,6 +25,9 @@ public class CellIterator implements Iterator<Cell> {
         }
     }
 
+    CellIterator(List<Cell> cells) {
+        myCellQueue = new LinkedList<>(cells);
+    }
 
     @Override
     public boolean hasNext() {
