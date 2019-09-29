@@ -43,7 +43,7 @@ abstract public class Cell {
      * the next state of the cell. Sets the next
      * state of the cell using setNextState.
      */
-    abstract public void updateNext();
+    abstract public State updateNext();
 
     /**
      * Sets the current state to the next state, stepping the state
@@ -78,28 +78,23 @@ abstract public class Cell {
      * Sets the current state of the simulation using setNextState and
      * stepState.
      *
-     * TODO: Possibly block changes in the cell state between the call of
-     * TODO: setNextState and stepState
-     *
      * @param state     the cell's new state
      */
     public void setState(State state) {
-        setNextState(state);
-        stepState();
+        myState = state;
     }
 
     /**
-     * Sets the next state to the parameter next. To change
+     * Sets the next state based on updateNext. To change
      * the state, the setNextState method should be called
      * and then the method which sets the state to the next
      * state. Updates the count map that keeps track of the
      * number of neighbors of each state.
      *
-     * @param next  sets the next state
      */
-    public void setNextState(State next) {
+    public void setNextState() {
         countMap = CellUtils.countMap(getNeighbors());
-        myNextState = next;
+        myNextState = updateNext();
     }
 
     /**

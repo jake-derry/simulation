@@ -2,6 +2,7 @@ package game.Simulation;
 
 import game.Simulation.Cell.Cell;
 import game.visualization.Visualization;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;

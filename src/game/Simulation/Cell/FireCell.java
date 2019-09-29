@@ -20,16 +20,15 @@ public class FireCell extends Cell {
     }
 
     @Override
-    public void updateNext() {
+    public State updateNext() {
         State nextState;
         if (getState() == EMPTY || getState() == BURNING) {
-                nextState = EMPTY;
+                return EMPTY;
         }
 
         else {
-                nextState = (burning() ? BURNING : TREE);
+                return burning() ? BURNING : TREE;
         }
-        setNextState(nextState);
 
     }
 
