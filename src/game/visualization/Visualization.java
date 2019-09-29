@@ -18,6 +18,8 @@ import java.util.*;
  * @author Matt Harris
  */
 public class Visualization{
+    private final int DEFAULT_WINDOW_SIZE = 200;
+    private final int DEFAULT_MILLI_DELAY = 5000;
     private Group myGroup;
     private Simulation mySim;
     private LineChart cellGraph;
@@ -25,14 +27,16 @@ public class Visualization{
     private int millisecondDelay;
     private List rectangleList;
     private List seriesList;
+    private int windowHeight;
 
-    public Visualization(Group group, Simulation sim, Stage stage, int windowHeight, String language, Timeline animation, Map stylingMap){
+    public Visualization(Group group, Simulation sim, Stage stage, String language, Timeline animation, Map stylingMap){
         myGroup = group;
         myGroup.getChildren().clear();
         mySim = sim;
+        setDelay(stylingMap);
+        setWindowHeight(stylingMap);
         cellGraph = GraphHandler.setUpStateGraph(group, windowHeight);
         //TODO: Dummy delay (should read from styling)
-        millisecondDelay = 500;
         seriesList = new ArrayList<XYChart.Series>();
         MenuHandler.addMenuButtonsToDisplayGroup(stage, group, sim, windowHeight, millisecondDelay, animation, language, cellGraph, seriesList);
         MenuHandler.addTitleTextToDisplayGroup(group, windowHeight, sim.getSimTitle());
@@ -47,5 +51,31 @@ public class Visualization{
 
     public int getDelay(){
         return millisecondDelay;
+    }
+
+    private void setWindowHeight(Map stylingMap){
+        if (stylingMap.containsKey("windowDimension")){
+            windowHeight = (int) stylingMap.get("windowDimension");
+        }
+        else{
+            windowHeight = DEFAULT_WINDOW_SIZE;
+        }
+    }
+
+    private void setDelay(Map stylingMap){
+        if (stylingMap.containsKey("delay")){
+            millisecondDelay = (int) stylingMap.get("delay");
+        }
+        else{
+            millisecondDelay = DEFAULT_MILLI_DELAY;
+        }
+    }
+
+    public int getWindowHeight(){
+        return windowHeight;
+    }
+
+    public int getWindowWidth(){
+        return windowHeight*2;
     }
 }

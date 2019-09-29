@@ -46,7 +46,7 @@ public class LoadNewSimButton extends MenuButton {
                 if (file != null) {
                     mySim = Configurer.getSimulation(file.getName());
                     Map stylingMap = Configurer.getStyling(mySim.getParameterMap().get("StylingFile").toString());
-                    myVis = new Visualization(myGroup, mySim, myStage, WINDOW_SIZE, myLanguage, myAnimation, stylingMap);
+                    myVis = new Visualization(myGroup, mySim, myStage, myLanguage, myAnimation, stylingMap);
                     CAApp.setVisualization(myVis);
                     CAApp.setSim(mySim);
                 }
