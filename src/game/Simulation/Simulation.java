@@ -40,7 +40,6 @@ public class Simulation {
         running = true;
         grid = new CellGrid(parameterMap, initialGrid);
         stepCount = 0;
-        myParameterMap.put("StylingFile", "FireStyle.xml");
     }
 
     /**
