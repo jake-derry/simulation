@@ -27,8 +27,6 @@ public class CAApp extends Application {
     private Group displayGroup;
     private static List<Simulation> mySims;
     private static List<Visualization> myVisualizations;
-
-
     private Stage myStage;
 
     /**

@@ -2,39 +2,54 @@ package game.Simulation.Cell.Agent;
 
 import game.Simulation.State;
 
-public abstract class Mover {
+/**
+ * An abstract class that organizes the behavior of the
+ * predator and prey in a predator-prey simulation.
+ */
+public interface Mover {
 
     /**
+     * Returns whether a breeding condition is met.
+     * Generalizes the different breeding condition that
+     * both have.
      *
-     * @return
+     * @return          If breeding condition is met
      */
-    abstract public boolean readyToBreed();
+    boolean readyToBreed();
 
     /**
+     * Returns an instance of the mover of the particular
+     * class that it is called on.
      *
-     * @return
+     * @return          Mover object with the same parameters
+     *                  as the mover it is called on.
      */
-    abstract public Mover offspring();
+    Mover offspring();
 
     /**
-     *
+     * Alters the condition of the mover which will influence
+     * whether it lives or breeds. Called when the mover
+     * moves between two cells.
      */
-    abstract public void step();
+    void step();
 
     /**
-     *
-     * @return
+     * Return if the mover is living.
+     * @return          If mover is living
      */
-    abstract public boolean isLiving();
+    boolean isLiving();
 
     /**
+     * Returns the state associated with a given mover.
+     * Used to find the state associated with an implementation
+     * while using the Mover interface.
      *
-     * @return
+     * @return          State associated with a given mover
      */
-    abstract public State moverState();
+    State moverState();
 
     /**
-     *
+     * Sets living to false.
      */
-    abstract public void kill();
+    void kill();
 }

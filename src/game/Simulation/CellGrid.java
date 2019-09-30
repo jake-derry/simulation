@@ -5,15 +5,21 @@ import util.Pair;
 
 import java.util.*;
 
+/**
+ * An Iterable class that protects the array of cells.
+ */
 public class CellGrid implements Iterable<Cell> {
     private Cell[][] myCellGrid;
     private Map<String, Object> myParameterMap;
 
     /**
+     * Constructor for CellGrid that initializes the cell grid
+     * based on a map of parameters and a grid of strings that
+     * correspond to states.
      *
-     *
-     * @param parameterMap
-     * @param cellGrid
+     * @param parameterMap          Map of parameters
+     * @param cellGrid              A grid of strings that correspond to
+     *                              states
      */
     public CellGrid(Map<String, Object> parameterMap, String[][] cellGrid) {
         myParameterMap = parameterMap;
@@ -22,8 +28,9 @@ public class CellGrid implements Iterable<Cell> {
     }
 
     /**
+     * Creates the cell grid for each simulation type
      *
-     * @param cellGrid
+     * @param cellGrid              String array
      */
     private void createCellGrid(String[][] cellGrid) {
         myCellGrid = new Cell[cellGrid.length][cellGrid[0].length];
