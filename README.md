@@ -14,7 +14,7 @@ Start Date: Sept 15
 
 Finish Date: Sept 30
 
-Hours Spent: 44 hours between members
+Hours Spent: 160 hours between members
 
 ### Primary Roles
 
@@ -36,7 +36,7 @@ New Sim File Chooser inspiration from: https://docs.oracle.com/javafx/2/ui_contr
  * GameOfLife.xml 
  * Percolation.xml 
  * PredatorPrey.xml 
- * Segregation.xml
+ * RPS.xml
  * For Error Checking info, see section in Notes below
 
 ####Interesting data files: Fire.xml
@@ -74,9 +74,10 @@ Assumptions or Simplifications:
 * new Simulations can only be started in new windows
 * default values (hardcoded) are used when users do not specify needed parameters
 * simulation parameters cannot be changed on the fly once a simulation has been loaded and created
-* 
+* currently only one language (English) has been defined in a properties file so this is the default language used for all simulations (could be changed easily)
 
 Known Bugs:
+* the simulation can take a few seconds to load in at the start of the app (especially for large grids)
 
 Extra credit:
 
