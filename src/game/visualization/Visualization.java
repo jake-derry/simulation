@@ -25,7 +25,7 @@ public class Visualization{
     private LineChart cellGraph;
     private Object colorMap;
     private int millisecondDelay;
-    private List rectangleList;
+    private List polygonList;
     private List seriesList;
     private int windowHeight;
 
@@ -40,12 +40,12 @@ public class Visualization{
         seriesList = new ArrayList<XYChart.Series>();
         MenuHandler.addMenuButtonsToDisplayGroup(stage, group, sim, windowHeight, millisecondDelay, animation, language, cellGraph, seriesList);
         MenuHandler.addTitleTextToDisplayGroup(group, windowHeight, sim.getSimTitle());
-        rectangleList = GridHandler.setUpRectangles(windowHeight, sim.getGrid().getCellRows(), sim.getGrid().getCellColumns(), myGroup, stylingMap);
+        polygonList = GridHandler.setUpPolygons(windowHeight, sim.getGrid().getCellRows(), sim.getGrid().getCellColumns(), myGroup, stylingMap, 6);
         colorMap = stylingMap.get("colorMap");
     }
 
     public void visualize(){
-        GridHandler.visualizeCells(rectangleList.iterator(), mySim.getGrid().iterator(), (Map)colorMap);
+        GridHandler.visualizeCells(polygonList.iterator(), mySim.getGrid().iterator(), (Map)colorMap);
         GraphHandler.updateGraph(cellGraph, seriesList, mySim.getGrid(), mySim.getStepCount());
     }
 
