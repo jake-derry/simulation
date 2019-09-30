@@ -105,7 +105,7 @@ public class GridHandler {
         else{
             triangle.getPoints().addAll(xPos, yPos+cellHeight, xPos+cellWidth/2, yPos, xPos+cellWidth, yPos+cellHeight);
         }
-        triangle.setOnMouseClicked(mouseEvent -> cell.setState(cell.getNextStateOnClick(cell.getState())));
+        triangle.setOnMouseClicked(mouseEvent -> cell.setState(cell.getNextStateOnClick()));
         return triangle;
     }
 
@@ -125,7 +125,7 @@ public class GridHandler {
         double xPos = j*cellWidth + xOffset;
         double yPos = i*cellHeight+menuHeight;
         rectangle.getPoints().addAll(xPos, yPos, xPos, yPos+cellHeight, xPos+cellWidth, yPos+cellHeight, xPos+cellWidth, yPos);
-        rectangle.setOnMouseClicked(mouseEvent -> cell.setState(cell.getNextStateOnClick(cell.getState())));
+        rectangle.setOnMouseClicked(mouseEvent -> cell.setState(cell.getNextStateOnClick()));
         return rectangle;
     }
 }
