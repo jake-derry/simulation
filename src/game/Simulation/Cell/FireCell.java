@@ -7,12 +7,28 @@ import java.util.Random;
 
 import static game.Simulation.State.*;
 
+/**
+ * Cell that implements rules of a fire simulation.
+ */
 public class FireCell extends Cell {
 
-
+    /**
+     * Likelihood of a neighboring cell of a burning cell
+     * catching fire.
+     */
     private double myProbCatch;
+
     private Random random;
 
+    /**
+     * Constructor for FireCell. Initializes state and the
+     * likelihood of a neighboring cell of a burning cell
+     * catching fire.
+     *
+     * @param state         Initial state
+     * @param probCatch     Probability of a neighboring cell of
+     *                      a burning cell catching fire.
+     */
     public FireCell(State state, double probCatch) {
         super(state);
         myProbCatch = probCatch;
@@ -32,6 +48,12 @@ public class FireCell extends Cell {
 
     }
 
+    /**
+     * Based on the probability of catching fire determines if
+     * a tree cell will burn.
+     *
+     * @return          Whether a tree cell will burn
+     */
     private boolean burning() {
         int burningCount;
         if (getCountMap().containsKey(BURNING)) {

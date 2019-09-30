@@ -8,6 +8,9 @@ import static game.Simulation.State.EMPTY;
 import static game.Simulation.State.WALL;
 import static game.Simulation.State.WATER;
 
+/**
+ * Cell that implements Percolation rules
+ */
 public class PercolationCell extends Cell{
 
     /**

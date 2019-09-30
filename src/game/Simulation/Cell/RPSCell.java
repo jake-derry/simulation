@@ -2,7 +2,16 @@ package game.Simulation.Cell;
 
 import game.Simulation.State;
 
+/**
+ * Cell class that implements the Rock, Paper, Scissors
+ * simulation.
+ */
 public class RPSCell extends Cell{
+
+    /**
+     * Threshold at which a cell becomes the type that
+     * beats it.
+     */
     private int myThreshold;
 
     /**

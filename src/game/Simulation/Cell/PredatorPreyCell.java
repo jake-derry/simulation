@@ -6,15 +6,16 @@ import game.Simulation.Cell.Agent.Prey;
 import game.Simulation.State;
 
 /**
- * Idk if this works?
+ * Cell that implements Predator-Prey rules.
  */
 public class PredatorPreyCell extends Cell {
     private Mover mover;
     private Mover nextMover;
 
     /**
-     * Constructor for Cell. Initializes the state of the
-     * cell.
+     * Constructor for Cell. Initializes the state of the cell, initial
+     * energy, food boost, and breeding threshold of the predator, and the
+     * breed time of the prey.
      *
      * @param state Initial state of the Cell
      */
@@ -63,7 +64,7 @@ public class PredatorPreyCell extends Cell {
     }
 
     /**
-     *
+     * Updates a predator.
      */
     private void updatePredator() {
         Predator predator = (Predator) mover;
@@ -83,7 +84,7 @@ public class PredatorPreyCell extends Cell {
     }
 
     /**
-     *
+     * Updates a prey.
      */
     private void updatePrey() {
         PredatorPreyCell randomCell = (PredatorPreyCell) getNeighborhood().
@@ -98,9 +99,10 @@ public class PredatorPreyCell extends Cell {
     }
 
     /**
+     * Places an offspring in a random neighboring cell if the mover
+     * is ready to replicate.
      *
-     *
-     * @param randomCell
+     * @param randomCell        Cell for offspring to be placed.
      */
     private void replicateIfReady(PredatorPreyCell randomCell) {
         if (mover.readyToBreed()) {
@@ -117,22 +119,45 @@ public class PredatorPreyCell extends Cell {
         }
     }
 
+    /**
+     * Sets the mover to the next mover.
+     */
     private void stepMover() {
         mover = nextMover;
     }
 
+    /**
+     * Sets the next mover
+     *
+     * @param newMover      The next mover
+     */
     private void setNextMover(Mover newMover) {
         nextMover = newMover;
     }
 
+    /**
+     * Sets the mover.
+     *
+     * @param newMover      The mover
+     */
     private void setMover(Mover newMover) {
         mover = newMover;
     }
 
+    /**
+     * Gets the next mover.
+     *
+     * @return              The next mover
+     */
     private Mover getNextMover() {
         return nextMover;
     }
 
+    /**
+     * Gets mover.
+     *
+     * @return              The mover
+     */
     private Mover getMover() {
         return mover;
     }

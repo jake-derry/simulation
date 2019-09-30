@@ -9,6 +9,9 @@ import java.util.List;
 
 import static game.Simulation.State.*;
 
+/**
+ * Cell that implements Game of Life rules
+ */
 public class GameOfLifeCell extends Cell {
 
     /**
