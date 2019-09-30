@@ -1,24 +1,31 @@
 <?xml version="1.0"?>
 <Simulation>
-    <type>segregation</type>
+    <type>Foraging</type>
     <author>
         Jonah Knapp
     </author>
     <size>
-        <rows>10</rows>
-        <columns>10</columns>
+        <rows>50</rows>
+        <columns>50</columns>
     </size>
     <defaultState>empty</defaultState>
-    <cellDistribution>random</cellDistribution>
+    <cellDistribution>cell</cellDistribution>
     <activeCells>
         <random>
-            <state>A</state> <value>30</value>
+            <state>food</state> <value>10</value>
         </random>
         <random>
-            <state>B</state> <value>30</value>
+            <state>nest</state> <value>1</value>
         </random>
+        <cell> <row>5</row> <col>5</col> <state>nest</state></cell>
+        <cell> <row>40</row> <col>40</col> <state>food</state></cell>
+        <cell> <row>20</row> <col>20</col> <state>food</state></cell>
+
     </activeCells>
-    <satisfaction>50</satisfaction>
+    <foragingPheromones>5</foragingPheromones>
+    <returningPheromones>10</returningPheromones>
+    <birthProbability>30</birthProbability>
+
     <shape>rectangle</shape>
     <neighbor> <index>0</index> </neighbor>
     <neighbor> <index>1</index> </neighbor>
@@ -27,5 +34,6 @@
     <neighbor> <index>4</index> </neighbor>
     <neighbor> <index>5</index> </neighbor>
     <neighbor> <index>6</index> </neighbor>
+    <neighbor> <index>7</index> </neighbor>
     <Style>styles/Style1.xml</Style>
 </Simulation>

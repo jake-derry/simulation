@@ -31,28 +31,35 @@ public class CellGrid implements Iterable<Cell> {
             for (int j = 0; j < cellGrid[0].length; j++) {
                 switch ((String) myParameterMap.get("Simulation")) {
                     case ("Fire") : {
-                        myCellGrid[i][j] = new FireCell(State.getState(cellGrid[i][j]), (double) myParameterMap.get("probCatch"));
+                        myCellGrid[i][j] = new FireCell(State.getState(cellGrid[i][j]),
+                                (double) (Integer)myParameterMap.get("probCatch")/100);
+                        break;
                     }
                     case ("Game of life") : {
                         myCellGrid[i][j] = new GameOfLifeCell(State.getState(cellGrid[i][j]));
+                        break;
                     }
                     case ("Percolation") : {
                         myCellGrid[i][j] = new PercolationCell(State.getState(cellGrid[i][j]));
+                        break;
                     }
                     case ("Predator-Prey") : {
                         myCellGrid[i][j] = new PredatorPreyCell(State.getState(cellGrid[i][j]),
                                 (int) myParameterMap.get("initialEnergy"), (int) myParameterMap.get("foodBoost"),
                                 (int) myParameterMap.get("breedThreshold"), (int) myParameterMap.get("breedTime"));
+                        break;
                     }
                     case ("RPS") : {
                         myCellGrid[i][j] = new RPSCell(State.getState(cellGrid[i][j]),
                                 (int) myParameterMap.get("threshold"));
+                        break;
                     }
                     case ("Foraging") : {
                         myCellGrid[i][j] = new ForagingCell(State.getState(cellGrid[i][j]),
                                 (int) myParameterMap.get("foragingPheromones"),
                                 (int) myParameterMap.get("returningPheromones"),
-                                (double) myParameterMap.get("birthProbability"));
+                                (double) (Integer)myParameterMap.get("birthProbability")/100);
+                        break;
                     }
                 }
             }
@@ -82,7 +89,7 @@ public class CellGrid implements Iterable<Cell> {
      * @param j
      */
     private void connectNeighbors(int[] neighbors, CellShape shape, int i, int j) {
-        Map<Pair<Integer, Integer>, Cell> neighborMap = new TreeMap<>();
+        Map<Pair<Integer, Integer>, Cell> neighborMap = new HashMap<>();
 
         for (Pair<Integer, Integer> displacement : shape.getDisplacements(neighbors)) {
             int iNeighbor = i + displacement.getKey();

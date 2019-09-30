@@ -16,7 +16,14 @@ public class CellUtils {
             int countValue = countMap.get(state) + 1;
             countMap.put(state, countValue);
         }
+        addAllState(countMap);
         return countMap;
+    }
+
+    private static void addAllState(Map<State, Integer> countMap) {
+        for (State state : State.values()) {
+            countMap.put(state, 0);
+        }
     }
 
     public static Map<State, List<Cell>> cellMap(Iterable<Cell> cells) {

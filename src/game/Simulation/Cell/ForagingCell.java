@@ -24,7 +24,7 @@ public class ForagingCell extends Cell {
     public ForagingCell(State state, int foragingPheromones, int returningPheromones, double birthProbability) {
         super(state);
         pheromones = 0;
-        Random random = new Random();
+        random = new Random();
 
         if (getState() == State.ANT) {
             ant = new Ant(foragingPheromones, returningPheromones);
@@ -44,16 +44,18 @@ public class ForagingCell extends Cell {
     public void updateNext() {
         switch (getState()) {
             case NEST: {
-                int index = random.nextInt(getCountMap().get(State.EMPTY));
-                int count = 0;
-
-                for (Cell cell : getCellMap().get(State.EMPTY)) {
-                    if (count == index) {
-                        cell.setNextState(State.ANT);
-                        ((ForagingCell) cell).setNextAnt(new Ant(myForagingPheromones, myReturningPheromones));
-                        break;
+                if(getCountMap().get(State.EMPTY) != 0){
+                    int index = random.nextInt(getCountMap().get(State.EMPTY));
+                    int count = 0;
+                    for (Cell cell : getCellMap().get(State.EMPTY)) {
+                        if (count == index) {
+                            cell.setNextState(State.ANT);
+                            ((ForagingCell) cell).setNextAnt(new Ant(myForagingPheromones, myReturningPheromones));
+                            break;
+                        }
                     }
                 }
+                break;
             }
             case ANT: {
                 ForagingCell nextAntSpot;
@@ -75,6 +77,7 @@ public class ForagingCell extends Cell {
                     nextAntSpot.setNextAnt(ant);
                     setNextAnt(null);
                 }
+                break;
             }
         }
     }

@@ -15,7 +15,12 @@ import static game.Configurer.XMLReaders.getFirstElementInteger;
 
 /**
  * This class handles loading in parameters from the XML file. It contains default values for each of the parameters,
- * which is set when the specified values in the XML are not supported.
+ * which is set when the specified values in the XML are not supported. It depends on XMLReaders.java to read
+ * integers/strings from the nodes in the main XML element and to do error checking on the parsing of these values.
+ *
+ * Methods who want to implement the ParameterLoader class first declare an instance of the class, then use public
+ * methods such as getDimensions() and getActiveCells() to access values that correspond to the nodes within the
+ * element.
  *
  * @author Jonah Knapp
  */
@@ -128,14 +133,13 @@ public class ParameterLoader {
         return activeCells;
     }
 
-    public int getValueInt(String myTag, int DefaultValue){
-        int myVal = getFirstElementInteger(mainElement, myTag);
-        if(myVal < 0){
-            return DefaultValue;
-        }
-        return myVal;
-    }
 
+    /**
+     * Returns the String that maps to the first instance of a particular tag. In the case that the
+     * String is missing or invalid, the supplied default value will be used.
+     *
+     * @return String that maps to the tag
+     */
     public String getValueString(String myTag, String DefaultValue){
         String myVal = getFirstElementString(mainElement, myTag);
         if(myVal.equals("Unspecified")){
@@ -144,10 +148,20 @@ public class ParameterLoader {
         return myVal;
     }
 
+    /**
+     *
+     * @return the type of Simulation, as specified in the Element
+     */
     public String getSimType() {
         return simType;
     }
 
+    /**
+     * Returns a integer array containing the neighborhood of cells
+     *
+     * @param Default default list of Neighbors. Used if neighbors in the XML are unspecified or invalid.
+     * @return integer array corresponding to neighborhood that cells should include in their calculations
+     */
     public int[] getNeighbors(int[] Default) {
         NodeList nList = mainElement.getElementsByTagName(NEIGHBORS_TAG);
         List<Integer> myNeighbors = new ArrayList<>();

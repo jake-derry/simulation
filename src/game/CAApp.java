@@ -33,7 +33,7 @@ public class CAApp extends Application {
     private static List<Simulation> mySims;
     private static List<Visualization> myVisualizations;
 
-    private static final String DEFAULT_SIMULATION = "GameofLife.xml";
+    private static final String DEFAULT_SIMULATION = "simulations/Foraging.xml";
 
     private Stage myStage;
 

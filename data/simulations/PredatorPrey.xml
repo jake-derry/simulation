@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Simulation>
-    <type>predatorPrey</type>
+    <type>Predator-Prey</type>
     <author>
         Jonah Knapp
     </author>
@@ -9,8 +9,14 @@
         <columns>10</columns>
     </size>
     <defaultState>empty</defaultState>
-    <cellDistribution>cell</cellDistribution>
+    <cellDistribution>random</cellDistribution>
     <activeCells>
+        <random>
+            <state>prey</state> <value>30</value>
+        </random>
+        <random>
+            <state>predator</state> <value>30</value>
+        </random>
         <activeCells>
             <cell> <row>1</row> <col>1</col> <state>predator</state> </cell>
             <cell> <row>1</row> <col>4</col> <state>predator</state> </cell>
@@ -89,8 +95,9 @@
         </activeCells>
     </activeCells>
     <breedTime>5</breedTime>
-    <initEnergy>10</initEnergy>
-    <energyThreshold>10</energyThreshold>
+    <initialEnergy>10</initialEnergy>
+    <breedThreshold>10</breedThreshold>
+    <foodBoost>2</foodBoost>
     <shape>rectangle</shape>
     <neighbor> <index>0</index> </neighbor>
     <neighbor> <index>1</index> </neighbor>
@@ -99,5 +106,6 @@
     <neighbor> <index>4</index> </neighbor>
     <neighbor> <index>5</index> </neighbor>
     <neighbor> <index>6</index> </neighbor>
-    <Style>Style1.xml</Style>
+    <neighbor> <index>7</index> </neighbor>
+    <Style>styles/Style1.xml</Style>
 </Simulation>

@@ -10,4 +10,11 @@
     <color><state>BURNING</state> <color>FIREBRICK</color></color>
     <color><state>TREE</state> <color>GREEN</color></color>
     <color><state>BEYOND_EDGE</state> <color>BLACK</color></color>
+    <color><state>ROCK</state> <color>GREY</color></color>
+    <color><state>PAPER</state> <color>WHITE</color></color>
+    <color><state>SCISSORS</state> <color>RED</color></color>
+    <color><state>ANT</state> <color>YELLOW</color></color>
+    <color><state>FOOD</state> <color>GREEN</color></color>
+    <color><state>NEST</state> <color>RED</color></color>
+
 </defaults>

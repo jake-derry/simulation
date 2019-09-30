@@ -54,7 +54,7 @@ public class LoadNewSimButton extends MenuButton {
                 if (file != null) {
                     Stage stage = new Stage();
                     Timeline myAnimation = new Timeline();
-                    Simulation sim = Configurer.getSimulation(file.getName());
+                    Simulation sim = Configurer.getSimulation("simulations/" + file.getName());
                     Map stylingMap = Configurer.getStyling(sim.getParameterMap().get("StylingFile").toString());
                     Group group = new Group();
                     Visualization vis = new Visualization(group, sim, stage, myLanguage, myAnimation, stylingMap);
