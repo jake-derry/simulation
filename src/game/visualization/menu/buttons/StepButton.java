@@ -32,7 +32,7 @@ public class StepButton extends MenuButton {
                     mySim.play();
                     mySim.step();
                     mySim.pause();
-                    GraphHandler.updateGraph(cellGraph, seriesList, mySim.getGrid().iterator(), mySim.getStepCount());
+                    GraphHandler.updateGraph(cellGraph, seriesList, mySim.getGrid(), mySim.getStepCount());
                 }
             }
         });

@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum CellShape {
-    RECTANGLE("rectangle", new int[][] {
+    RECTANGLE("rectangle", 4, new int[][] {
             new int[] {0, 1},
             new int[] {1, 1},
             new int[] {-1, 0},
@@ -18,7 +18,7 @@ public enum CellShape {
             new int[] {1, 0},
             new int[] {1, -1},
     }),
-    TRIANGLE("triangle", new int[][] {
+    TRIANGLE("triangle", 3, new int[][] {
             new int[] {1, 0},
             new int[] {1, 1},
             new int[] {0, 1},
@@ -32,7 +32,7 @@ public enum CellShape {
             new int[] {0, -1},
             new int[] {1, -1},
     }),
-    HEXAGON("hexagon", new int[][] {
+    HEXAGON("hexagon", 6, new int[][] {
             new  int[] {1, 1},
             new int[] {0, 1},
             new int[] {-1, 1},
@@ -44,9 +44,11 @@ public enum CellShape {
 
     private String myShapeName;
     private int[][] myDisplacementMap;
+    private int mySides;
 
-    CellShape(String shapeName, int[][] displacementMap) {
+    CellShape(String shapeName, int sides, int[][] displacementMap) {
         myShapeName = shapeName;
+        mySides = sides;
         myDisplacementMap = displacementMap;
     }
 
@@ -59,6 +61,11 @@ public enum CellShape {
         return myDisplacementMap[i];
     }
 
+    /**
+     *
+     * @param dexes
+     * @return
+     */
     public List<Pair<Integer, Integer>> getDisplacements(int[] dexes) {
         List<Pair<Integer, Integer>> selectDisplacements = new ArrayList<>();
         for (int dex : dexes) {
@@ -69,4 +76,25 @@ public enum CellShape {
         return selectDisplacements;
     }
 
+    /**
+     *
+     * @param shapeName
+     * @return
+     */
+    public static CellShape matchShape(String shapeName) {
+        for (CellShape shape : CellShape.values()) {
+            if (shapeName.equals(shape.getName())) {
+                return shape;
+            }
+        }
+        return null;
+    }
+
+    private String getName() {
+        return myShapeName;
+    }
+
+    public int getSides() {
+        return mySides;
+    }
 }

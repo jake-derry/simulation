@@ -29,7 +29,7 @@ public class GraphHandler {
         return stateGraph;
     }
 
-    public static void updateGraph(LineChart stateGraph, List<XYChart.Series> seriesList, Iterator<Cell> cellIterator, int stepCount){
+    public static void updateGraph(LineChart stateGraph, List<XYChart.Series> seriesList, Iterable<Cell> cellIterator, int stepCount){
         Map<State, Integer> stateMap = CellUtils.countMap(cellIterator);
         for (State key:stateMap.keySet()){
             boolean newSeries = true;

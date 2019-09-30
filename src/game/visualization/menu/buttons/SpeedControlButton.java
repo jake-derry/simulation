@@ -1,7 +1,6 @@
 package game.visualization.menu.buttons;
 
 import game.Simulation.Simulation;
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -28,4 +27,19 @@ public class SpeedControlButton extends MenuButton {
         }
         setButtonAction();
     }
-    
+
+    /**
+     * setSpeedHandler: Sets the specfic button action for the Simulation Speed Buttons
+     * @return- event handler for Sim Speed Buttons
+     * Note: a check had to added in order to keep the speed from being increased to a point of crashing the app
+     */
+    @Override
+    public void setButtonAction() {
+        myButton.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(final ActionEvent e) {
+                myAnimation.setRate(myAnimation.getRate()*multiplier);
+            }
+        });
+    }
+}

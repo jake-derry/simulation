@@ -13,13 +13,22 @@ public class CellGrid implements Iterable<Cell> {
     private Cell[][] myCellGrid;
     private Map<String, Object> myParameterMap;
 
-    // assumes rectangle grid shape for the moment
+    /**
+     *
+     *
+     * @param parameterMap
+     * @param cellGrid
+     */
     public CellGrid(Map<String, Object> parameterMap, String[][] cellGrid) {
         createCellGrid(cellGrid);
         connectGrid(cellGrid);
         myParameterMap = parameterMap;
     }
 
+    /**
+     *
+     * @param cellGrid
+     */
     private void createCellGrid(String[][] cellGrid) {
         myCellGrid = new Cell[cellGrid.length][cellGrid[0].length];
         for (int i = 0; i < cellGrid.length; i++) {
@@ -29,9 +38,13 @@ public class CellGrid implements Iterable<Cell> {
         }
     }
 
+    /**
+     *
+     * @param cellGrid
+     */
     private void connectGrid(String[][] cellGrid) {
         int[] neighbors = (int[]) myParameterMap.get("neighbors");
-        CellShape shape = (CellShape) myParameterMap.get("cell shape");
+        CellShape shape = CellShape.matchShape((String) myParameterMap.get("shape"));
 
         for (int i = 0; i < cellGrid.length; i++) {
             for (int j = 0; j < cellGrid[0].length; j++) {
@@ -40,6 +53,13 @@ public class CellGrid implements Iterable<Cell> {
         }
     }
 
+    /**
+     *
+     * @param neighbors
+     * @param shape
+     * @param i
+     * @param j
+     */
     private void connectNeighbors(int[] neighbors, CellShape shape, int i, int j) {
         List<Cell> neighborList = new ArrayList<>();
 
@@ -55,14 +75,30 @@ public class CellGrid implements Iterable<Cell> {
         myCellGrid[i][j].setNeighborhood(new Neighborhood(neighborList));
     }
 
+    /**
+     *
+     * @param iNeighbor
+     * @param jNeighbor
+     * @return
+     */
     private boolean inRange(int iNeighbor, int jNeighbor) {
         return inXRange(iNeighbor) && inYRange(jNeighbor);
     }
 
+    /**
+     *
+     * @param jNeighbor
+     * @return
+     */
     private boolean inYRange(int jNeighbor) {
         return jNeighbor >= 0 && jNeighbor < myCellGrid.length;
     }
 
+    /**
+     *
+     * @param iNeighbor
+     * @return
+     */
     private boolean inXRange(int iNeighbor) {
         return iNeighbor >= 0 && iNeighbor < myCellGrid[0].length;
     }
@@ -72,11 +108,27 @@ public class CellGrid implements Iterable<Cell> {
         return new CellIterator(myCellGrid);
     }
 
+    /**
+     *
+     * @return
+     */
     public int getCellRows(){
         return myCellGrid.length;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getCellColumns(){
         return myCellGrid[0].length;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public CellShape getShape() {
+        return CellShape.matchShape((String) myParameterMap.get("shape"));
     }
 }
