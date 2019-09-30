@@ -24,7 +24,7 @@ public class CellGrid implements Iterable<Cell> {
         myCellGrid = new Cell[cellGrid.length][cellGrid[0].length];
         for (int i = 0; i < cellGrid.length; i++) {
             for (int j = 0; j < cellGrid[0].length; j++) {
-                myCellGrid[i][j] = new FireCell(State.getState(cellGrid[i][j]), 0.7);
+                myCellGrid[i][j] = new FireCell(State.getState(cellGrid[i][j]), 0.3);
             }
         }
     }

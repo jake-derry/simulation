@@ -1,7 +1,6 @@
 package game.Simulation;
 
 import game.Simulation.Cell.Cell;
-import game.Simulation.Cell.CellUtils;
 
 import java.util.Map;
 
@@ -25,10 +24,10 @@ import java.util.Map;
  * @author Jake Derry
  */
 public class Simulation {
-
     private CellGrid grid;
     private boolean running;
     private Map<String, Object> myParameterMap;
+    private int stepCount;
 
     /**
      * Initializes a simulation running.
@@ -40,6 +39,7 @@ public class Simulation {
         myParameterMap = parameterMap;
         running = true;
         grid = new CellGrid(parameterMap, initialGrid);
+        stepCount = 0;
     }
 
     /**
@@ -49,7 +49,12 @@ public class Simulation {
     public void step() {
         if (running){
             update();
+            stepCount++;
         }
+    }
+
+    public int getStepCount(){
+        return stepCount;
     }
 
     /**
@@ -101,5 +106,9 @@ public class Simulation {
         for (Cell cell : grid) {
             cell.stepState();
         }
+    }
+
+    public Map<String, Object> getParameterMap(){
+        return myParameterMap;
     }
 }

@@ -1,9 +1,7 @@
 package game;
 
 import game.Configurer.Configurer;
-import game.Simulation.Cell.CellUtils;
 import game.Simulation.Simulation;
-import game.Simulation.State;
 import game.visualization.Visualization;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -16,6 +14,7 @@ import javafx.util.Duration;
 
 import java.util.Map;
 
+
 /**
  * CAApp: Main JavaFX application. Calls Configurer to read in XML file and create simulation of proper type, Simulation to calculate and step through
  * states of cells based on the rules, and DisplayHandler to create and position menu assets to be displayed.
@@ -26,8 +25,6 @@ import java.util.Map;
  * @author Matt Harris
  */
 public class CAApp extends Application {
-    private static final int WINDOW_HEIGHT = 600;
-    private static final int WINDOW_WIDTH = 2*WINDOW_HEIGHT;
     private static final Color BACKGROUND_COLOR = Color.LIGHTGRAY;
     private String language = "English";
 
@@ -36,7 +33,6 @@ public class CAApp extends Application {
     private static Visualization myVisualization;
 
     private Stage myStage;
-    private int x;
 
     /**
      * start: Starts the simulation and animation of the app. Here the display group, display handler, simulation, and animation are all defined and started.
@@ -48,11 +44,11 @@ public class CAApp extends Application {
         displayGroup = new Group();
         mySim = Configurer.getSimulation("Fire.xml");
         Timeline myAnimation = new Timeline();
-        myVisualization = new Visualization(displayGroup, mySim, myStage, WINDOW_HEIGHT, language, myAnimation);
-        myStage.setScene(new Scene(displayGroup, WINDOW_WIDTH, WINDOW_HEIGHT, BACKGROUND_COLOR));
+        Map stylingMap = Configurer.getStyling(mySim.getParameterMap().get("StylingFile").toString());
+        myVisualization = new Visualization(displayGroup, mySim, myStage, language, myAnimation, stylingMap);
+        myStage.setScene(new Scene(displayGroup, myVisualization.getWindowWidth(), myVisualization.getWindowHeight(), BACKGROUND_COLOR));
         myStage.setTitle(mySim.getSimTitle());
         myStage.show();
-        //TODO: This should be gotten from styling and from visualization
         int millisecondDelay = myVisualization.getDelay();
         var frame = new KeyFrame(Duration.millis(millisecondDelay), e -> step());
         myAnimation.setCycleCount(Timeline.INDEFINITE);

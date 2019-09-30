@@ -12,6 +12,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class LoadNewSimButton extends MenuButton {
@@ -44,7 +45,8 @@ public class LoadNewSimButton extends MenuButton {
                 File file = fileChooser.showOpenDialog(myStage);
                 if (file != null) {
                     mySim = Configurer.getSimulation(file.getName());
-                    myVis = new Visualization(myGroup, mySim, myStage, WINDOW_SIZE, myLanguage, myAnimation);
+                    Map stylingMap = Configurer.getStyling(mySim.getParameterMap().get("StylingFile").toString());
+                    myVis = new Visualization(myGroup, mySim, myStage, myLanguage, myAnimation, stylingMap);
                     CAApp.setVisualization(myVis);
                     CAApp.setSim(mySim);
                 }
