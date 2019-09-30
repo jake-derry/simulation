@@ -12,6 +12,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,8 +30,8 @@ public class CAApp extends Application {
     private String language = "English";
 
     private Group displayGroup;
-    private static Simulation mySim;
-    private static Visualization myVisualization;
+    private static List<Simulation> mySims;
+    private static List<Visualization> myVisualizations;
 
     private Stage myStage;
 
@@ -41,31 +43,32 @@ public class CAApp extends Application {
     public void start(Stage stage){
         myStage = stage;
         displayGroup = new Group();
-        mySim = Configurer.getSimulation("Fire.xml");
+        mySims = new ArrayList<>();
+        myVisualizations = new ArrayList<>();
+        mySims.add(Configurer.getSimulation("Fire.xml"));
         Timeline myAnimation = new Timeline();
-        Map stylingMap = Configurer.getStyling(mySim.getParameterMap().get("StylingFile").toString());
-        myVisualization = new Visualization(displayGroup, mySim, myStage, language, myAnimation, stylingMap);
-        myStage.setScene(new Scene(displayGroup, myVisualization.getWindowWidth(), myVisualization.getWindowHeight(), BACKGROUND_COLOR));
-        myStage.setTitle(mySim.getSimTitle());
+        Map stylingMap = Configurer.getStyling(mySims.get(0).getParameterMap().get("StylingFile").toString());
+        myVisualizations.add(new Visualization(displayGroup, mySims.get(0), myStage, language, myAnimation, stylingMap));
+        myStage.setScene(new Scene(displayGroup, myVisualizations.get(0).getWindowWidth(), myVisualizations.get(0).getWindowHeight(), BACKGROUND_COLOR));
         myStage.show();
-        int millisecondDelay = myVisualization.getDelay();
-        var frame = new KeyFrame(Duration.millis(millisecondDelay), e -> step());
+        int millisecondDelay = myVisualizations.get(0).getDelay();
+        var frame = new KeyFrame(Duration.millis(millisecondDelay), e -> step(0));
         myAnimation.setCycleCount(Timeline.INDEFINITE);
         myAnimation.getKeyFrames().add(frame);
         myAnimation.play();
     }
 
-    public static void setSim(Simulation sim){
-        mySim = sim;
+    public static void addSim(Simulation sim){
+        mySims.add(sim);
     }
-    public static void setVisualization(Visualization vis) { myVisualization = vis; }
+    public static void addVisualization(Visualization vis) { myVisualizations.add(vis); }
 
     /**
      * step: calls the simulation to step through calculating and updating states according to the pace of the current timeline
      */
-    public void step(){
-        myVisualization.visualize();
-        mySim.step();
+    public static void step(int index){
+        myVisualizations.get(index).visualize();
+        mySims.get(index).step();
     }
 
     public static void main (String[] args) {

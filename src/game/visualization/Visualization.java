@@ -36,7 +36,6 @@ public class Visualization{
         setDelay(stylingMap);
         setWindowHeight(stylingMap);
         cellGraph = GraphHandler.setUpStateGraph(group, windowHeight, language);
-        //TODO: Dummy delay (should read from styling)
         seriesList = new ArrayList<XYChart.Series>();
         MenuHandler.addMenuButtonsToDisplayGroup(stage, group, sim, windowHeight, millisecondDelay, animation, language, cellGraph, seriesList);
         MenuHandler.addTitleTextToDisplayGroup(group, windowHeight, sim.getSimTitle());

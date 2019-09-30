@@ -25,6 +25,7 @@ public class GraphHandler {
         stateGraph.setLayoutX(windowHeight*9/8);
         stateGraph.setLayoutY(windowHeight*1/8);
         stateGraph.setAnimated(false);
+        stateGraph.setCreateSymbols(false);
         group.getChildren().add(stateGraph);
         return stateGraph;
     }
