@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class CAApp extends Application {
     private String language = "English";
-    private String defaultSimFile = "Fire.xml";
+    private String defaultSimFile = "/simulations/Fire.xml";
     private Group displayGroup;
     private static List<Simulation> mySims;
     private static List<Visualization> myVisualizations;
