@@ -40,7 +40,7 @@ public class Visualization{
         seriesList = new ArrayList<XYChart.Series>();
         MenuHandler.addMenuButtonsToDisplayGroup(stage, group, sim, windowHeight, millisecondDelay, animation, language, cellGraph, seriesList);
         MenuHandler.addTitleTextToDisplayGroup(group, windowHeight, sim.getSimTitle());
-        rectangleList = GridHandler.setUpRectangles(windowHeight, sim.getGrid().getCellRows(), sim.getGrid().getCellColumns(), myGroup, stylingMap);
+        rectangleList = GridHandler.setUpPolygons(windowHeight, sim.getGrid().getCellRows(), sim.getGrid().getCellColumns(), myGroup, stylingMap, 6);
         colorMap = stylingMap.get("colorMap");
     }
 
