@@ -19,33 +19,35 @@ import java.util.ResourceBundle;
 
 public class LoadNewSimButton extends MenuButton {
     private Stage myStage;
-    private Simulation mySim;
     private String myLanguage;
 
     /**
-     *
-     * @param xPos
-     * @param yPos
-     * @param height
-     * @param resources
-     * @param stage
-     * @param sim
-     * @param language
+     * @author Matt Harris
+     * This class implements MenuButton and represents a button capable of launching a new sim, given a user's choice of xml file, in a new window.
+     * Assumptions: the user always wants the new simulation to appear in a new window and with the same language resources as the simulation that contains this button
+     * Assumptions: the button width will always be twice the specified button height
+     * Dependencies: depends on Simulation, Configurer, Visualization, CAApp
+     * @param xPos- xPosition in the scene for the button to appear
+     * @param yPos- yPosition in the scene for the button to appear
+     * @param height- height of the button to be created
+     * @param resources- the ResourcesBundle to pull the text from
+     * @param stage- the stage to open the file chooser in
+     * @param language- the language of the simulation to be used in setting up the newly created simulation/visualization
      */
-    public LoadNewSimButton(int xPos, int yPos, int height, ResourceBundle resources, Stage stage, Simulation sim, String language){
+    public LoadNewSimButton(int xPos, int yPos, int height, ResourceBundle resources, Stage stage, String language){
         super(xPos, yPos, height, resources);
         myButton.setText(resources.getString("LoadNewSim"));
         myStage = stage;
-        mySim = sim;
         myLanguage = language;
         setButtonAction();
     }
 
     @Override
     /**
-     *
+     * This method sets the action of the LoadNewSim button when clicked.
+     * Assumptions: see above
      */
-    public void setButtonAction() {
+    protected void setButtonAction() {
         final FileChooser fileChooser = new FileChooser();
         myButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override

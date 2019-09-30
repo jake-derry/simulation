@@ -11,12 +11,16 @@ public class PausePlayButton extends MenuButton {
     private ResourceBundle myResources;
 
     /**
-     *
-     * @param xPos
-     * @param yPos
-     * @param height
-     * @param resources
-     * @param sim
+     * @author Matt Harris
+     * This class implements MenuButton and represents a button capable of pausing and playing the simulation,
+     * stopping the progress and changing the displayed button text between 'Pause' and 'Play'.
+     * Assumptions: a pause / play button will only be able to control a single simulation, not all that are open in all windows.
+     * Dependencies: Simulation
+     * @param xPos- xPosition in the scene for the button to appear
+     * @param yPos- yPosition in the scene for the button to appear
+     * @param height- height of the button to be created
+     * @param resources- the ResourcesBundle to pull the text from
+     * @param sim- simulation being controlled by the pause / play button
      */
     public PausePlayButton(int xPos, int yPos, int height, ResourceBundle resources, Simulation sim) {
         super(xPos, yPos, height, resources);
@@ -27,12 +31,10 @@ public class PausePlayButton extends MenuButton {
     }
 
     /**
-     * setPauseResumeHandler: Sets the specific button action for the Pause/Resume Button
-     *
-     * @return- event handler for Pause/Resume Button
+     * Sets the action of the pause / play button
      */
     @Override
-    public void setButtonAction() {
+    protected void setButtonAction() {
         myButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(final ActionEvent e) {
