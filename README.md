@@ -43,6 +43,19 @@ New Sim File Chooser inspiration from: https://docs.oracle.com/javafx/2/ui_contr
 
 ####Features implemented:
 ##### Configuration: 
+* Reads in an XML file that contains initial settings for a simulation. The type of simulation, 
+neighbors, size of grid, shape of the cell, simulation parameters, preferred style file, and 
+type of distribution (specific, random, or concentration) are all able to be set through this XML. 
+* Reads in an XML file that contains the style settings for the simulation. This includes whether or not 
+grid lines should be displayed, colors for cells, delay of the simulation(initial speed), and the 
+dimensions of the window. 
+* Reads in an XML file that contains the default settings for color. Ideally, this file is not 
+touched by the user and serves as a flexible backup for when the user does not specify a color 
+within their Style file. 
+* Error checking for incorrect file data (See error checking Note below) 
+* Ability for user to select the initial distribution of the cells. This distribution can be set 
+by specific locations and states, randomly by number of locations to occupy, and finally by 
+concentration.
 ##### Simulation:
 ##### Visualization: 
 * visualization of the cell grid that can run indefinitely until stopped by user (with specific cell shapes specified in style xml)
