@@ -6,8 +6,6 @@ import java.util.ResourceBundle;
 
 abstract public class MenuButton {
     protected Button myButton;
-    protected ResourceBundle myResources;
-
 
     public MenuButton(int xPos, int yPos, int height, ResourceBundle resources){
         myButton = new Button();
@@ -15,7 +13,6 @@ abstract public class MenuButton {
         myButton.setLayoutY(yPos);
         myButton.setPrefHeight(height);
         myButton.setPrefWidth(height*5);
-        myResources = resources;
     }
 
     public Button getButton(){

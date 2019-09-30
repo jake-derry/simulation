@@ -12,5 +12,7 @@ public enum GridShape {
     private List<AbstractMap.SimpleEntry<Integer, Integer>> myDisplacementMap;
     private String myShape;
 
-    GridShape(String filename) { }
+    GridShape(String filename) {
+
+    }
 }

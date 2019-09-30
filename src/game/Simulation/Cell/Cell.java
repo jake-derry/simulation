@@ -1,7 +1,8 @@
 package game.Simulation.Cell;
 
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import game.Simulation.State;
+
+import java.util.*;
 
 /**
  * This class represents a single cell in a cellular
@@ -14,13 +15,11 @@ import javafx.scene.shape.Rectangle;
  *
  * @author Jake Derry
  */
-public class Cell {
-    private int myState;
-    private int myNextState;
-    private Rectangle myRectangle;
+abstract public class Cell {
 
-    private int row;
-    private int column;
+    private State myState;
+    private State myNextState;
+    private List<Cell> myNeighbors;
 
     /**
      * Constructor for Cell. Initializes the state of the
@@ -28,62 +27,27 @@ public class Cell {
      *
      * @param state         Initial state of the Cell
      */
-    public Cell(int state) {
+    public Cell(State state) {
         myState = state;
-        myRectangle = new Rectangle();
+    }
+
+    public void setNeighbors(Iterable<Cell> neighbors) {
+        myNeighbors = new ArrayList<>((Collection<? extends Cell>) neighbors);
     }
 
     /**
-     * Constructor for Cell. Initializes the state of the
-     * cell, and stores row and column information.
-     *
-     * @param state         Initial state of the Cell
-     * @param cellRow       Which row in the grid this cell is
-     * @param cellColumn    Which column in the grid this cell is
+     * Performs cellular automata logic to determine
+     * the next state of the cell. Sets the next
+     * state of the cell using setNextState.
      */
-    public Cell(int state, int cellRow, int cellColumn) {
-        this(state);
-        row = cellRow;
-        column = cellColumn;
-    }
-
-    /**
-     * Sets the next state to the parameter next. To change
-     * the state, the setNextState method should be called
-     * and then the {link #stepState(Color[] palette) stepState}
-     * method which sets the state to the next state.
-     *
-     * @param next  sets the next state
-     */
-    public void setNextState(int next) {
-        myNextState = next;
-    }
+    abstract public void updateNext();
 
     /**
      * Sets the current state to the next state, stepping the state
-     * forward. Once, the state has been updated, the method sets
-     * the color of the rectangle to match the palette taken in as
-     * a parameter. This palette is expressed as an array of colors
-     * where the state i's color is at index i.
-     *
-     * @param palette   array of colors of the same length
-     *                  as the number of states for a
-     *                  simulation
+     * forward.
      */
-    public void stepState(Color[] palette) {
+    public void stepState() {
         myState = myNextState;
-        myRectangle.setFill(palette[myState]);
-    }
-
-    /**
-     * Gets the cell's rectangle object. The Visualization class will
-     * leverage this method to retrieve the cell's objects and display
-     * them.
-     *
-     * @return      the cell's rectangle
-     */
-    public Rectangle getRectangle() {
-        return myRectangle;
     }
 
     /**
@@ -91,28 +55,57 @@ public class Cell {
      * to retrieve the cell's state to determine the state of neighboring
      * cells.
      *
-     * @return      the cell's state
+     * @return          the cell's state
      */
-    public int getState() {
+    public State getState() {
         return myState;
     }
 
     /**
-     * Gets the row of the cell
+     * Gets the cell's neighbors. This is only used by subclasses to
+     * implement updateNext.
      *
-     * @return      the cell's row in the grid
+     * @return          the cell's neighbors in an Iterator
      */
-    public int getRow() {
-        return row;
+    protected Iterator<Cell> getNeighbors() {
+        return myNeighbors.iterator();
     }
 
     /**
-     * Gets the column of the cell
+     * Sets the current state of the simulation using setNextState and
+     * stepState.
      *
-     * @return      the cell's column in the grid
+     * TODO: Possibly block changes in the cell state between the call of
+     * TODO: setNextState and stepState
+     *
+     * @param state     the cell's new state
      */
-    public int getColumn() {
-        return column;
+    public void setState(State state) {
+        setNextState(state);
+        stepState();
+    }
+
+    /**
+     * Sets the next state to the parameter next. To change
+     * the state, the setNextState method should be called
+     * and then the method which sets the state to the next
+     * state. Updates the count map that keeps track of the
+     * number of neighbors of each state.
+     *
+     * @param next  sets the next state
+     */
+    public void setNextState(State next) {
+        myNextState = next;
+    }
+
+    /**
+     * Gets a map of the counts of each state among the
+     * cell's neighbors.
+     *
+     * @return      map of state counts of neighbors
+     */
+    protected Map<State, Integer> getCountMap() {
+        return CellUtils.countMap(getNeighbors());
     }
 
 }

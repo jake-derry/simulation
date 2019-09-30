@@ -1,18 +1,25 @@
 package game.visualization.menu.buttons;
 
 import game.Simulation.Simulation;
+import game.visualization.GraphHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.chart.LineChart;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class StepButton extends MenuButton {
 
     private Simulation mySim;
-    public StepButton(int xPos, int yPos, int height, ResourceBundle resources, Simulation sim){
+    private LineChart cellGraph;
+    private List seriesList;
+    public StepButton(int xPos, int yPos, int height, ResourceBundle resources, Simulation sim, LineChart graph, List series){
         super(xPos, yPos, height, resources);
         mySim = sim;
-        myButton.setText(myResources.getString("Step"));
+        myButton.setText(resources.getString("Step"));
+        cellGraph = graph;
+        seriesList = series;
         setButtonAction();
     }
 
@@ -25,6 +32,7 @@ public class StepButton extends MenuButton {
                     mySim.play();
                     mySim.step();
                     mySim.pause();
+                    GraphHandler.updateGraph(cellGraph, seriesList, mySim.getGrid().iterator(), mySim.getStepCount());
                 }
             }
         });

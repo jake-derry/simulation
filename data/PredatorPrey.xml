@@ -9,6 +9,7 @@
         <columns>10</columns>
     </size>
     <defaultState>0</defaultState>
+    <highestState>2</highestState>
     <activeCells>
         <activeCells>
             <cell> <row>1</row> <col>1</col> <state>1</state> </cell>

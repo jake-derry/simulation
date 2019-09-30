@@ -1,11 +1,14 @@
 package game.visualization;
 
-import game.Simulation.Cell.Cell;
 import game.Simulation.Simulation;
 import game.visualization.menu.MenuHandler;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
-import javafx.scene.paint.Color;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
+
+import java.util.*;
 
 /**
  * Visualization: created by a simulation in order to display the states in the cell grid.
@@ -15,36 +18,64 @@ import javafx.stage.Stage;
  * @author Matt Harris
  */
 public class Visualization{
-    private String DEFAULT_RESOURCE_PACKAGE = "/data/";
-    private Color[] colorList;
-
+    private final int DEFAULT_WINDOW_SIZE = 200;
+    private final int DEFAULT_MILLI_DELAY = 5000;
     private Group myGroup;
-    private MenuHandler myMenuHandler;
-    private GridHandler myGridHandler;
     private Simulation mySim;
-    
-    public Visualization(Group group, Simulation sim, Stage stage, int windowDimension, String language){
+    private LineChart cellGraph;
+    private Object colorMap;
+    private int millisecondDelay;
+    private List rectangleList;
+    private List seriesList;
+    private int windowHeight;
+
+    public Visualization(Group group, Simulation sim, Stage stage, String language, Timeline animation, Map stylingMap){
         myGroup = group;
         myGroup.getChildren().clear();
         mySim = sim;
-        colorList = new Color[4];
-        colorList[0] = Color.BLACK;
-        colorList[1] = Color.RED;
-        colorList[2] = Color.YELLOW;
-        myMenuHandler = new MenuHandler(myGroup, mySim, windowDimension, stage, language);
-        myGridHandler = new GridHandler(mySim, myGroup, windowDimension);
+        setDelay(stylingMap);
+        setWindowHeight(stylingMap);
+        cellGraph = GraphHandler.setUpStateGraph(group, windowHeight, language);
+        //TODO: Dummy delay (should read from styling)
+        seriesList = new ArrayList<XYChart.Series>();
+        MenuHandler.addMenuButtonsToDisplayGroup(stage, group, sim, windowHeight, millisecondDelay, animation, language, cellGraph, seriesList);
+        MenuHandler.addTitleTextToDisplayGroup(group, windowHeight, sim.getSimTitle());
+        rectangleList = GridHandler.setUpRectangles(windowHeight, sim.getGrid().getCellRows(), sim.getGrid().getCellColumns(), myGroup, stylingMap);
+        colorMap = stylingMap.get("colorMap");
     }
 
-    /**
-     * visualize: step through cells and update colors accordingly
-     * Assumptions: N/A
-     */
     public void visualize(){
-        for (Cell[] cellRow : mySim.getGrid()){
-            for (Cell cell : cellRow){
-                cell.stepState(colorList);
-            }
+        GridHandler.visualizeCells(rectangleList.iterator(), mySim.getGrid().iterator(), (Map)colorMap);
+        GraphHandler.updateGraph(cellGraph, seriesList, mySim.getGrid().iterator(), mySim.getStepCount());
+    }
+
+    public int getDelay(){
+        return millisecondDelay;
+    }
+
+    private void setWindowHeight(Map stylingMap){
+        if (stylingMap.containsKey("windowDimension")){
+            windowHeight = (int) stylingMap.get("windowDimension");
+        }
+        else{
+            windowHeight = DEFAULT_WINDOW_SIZE;
         }
     }
 
+    private void setDelay(Map stylingMap){
+        if (stylingMap.containsKey("delay")){
+            millisecondDelay = (int) stylingMap.get("delay");
+        }
+        else{
+            millisecondDelay = DEFAULT_MILLI_DELAY;
+        }
+    }
+
+    public int getWindowHeight(){
+        return windowHeight;
+    }
+
+    public int getWindowWidth(){
+        return windowHeight*2;
+    }
 }
