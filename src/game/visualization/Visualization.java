@@ -6,6 +6,8 @@ import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 import java.util.*;
@@ -20,29 +22,31 @@ import java.util.*;
 public class Visualization{
     private final int DEFAULT_WINDOW_SIZE = 200;
     private final int DEFAULT_MILLI_DELAY = 5000;
+    private final Color DEFAULT_BACKGROUND_COLOR = Color.LIGHTGRAY;
     private Group myGroup;
     private Simulation mySim;
     private LineChart cellGraph;
-    private Object colorMap;
+    private Map colorMap;
     private int millisecondDelay;
     private List polygonList;
     private List seriesList;
     private int windowHeight;
-    private int myIndex;
+    private Paint myBackGroundColor;
 
-    public Visualization(Group group, Simulation sim, Stage stage, String language, Timeline animation, Map stylingMap, int visIndex){
+    public Visualization(Group group, Simulation sim, Stage stage, String language, Timeline animation, Map stylingMap){
         myGroup = group;
         myGroup.getChildren().clear();
         mySim = sim;
-        myIndex = visIndex;
         setDelay(stylingMap);
         setWindowHeight(stylingMap);
+        setBackgroundColor(stylingMap);
         cellGraph = GraphHandler.setUpStateGraph(group, windowHeight, language);
         seriesList = new ArrayList<XYChart.Series>();
-        MenuHandler.addMenuButtonsToDisplayGroup(stage, group, sim, windowHeight, millisecondDelay, animation, language, cellGraph, seriesList, myIndex);
+        MenuHandler.addMenuButtonsToDisplayGroup(stage, group, sim, windowHeight, millisecondDelay, animation, language, cellGraph, seriesList);
         MenuHandler.addTitleTextToDisplayGroup(group, windowHeight, sim.getSimTitle());
         polygonList = GridHandler.setUpPolygons(windowHeight, sim.getGrid().getCellRows(), sim.getGrid().getCellColumns(), myGroup, stylingMap, 6);
-        colorMap = stylingMap.get("colorMap");
+        colorMap = (Map) stylingMap.get("colorMap");
+        myBackGroundColor = Paint.valueOf(colorMap.get("backgroundColor").toString());
     }
     public void step(){
         visualize();
@@ -76,11 +80,24 @@ public class Visualization{
         }
     }
 
+    private void setBackgroundColor(Map stylingMap){
+        if (stylingMap.containsKey("bacgroundColor")){
+            myBackGroundColor = (Color) stylingMap.get("backgroundColor");
+        }
+        else{
+            myBackGroundColor = DEFAULT_BACKGROUND_COLOR;
+        }
+    }
+
     public int getWindowHeight(){
         return windowHeight;
     }
 
     public int getWindowWidth(){
         return windowHeight*2;
+    }
+
+    public Paint getBackgroundColor(){
+        return myBackGroundColor;
     }
 }

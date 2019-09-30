@@ -18,22 +18,17 @@ import java.io.File;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import static game.CAApp.step;
-import static javafx.scene.paint.Color.BLACK;
-
 public class LoadNewSimButton extends MenuButton {
     private Stage myStage;
     private Simulation mySim;
     private String myLanguage;
-    private int visualizationIndex;
 
-    public LoadNewSimButton(int xPos, int yPos, int height, ResourceBundle resources, Stage stage, Simulation sim, String language, int visIndex){
+    public LoadNewSimButton(int xPos, int yPos, int height, ResourceBundle resources, Stage stage, Simulation sim, String language){
         super(xPos, yPos, height, resources);
         myButton.setText(resources.getString("LoadNewSim"));
         myStage = stage;
         mySim = sim;
         myLanguage = language;
-        visualizationIndex = visIndex;
         setButtonAction();
     }
 
@@ -50,14 +45,14 @@ public class LoadNewSimButton extends MenuButton {
                     Simulation sim = Configurer.getSimulation(file.getName());
                     Map stylingMap = Configurer.getStyling(sim.getParameterMap().get("StylingFile").toString());
                     Group group = new Group();
-                    Visualization vis = new Visualization(group, sim, stage, myLanguage, myAnimation, stylingMap, 0);
+                    Visualization vis = new Visualization(group, sim, stage, myLanguage, myAnimation, stylingMap);
                     CAApp.addVisualization(vis);
                     CAApp.addSim(sim);
                     var frame = new KeyFrame(Duration.millis(vis.getDelay()), f -> vis.step());
                     myAnimation.setCycleCount(Timeline.INDEFINITE);
                     myAnimation.getKeyFrames().add(frame);
                     myAnimation.play();
-                    stage.setScene(new Scene(group, vis.getWindowWidth(), vis.getWindowHeight(), BLACK));
+                    stage.setScene(new Scene(group, vis.getWindowWidth(), vis.getWindowHeight(), vis.getBackgroundColor()));
                     stage.show();
                 }
             }

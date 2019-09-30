@@ -33,7 +33,7 @@ public class MenuHandler {
      * @return- an ArrayList<Button> to be added to the display group in CAApp
      * Assumptions- the functions of these buttons will be set in CAApp before adding them to the display group
      */
-    public static void addMenuButtonsToDisplayGroup(Stage stage, Group group, Simulation sim, int windowSize, int delay, Timeline animation, String language, LineChart cellGraph, List seriesList, int visualizationIndex){
+    public static void addMenuButtonsToDisplayGroup(Stage stage, Group group, Simulation sim, int windowSize, int delay, Timeline animation, String language, LineChart cellGraph, List seriesList){
         ResourceBundle myResources = ResourceBundle.getBundle(language);
         int NEW_SIM_X = windowSize/32;
         int PAUSE_PLAY_X = windowSize*7/32;
@@ -42,7 +42,7 @@ public class MenuHandler {
         int FASTER_X = windowSize*19/32;
         int BUTTON_Y = windowSize*3/20;
         int BUTTON_HEIGHT = windowSize/30;
-        LoadNewSimButton newSimButton = new LoadNewSimButton(NEW_SIM_X, BUTTON_Y, BUTTON_HEIGHT, myResources, stage, sim, language, visualizationIndex);
+        LoadNewSimButton newSimButton = new LoadNewSimButton(NEW_SIM_X, BUTTON_Y, BUTTON_HEIGHT, myResources, stage, sim, language);
         group.getChildren().add(newSimButton.getButton());
         PausePlayButton pausePlayButton = new PausePlayButton(PAUSE_PLAY_X, BUTTON_Y, BUTTON_HEIGHT, myResources, sim);
         group.getChildren().add(pausePlayButton.getButton());

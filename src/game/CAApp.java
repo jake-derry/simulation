@@ -48,8 +48,8 @@ public class CAApp extends Application {
         mySims.add(Configurer.getSimulation("Fire.xml"));
         Timeline myAnimation = new Timeline();
         Map stylingMap = Configurer.getStyling(mySims.get(0).getParameterMap().get("StylingFile").toString());
-        myVisualizations.add(new Visualization(displayGroup, mySims.get(0), myStage, language, myAnimation, stylingMap, 0));
-        myStage.setScene(new Scene(displayGroup, myVisualizations.get(0).getWindowWidth(), myVisualizations.get(0).getWindowHeight(), BACKGROUND_COLOR));
+        myVisualizations.add(new Visualization(displayGroup, mySims.get(0), myStage, language, myAnimation, stylingMap));
+        myStage.setScene(new Scene(displayGroup, myVisualizations.get(0).getWindowWidth(), myVisualizations.get(0).getWindowHeight(), myVisualizations.get(0).getBackgroundColor()));
         myStage.show();
         int millisecondDelay = myVisualizations.get(0).getDelay();
         var frame = new KeyFrame(Duration.millis(millisecondDelay), e -> myVisualizations.get(0).step());
