@@ -1,12 +1,11 @@
 package game.visualization;
 
 import game.Simulation.Cell.Cell;
-import game.Simulation.Cell.CellUtils;
+import game.Simulation.Cell.Utils.CellUtils;
 import game.Simulation.State;
 import javafx.scene.Group;
 import javafx.scene.chart.*;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;

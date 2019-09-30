@@ -16,4 +16,9 @@ public class Pair<K, V> {
     public V getValue() {
         return myValue;
     }
+
+    @Override
+    public int hashCode() {
+        return myKey.hashCode() +  myValue.hashCode();
+    }
 }

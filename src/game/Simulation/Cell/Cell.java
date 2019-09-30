@@ -1,5 +1,6 @@
 package game.Simulation.Cell;
 
+import game.Simulation.Cell.Utils.CellUtils;
 import game.Simulation.Neighborhood;
 import game.Simulation.State;
 
@@ -112,6 +113,14 @@ abstract public class Cell {
      */
     protected Map<State, Integer> getCountMap() {
         return CellUtils.countMap(getNeighborhood());
+    }
+
+    /**
+     *
+     * @return
+     */
+    protected Map<State, List<Cell>> getCellMap() {
+        return CellUtils.cellMap(getNeighborhood());
     }
 
 }

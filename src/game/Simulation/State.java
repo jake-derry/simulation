@@ -24,7 +24,10 @@ public enum State {
     TREE("tree"),
     ROCK("rock"),
     PAPER("paper"),
-    SCISSORS("scissors")
+    SCISSORS("scissors"),
+    ANT("ant"),
+    FOOD("food"),
+    NEST("nest")
     ;
 
     /**
