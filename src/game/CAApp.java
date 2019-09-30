@@ -14,7 +14,6 @@ import javafx.util.Duration;
 
 import java.util.Map;
 
-
 /**
  * CAApp: Main JavaFX application. Calls Configurer to read in XML file and create simulation of proper type, Simulation to calculate and step through
  * states of cells based on the rules, and DisplayHandler to create and position menu assets to be displayed.

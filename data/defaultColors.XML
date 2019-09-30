@@ -7,7 +7,7 @@
     <color><state>PREY</state> <color>GREEN</color></color>
     <color><state>GROUP_A</state> <color>RED</color></color>
     <color><state>GROUP_B</state> <color>GREEN</color></color>
-    <color><state>BURNING</state> <color>RED</color></color>
+    <color><state>BURNING</state> <color>FIREBRICK</color></color>
     <color><state>TREE</state> <color>GREEN</color></color>
     <color><state>BEYOND_EDGE</state> <color>BLACK</color></color>
 </defaults>

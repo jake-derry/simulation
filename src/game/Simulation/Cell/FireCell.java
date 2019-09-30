@@ -25,7 +25,6 @@ public class FireCell extends Cell {
         if (getState() == EMPTY || getState() == BURNING) {
                 setNextState(EMPTY);
         }
-
         else {
                 setNextState(burning() ? BURNING : TREE);
         }

@@ -117,4 +117,13 @@
     <breedTime>5</breedTime>
     <initEnergy>10</initEnergy>
     <energyThreshold>10</energyThreshold>
+    <shape>rectangle</shape>
+    <neighbor> <index>0</index> </neighbor>
+    <neighbor> <index>1</index> </neighbor>
+    <neighbor> <index>2</index> </neighbor>
+    <neighbor> <index>3</index> </neighbor>
+    <neighbor> <index>4</index> </neighbor>
+    <neighbor> <index>5</index> </neighbor>
+    <neighbor> <index>6</index> </neighbor>
+    <Style>Style1.xml</Style>
 </Simulation>
