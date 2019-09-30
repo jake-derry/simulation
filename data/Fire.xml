@@ -18,7 +18,7 @@
             <state>fire</state> <value> 1 </value>
         </concentration>
         <random>
-            <state>fire</state> <value>7</value>
+            <state>fire</state> <value>10</value>
         </random>
         <cell> <row>25</row> <col>25</col> <state>fire</state></cell>
     </activeCells>
