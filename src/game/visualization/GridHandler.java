@@ -1,11 +1,12 @@
 package game.visualization;
 
 import game.Simulation.Cell.Cell;
+import game.Simulation.Simulation;
+import game.Simulation.State;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
@@ -31,35 +32,7 @@ public class GridHandler {
      * setUpRectangles: sets width, height, x, and y coordinates of rectangles for cells
      * Assumptions: constant cellWidth / height
      */
-    public static List setUpRectangles(int windowSize, int numRows, int numCols, Group group, Map stylingMap){
-        ArrayList rectangleList = new ArrayList<Rectangle>();
-        int MENU_HEIGHT = windowSize/4;
-        int CELL_HEIGHT = (windowSize - MENU_HEIGHT) / numRows;
-        int CELL_WIDTH = windowSize*4/5 / numCols;
-        if (stylingMap.containsKey("cellSize") && (int)stylingMap.get("cellSize")*numCols < windowSize/2){
-            CELL_HEIGHT = (int)stylingMap.get("cellSize");
-            CELL_WIDTH = CELL_HEIGHT;
-        }
-        for (int i = 0; i < numRows; i++){
-            for (int j = 0; j < numCols; j++){
-                int xPos = j*CELL_WIDTH+(windowSize-CELL_WIDTH*numCols)/2;
-                int yPos = i*CELL_HEIGHT+MENU_HEIGHT;
-                Rectangle rectangle = new Rectangle(xPos, yPos, CELL_WIDTH, CELL_HEIGHT);
-                if (stylingMap.containsKey("outline") && (int)stylingMap.get("outline") == 1){
-                    rectangle.setStroke(Color.BLACK);
-                }
-                rectangleList.add(rectangle);
-                group.getChildren().add(rectangle);
-            }
-        }
-        return rectangleList;
-    }
-
-    /**
-     * setUpRectangles: sets width, height, x, and y coordinates of rectangles for cells
-     * Assumptions: constant cellWidth / height
-     */
-    public static List setUpPolygons(int windowSize, int numRows, int numCols, Group group, Map stylingMap, int numSides){
+    public static List setUpPolygons(int windowSize, int numRows, int numCols, Group group, Map stylingMap, int numSides, Simulation mySim){
         boolean colOdd = true;
         boolean rowOdd = true;
         ArrayList polygonList = new ArrayList<Polygon>();
@@ -71,21 +44,23 @@ public class GridHandler {
             CELL_HEIGHT = (int)stylingMap.get("cellSize");
             CELL_WIDTH = CELL_HEIGHT;
         }
+        Iterator<Cell> cellIterator = mySim.getGrid().iterator();
         for (int i = 0; i < numRows; i++){
             for (int j = 0; j < numCols; j++){
+                Cell cell = cellIterator.next();
                 Polygon polygon = new Polygon();
                 switch(numSides){
                     case 3:
                     {
-                        polygon = createTriangle(i, j, CELL_WIDTH, CELL_HEIGHT, MENU_HEIGHT, xOffset, colOdd);
+                        polygon = createTriangle(i, j, CELL_WIDTH, CELL_HEIGHT, MENU_HEIGHT, xOffset, colOdd, cell);
                         break;
                     }
                     case 4:{
-                        polygon = createRectangle(i, j, CELL_WIDTH, CELL_HEIGHT, MENU_HEIGHT, xOffset);
+                        polygon = createRectangle(i, j, CELL_WIDTH, CELL_HEIGHT, MENU_HEIGHT, xOffset, cell);
                         break;
                     }
                     default:{
-                        polygon = createRectangle(i,j,CELL_WIDTH,CELL_HEIGHT, MENU_HEIGHT, xOffset);
+                        polygon = createRectangle(i,j,CELL_WIDTH,CELL_HEIGHT, MENU_HEIGHT, xOffset, cell);
                     }
                 }
                 if (stylingMap.containsKey("outline") && (int)stylingMap.get("outline") == 1){
@@ -100,7 +75,7 @@ public class GridHandler {
         return polygonList;
     }
 
-    private static Polygon createTriangle(int i, int j, double cellWidth, double cellHeight, double menuHeight, double xOffset, boolean odd){
+    private static Polygon createTriangle(int i, int j, double cellWidth, double cellHeight, double menuHeight, double xOffset, boolean odd, Cell cell){
         Polygon triangle = new Polygon();
         Double xPos = j*cellWidth/2 + xOffset*2;
         Double yPos = i*cellHeight+menuHeight;
@@ -110,14 +85,16 @@ public class GridHandler {
         else{
             triangle.getPoints().addAll(xPos, yPos+cellHeight, xPos+cellWidth/2, yPos, xPos+cellWidth, yPos+cellHeight);
         }
+        triangle.setOnMouseClicked(mouseEvent -> cell.setState(State.BURNING));
         return triangle;
     }
 
-    private static Polygon createRectangle(int i, int j, double cellWidth, double cellHeight, double menuHeight, double xOffset){
+    private static Polygon createRectangle(int i, int j, double cellWidth, double cellHeight, double menuHeight, double xOffset, Cell cell){
         Polygon rectangle = new Polygon();
         double xPos = j*cellWidth + xOffset;
         double yPos = i*cellHeight+menuHeight;
         rectangle.getPoints().addAll(xPos, yPos, xPos, yPos+cellHeight, xPos+cellWidth, yPos+cellHeight, xPos+cellWidth, yPos);
+        rectangle.setOnMouseClicked(mouseEvent -> cell.setState(State.BURNING));
         return rectangle;
     }
 }
