@@ -1,5 +1,6 @@
 package game.Simulation.Cell;
 
+import game.Simulation.Neighborhood;
 import game.Simulation.State;
 
 import java.util.*;
@@ -19,7 +20,7 @@ abstract public class Cell {
 
     private State myState;
     private State myNextState;
-    private List<Cell> myNeighbors;
+    private Neighborhood myNeighborhood;
 
     /**
      * Constructor for Cell. Initializes the state of the
@@ -29,10 +30,12 @@ abstract public class Cell {
      */
     public Cell(State state) {
         myState = state;
+        myNextState = state;
+
     }
 
-    public void setNeighbors(Iterable<Cell> neighbors) {
-        myNeighbors = new ArrayList<>((Collection<? extends Cell>) neighbors);
+    public void setNeighborhood(Neighborhood neighborhood) {
+        myNeighborhood = neighborhood;
     }
 
     /**
@@ -67,35 +70,38 @@ abstract public class Cell {
      *
      * @return          the cell's neighbors in an Iterator
      */
-    protected Iterator<Cell> getNeighbors() {
-        return myNeighbors.iterator();
+    protected Neighborhood getNeighborhood() {
+        return myNeighborhood;
     }
 
     /**
      * Sets the current state of the simulation using setNextState and
      * stepState.
      *
-     * TODO: Possibly block changes in the cell state between the call of
-     * TODO: setNextState and stepState
-     *
      * @param state     the cell's new state
      */
     public void setState(State state) {
-        setNextState(state);
-        stepState();
+        myState = state;
     }
 
     /**
-     * Sets the next state to the parameter next. To change
+     * Sets the next state based on updateNext. To change
      * the state, the setNextState method should be called
      * and then the method which sets the state to the next
      * state. Updates the count map that keeps track of the
      * number of neighbors of each state.
      *
-     * @param next  sets the next state
      */
     public void setNextState(State next) {
         myNextState = next;
+    }
+
+    /**
+     *
+     * @return
+     */
+    protected State getNextState() {
+        return myNextState;
     }
 
     /**
@@ -105,7 +111,7 @@ abstract public class Cell {
      * @return      map of state counts of neighbors
      */
     protected Map<State, Integer> getCountMap() {
-        return CellUtils.countMap(getNeighbors());
+        return CellUtils.countMap(getNeighborhood());
     }
 
 }

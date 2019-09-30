@@ -46,7 +46,7 @@ public class Visualization{
 
     public void visualize(){
         GridHandler.visualizeCells(polygonList.iterator(), mySim.getGrid().iterator(), (Map)colorMap);
-        GraphHandler.updateGraph(cellGraph, seriesList, mySim.getGrid().iterator(), mySim.getStepCount());
+        GraphHandler.updateGraph(cellGraph, seriesList, mySim.getGrid(), mySim.getStepCount());
     }
 
     public int getDelay(){

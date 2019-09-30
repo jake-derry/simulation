@@ -23,12 +23,11 @@ public class FireCell extends Cell {
     public void updateNext() {
         State nextState;
         if (getState() == EMPTY || getState() == BURNING) {
-                nextState = EMPTY;
+                setNextState(EMPTY);
         }
         else {
-                nextState = (burning() ? BURNING : TREE);
+                setNextState(burning() ? BURNING : TREE);
         }
-        setNextState(nextState);
 
     }
 

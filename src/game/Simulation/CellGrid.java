@@ -2,6 +2,7 @@ package game.Simulation;
 
 import game.Simulation.Cell.Cell;
 import game.Simulation.Cell.FireCell;
+import util.Pair;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,25 +11,24 @@ import java.util.Map;
 
 public class CellGrid implements Iterable<Cell> {
     private Cell[][] myCellGrid;
-    private static final int[] NEIGHBORS = new int[] {0, 1, 2, 3, 4, 5, 6, 7};
-    private static final int[][] DISPLACEMENTS = new int[][] {
-            new int[] {1, -1},
-            new int[] {0, 1},
-            new int[] {1, 1},
-            new int[] {1, 0},
-            new int[] {-1, 0},
-            new int[] {-1, -1},
-            new int[] {0, -1},
-            new int[] {1, -1}
-    };
+    private Map<String, Object> myParameterMap;
 
-    // assumes rectangle grid shape for the moment
+    /**
+     *
+     *
+     * @param parameterMap
+     * @param cellGrid
+     */
     public CellGrid(Map<String, Object> parameterMap, String[][] cellGrid) {
+        myParameterMap = parameterMap;
         createCellGrid(cellGrid);
-        connectNeighbors(cellGrid);
+        connectGrid(cellGrid);
     }
 
-    //TODO WE DONT WANT TO HARD CODE TYPES
+    /**
+     *
+     * @param cellGrid
+     */
     private void createCellGrid(String[][] cellGrid) {
         myCellGrid = new Cell[cellGrid.length][cellGrid[0].length];
         for (int i = 0; i < cellGrid.length; i++) {
@@ -38,29 +38,67 @@ public class CellGrid implements Iterable<Cell> {
         }
     }
 
-    private void connectNeighbors(String[][] cellGrid) {
+    /**
+     *
+     * @param cellGrid
+     */
+    private void connectGrid(String[][] cellGrid) {
+        int[] neighbors = (int[]) myParameterMap.get("neighbors");
+        CellShape shape = CellShape.matchShape((String) myParameterMap.get("shape"));
+
         for (int i = 0; i < cellGrid.length; i++) {
             for (int j = 0; j < cellGrid[0].length; j++) {
-                List<Cell> neighborhood = new ArrayList<>();
-                for (int neighborDisplacement : NEIGHBORS) {
-                    int[] displacement = DISPLACEMENTS[neighborDisplacement];
-                    int iNeighbor = i + displacement[0];
-                    int jNeighbor = j + displacement[1];
-                    if (inXRange(iNeighbor) && inYRange(jNeighbor)) {
-                        Cell neighbor = myCellGrid[iNeighbor][jNeighbor];
-                        neighborhood.add(neighbor);
-                    }
-                }
-
-                myCellGrid[i][j].setNeighbors(neighborhood);
+                connectNeighbors(neighbors, shape, i, j);
             }
         }
     }
 
+    /**
+     *
+     * @param neighbors
+     * @param shape
+     * @param i
+     * @param j
+     */
+    private void connectNeighbors(int[] neighbors, CellShape shape, int i, int j) {
+        List<Cell> neighborList = new ArrayList<>();
+
+        for (Pair<Integer, Integer> displacement : shape.getDisplacements(neighbors)) {
+            int iNeighbor = i + displacement.getKey();
+            int jNeighbor = j + displacement.getValue();
+
+            if (inRange(iNeighbor, jNeighbor)) {
+                Cell neighbor = myCellGrid[iNeighbor][jNeighbor];
+                neighborList.add(neighbor);
+            }
+        }
+        myCellGrid[i][j].setNeighborhood(new Neighborhood(neighborList));
+    }
+
+    /**
+     *
+     * @param iNeighbor
+     * @param jNeighbor
+     * @return
+     */
+    private boolean inRange(int iNeighbor, int jNeighbor) {
+        return inXRange(iNeighbor) && inYRange(jNeighbor);
+    }
+
+    /**
+     *
+     * @param jNeighbor
+     * @return
+     */
     private boolean inYRange(int jNeighbor) {
         return jNeighbor >= 0 && jNeighbor < myCellGrid.length;
     }
 
+    /**
+     *
+     * @param iNeighbor
+     * @return
+     */
     private boolean inXRange(int iNeighbor) {
         return iNeighbor >= 0 && iNeighbor < myCellGrid[0].length;
     }
@@ -70,11 +108,27 @@ public class CellGrid implements Iterable<Cell> {
         return new CellIterator(myCellGrid);
     }
 
+    /**
+     *
+     * @return
+     */
     public int getCellRows(){
         return myCellGrid.length;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getCellColumns(){
         return myCellGrid[0].length;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public CellShape getShape() {
+        return CellShape.matchShape((String) myParameterMap.get("shape"));
     }
 }

@@ -38,7 +38,7 @@ public class SpeedControlButton extends MenuButton {
         myButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(final ActionEvent e) {
-                    myAnimation.setRate(myAnimation.getRate()*multiplier);
+                myAnimation.setRate(myAnimation.getRate()*multiplier);
             }
         });
     }

@@ -21,24 +21,20 @@ public class GameOfLifeCell extends Cell {
 
     @Override
     public void updateNext() {
-        State nextState;
-
         if (getState() == EMPTY) {
             if (getCountMap().get(LIVE) == 3) {
-                nextState = LIVE;
+                setNextState(LIVE);
             } else {
-                nextState = EMPTY;
+                setNextState(EMPTY);
             }
 
         } else {
             if (getCountMap().get(LIVE) < 2 || getCountMap().get(LIVE) > 3) {
-                nextState = EMPTY;
+                setNextState(EMPTY);
             } else {
-                nextState = LIVE;
+                setNextState(LIVE);
             }
 
         }
-
-        setNextState(nextState);
     }
 }

@@ -14,17 +14,18 @@ import java.util.TreeMap;
  * use a string "EMPTY" to represent an EMPTY state
  */
 public enum State {
-    EMPTY(""),
-    LIVE(""),
-    WALL(""),
-    WATER(""),
-    PREDATOR(""),
-    PREY(""),
-    GROUP_A(""),
-    GROUP_B(""),
+    EMPTY("empty"),
+    LIVE("live"),
+    WALL("wall"),
+    WATER("water"),
+    PREDATOR("predator"),
+    PREY("prey"),
     BURNING("fire"),
     TREE("tree"),
-    BEYOND_EDGE("");
+    ROCK("rock"),
+    PAPER("paper"),
+    SCISSORS("scissors")
+    ;
 
     /**
      * A string representation of the state which is how a state
