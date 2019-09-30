@@ -9,15 +9,17 @@ import javafx.scene.chart.*;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class GraphHandler {
-    public static LineChart setUpStateGraph(Group group, int windowHeight){
+    public static LineChart setUpStateGraph(Group group, int windowHeight, String language){
+        ResourceBundle resources = ResourceBundle.getBundle(language);
         NumberAxis stepAxis = new NumberAxis();
         NumberAxis cellAxis = new NumberAxis();
-        stepAxis.setLabel("Sim Step Number");
-        cellAxis.setLabel("Number of Cells");
+        stepAxis.setLabel(resources.getString("ChartXAxis"));
+        cellAxis.setLabel(resources.getString("ChartYAxis"));
         LineChart<Number, Number> stateGraph = new LineChart<>(stepAxis, cellAxis);
-        stateGraph.setTitle("State of Cells Over Time");
+        stateGraph.setTitle(resources.getString("ChartTitle"));
         stateGraph.setPrefHeight(windowHeight*3/4);
         stateGraph.setPrefWidth(windowHeight*3/4);
         stateGraph.setLayoutX(windowHeight*9/8);

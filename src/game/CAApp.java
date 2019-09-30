@@ -25,8 +25,6 @@ import java.util.Map;
  * @author Matt Harris
  */
 public class CAApp extends Application {
-    private static final int WINDOW_HEIGHT = 600;
-    private static final int WINDOW_WIDTH = 2*WINDOW_HEIGHT;
     private static final Color BACKGROUND_COLOR = Color.LIGHTGRAY;
     private String language = "English";
 
@@ -44,14 +42,13 @@ public class CAApp extends Application {
     public void start(Stage stage){
         myStage = stage;
         displayGroup = new Group();
-        mySim = Configurer.getSimulation("Fire.xml");
+        mySim = Configurer.getSimulation("GameofLife.xml");
         Timeline myAnimation = new Timeline();
         Map stylingMap = Configurer.getStyling(mySim.getParameterMap().get("StylingFile").toString());
-        myVisualization = new Visualization(displayGroup, mySim, myStage, WINDOW_HEIGHT, language, myAnimation, stylingMap);
-        myStage.setScene(new Scene(displayGroup, WINDOW_WIDTH, WINDOW_HEIGHT, BACKGROUND_COLOR));
+        myVisualization = new Visualization(displayGroup, mySim, myStage, language, myAnimation, stylingMap);
+        myStage.setScene(new Scene(displayGroup, myVisualization.getWindowWidth(), myVisualization.getWindowHeight(), BACKGROUND_COLOR));
         myStage.setTitle(mySim.getSimTitle());
         myStage.show();
-        //TODO: This should be gotten from styling and from visualization
         int millisecondDelay = myVisualization.getDelay();
         var frame = new KeyFrame(Duration.millis(millisecondDelay), e -> step());
         myAnimation.setCycleCount(Timeline.INDEFINITE);

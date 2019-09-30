@@ -15,4 +15,13 @@
         <cell> <row>99</row> <col>50</col> <state>2</state> </cell>
 
     </activeCells>
+    <shape>rectangle</shape>
+    <neighbor> <index>0</index> </neighbor>
+    <neighbor> <index>1</index> </neighbor>
+    <neighbor> <index>2</index> </neighbor>
+    <neighbor> <index>3</index> </neighbor>
+    <neighbor> <index>4</index> </neighbor>
+    <neighbor> <index>5</index> </neighbor>
+    <neighbor> <index>6</index> </neighbor>
+    <Style>Style1.xml</Style>
 </Simulation>
