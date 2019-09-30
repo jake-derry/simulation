@@ -36,7 +36,8 @@ public class ForagingCell extends Cell {
 
     @Override
     public void stepState() {
-
+        setState((getNextAnt() != null) ? State.ANT : State.EMPTY);
+        stepAnt();
     }
 
     @Override
@@ -45,6 +46,7 @@ public class ForagingCell extends Cell {
             case NEST: {
                 int index = random.nextInt(getCountMap().get(State.EMPTY));
                 int count = 0;
+
                 for (Cell cell : getCellMap().get(State.EMPTY)) {
                     if (count == index) {
                         cell.setNextState(State.ANT);
@@ -54,12 +56,47 @@ public class ForagingCell extends Cell {
                 }
             }
             case ANT: {
+                ForagingCell nextAntSpot;
+                if (ant.isForaging()) {
+                    ForagingCell right = (ForagingCell) getNeighborhood().getRight();
+                    ForagingCell down = (ForagingCell) getNeighborhood().getDown();
+                    nextAntSpot = getNextAntSpot(right, down);
+                } else {
+                    ForagingCell left = (ForagingCell) getNeighborhood().getLeft();
+                    ForagingCell up = (ForagingCell) getNeighborhood().getUp();
+                    nextAntSpot = getNextAntSpot(left, up);
+                }
 
-            }
-            case EMPTY: {
+                dropPheromones();
 
+                if (ant.isForaging() && nextAntSpot.isFood() || (! ant.isForaging()) && nextAntSpot.isNest()) {
+                    ant.switchForaging();
+                } else {
+                    nextAntSpot.setNextAnt(ant);
+                    setNextAnt(null);
+                }
             }
         }
+    }
+
+    private ForagingCell getNextAntSpot(ForagingCell right, ForagingCell down) {
+        ForagingCell nextAntSpot;
+
+        if (right.getPheromones() > down.getPheromones()) {
+            nextAntSpot = right;
+
+        } else if (right.getPheromones() < down.getPheromones()) {
+            nextAntSpot = down;
+
+        } else {
+            boolean isDown = random.nextBoolean();
+            if (isDown) {
+                nextAntSpot = down;
+            } else {
+                nextAntSpot = right;
+            }
+        }
+        return nextAntSpot;
     }
 
     /**
@@ -77,4 +114,25 @@ public class ForagingCell extends Cell {
     public void setNextAnt(Ant next) {
         nextAnt = next;
     }
+
+    public void dropPheromones() {
+        pheromones += ant.pheromones();
+    }
+
+    public boolean isFood() {
+        return food;
+    }
+
+    public boolean isNest() {
+        return nest;
+    }
+
+    private void stepAnt() {
+        ant = nextAnt;
+    }
+
+    private Ant getNextAnt() {
+        return nextAnt;
+    }
+
 }

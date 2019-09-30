@@ -54,10 +54,18 @@ public class Neighborhood implements Iterable<Cell> {
     }
 
     public Cell getDown() {
-        return null;
+        return myNeighborhoodMap.get(new Pair<Integer, Integer>(0, -1));
     }
 
     public Cell getRight() {
-        return null;
+        return myNeighborhoodMap.get(new Pair<Integer, Integer>(-1, 0));
+    }
+
+    public Cell getLeft() {
+        return myNeighborhoodMap.get(new Pair<Integer, Integer>(1, 0));
+    }
+
+    public Cell getUp() {
+        return myNeighborhoodMap.get(new Pair<Integer, Integer>(0, 1));
     }
 }

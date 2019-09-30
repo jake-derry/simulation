@@ -1,13 +1,9 @@
 package game.Simulation;
 
-import game.Simulation.Cell.Cell;
-import game.Simulation.Cell.FireCell;
+import game.Simulation.Cell.*;
 import util.Pair;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CellGrid implements Iterable<Cell> {
     private Cell[][] myCellGrid;
@@ -33,7 +29,32 @@ public class CellGrid implements Iterable<Cell> {
         myCellGrid = new Cell[cellGrid.length][cellGrid[0].length];
         for (int i = 0; i < cellGrid.length; i++) {
             for (int j = 0; j < cellGrid[0].length; j++) {
-                myCellGrid[i][j] = new FireCell(State.getState(cellGrid[i][j]), 0.3);
+                switch ((String) myParameterMap.get("Simulation")) {
+                    case ("Fire") : {
+                        myCellGrid[i][j] = new FireCell(State.getState(cellGrid[i][j]), (double) myParameterMap.get("probCatch"));
+                    }
+                    case ("Game of life") : {
+                        myCellGrid[i][j] = new GameOfLifeCell(State.getState(cellGrid[i][j]));
+                    }
+                    case ("Percolation") : {
+                        myCellGrid[i][j] = new PercolationCell(State.getState(cellGrid[i][j]));
+                    }
+                    case ("Predator-Prey") : {
+                        myCellGrid[i][j] = new PredatorPreyCell(State.getState(cellGrid[i][j]),
+                                (int) myParameterMap.get("initialEnergy"), (int) myParameterMap.get("foodBoost"),
+                                (int) myParameterMap.get("breedThreshold"), (int) myParameterMap.get("breedTime"));
+                    }
+                    case ("RPS") : {
+                        myCellGrid[i][j] = new RPSCell(State.getState(cellGrid[i][j]),
+                                (int) myParameterMap.get("threshold"));
+                    }
+                    case ("Foraging") : {
+                        myCellGrid[i][j] = new ForagingCell(State.getState(cellGrid[i][j]),
+                                (int) myParameterMap.get("foragingPheromones"),
+                                (int) myParameterMap.get("returningPheromones"),
+                                (double) myParameterMap.get("birthProbability"));
+                    }
+                }
             }
         }
     }
@@ -61,7 +82,7 @@ public class CellGrid implements Iterable<Cell> {
      * @param j
      */
     private void connectNeighbors(int[] neighbors, CellShape shape, int i, int j) {
-        List<Cell> neighborList = new ArrayList<>();
+        Map<Pair<Integer, Integer>, Cell> neighborMap = new TreeMap<>();
 
         for (Pair<Integer, Integer> displacement : shape.getDisplacements(neighbors)) {
             int iNeighbor = i + displacement.getKey();
@@ -69,10 +90,10 @@ public class CellGrid implements Iterable<Cell> {
 
             if (inRange(iNeighbor, jNeighbor)) {
                 Cell neighbor = myCellGrid[iNeighbor][jNeighbor];
-                neighborList.add(neighbor);
+                neighborMap.put(displacement, neighbor);
             }
         }
-        myCellGrid[i][j].setNeighborhood(new Neighborhood(neighborList));
+        myCellGrid[i][j].setNeighborhood(new Neighborhood(neighborMap));
     }
 
     /**

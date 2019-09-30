@@ -18,4 +18,8 @@ public class Ant {
     public void switchForaging() {
         foraging = !(foraging);
     }
+
+    public boolean isForaging() {
+        return foraging;
+    }
 }
