@@ -45,7 +45,7 @@ public class CAApp extends Application {
         displayGroup = new Group();
         mySims = new ArrayList<>();
         myVisualizations = new ArrayList<>();
-        mySims.add(Configurer.getSimulation("GameofLife.xml"));
+        mySims.add(Configurer.getSimulation("Percolation.xml"));
         Timeline myAnimation = new Timeline();
         Map stylingMap = Configurer.getStyling(mySims.get(0).getParameterMap().get("StylingFile").toString());
         myVisualizations.add(new Visualization(displayGroup, mySims.get(0), myStage, language, myAnimation, stylingMap));

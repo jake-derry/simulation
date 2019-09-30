@@ -5,8 +5,8 @@
         Jonah Knapp
     </author>
     <size>
-        <rows>20</rows>
-        <columns>20</columns>
+        <rows>100</rows>
+        <columns>100</columns>
     </size>
     <highestState>2</highestState>
     <defaultState>tree</defaultState>
@@ -29,5 +29,6 @@
     <neighbor> <index>4</index> </neighbor>
     <neighbor> <index>5</index> </neighbor>
     <neighbor> <index>6</index> </neighbor>
+    <neighbor> <index>7</index> </neighbor>
     <Style>Style1.xml</Style>
 </Simulation>

@@ -22,17 +22,17 @@ public class GameOfLifeCell extends Cell {
     @Override
     public void updateNext() {
         if (getState() == EMPTY) {
-            if (getCountMap().get(LIVE) == 3) {
+            if (getCountMap().containsKey(LIVE) && getCountMap().get(LIVE) == 3) {
                 setNextState(LIVE);
             } else {
                 setNextState(EMPTY);
             }
 
         } else {
-            if (getCountMap().get(LIVE) < 2 || getCountMap().get(LIVE) > 3) {
-                setNextState(EMPTY);
-            } else {
+            if (getCountMap().containsKey(LIVE) && (getCountMap().get(LIVE) == 2 || getCountMap().get(LIVE) == 3)) {
                 setNextState(LIVE);
+            } else {
+                setNextState(EMPTY);
             }
 
         }

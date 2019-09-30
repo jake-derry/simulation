@@ -37,7 +37,7 @@ public class Simulation {
      */
     public Simulation(Map<String, Object> parameterMap, String[][] initialGrid) {
         myParameterMap = parameterMap;
-        running = true;
+        running = false;
         grid = new CellGrid(parameterMap, initialGrid);
         stepCount = 0;
     }

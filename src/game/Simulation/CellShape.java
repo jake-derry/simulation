@@ -16,7 +16,7 @@ public enum CellShape {
             new int[] {0, -1},
             new int[] {1, -1},
             new int[] {1, 0},
-            new int[] {1, -1},
+            new int[] {-1, 1},
     }),
     TRIANGLE("triangle", 3, new int[][] {
             new int[] {1, 0},

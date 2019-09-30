@@ -2,6 +2,9 @@ package game.Simulation.Cell;
 
 import game.Simulation.State;
 
+import static game.Simulation.State.EMPTY;
+import static game.Simulation.State.WATER;
+
 public class PercolationCell extends Cell{
 
     /**
@@ -16,8 +19,8 @@ public class PercolationCell extends Cell{
 
     @Override
     public void updateNext() {
-        if (getState() == State.EMPTY && getCountMap().get(State.WATER) > 0) {
-            setNextState(State.WATER);
+        if (getState() == EMPTY && getCountMap().get(WATER) > 0) {
+            setNextState(WATER);
         }
         setNextState(getState());
     }

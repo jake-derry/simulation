@@ -3,6 +3,7 @@ package game.Simulation;
 import game.Simulation.Cell.Cell;
 import game.Simulation.Cell.FireCell;
 import game.Simulation.Cell.GameOfLifeCell;
+import game.Simulation.Cell.PercolationCell;
 import util.Pair;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class CellGrid implements Iterable<Cell> {
         myCellGrid = new Cell[cellGrid.length][cellGrid[0].length];
         for (int i = 0; i < cellGrid.length; i++) {
             for (int j = 0; j < cellGrid[0].length; j++) {
-                myCellGrid[i][j] = new GameOfLifeCell(State.getState(cellGrid[i][j]));
+                myCellGrid[i][j] = new PercolationCell(State.getState(cellGrid[i][j]));
             }
         }
     }

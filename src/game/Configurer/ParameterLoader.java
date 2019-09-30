@@ -157,7 +157,7 @@ public class ParameterLoader {
         for(int i = 0 ; i < nList.getLength(); i++){
             Element neighbor = (Element) nList.item(i);
             int myIndex = getFirstElementInteger(neighbor, INDEX_TAG);
-            if(myIndex > 0){ myNeighbors.add(myIndex);}
+            if(myIndex >= 0){ myNeighbors.add(myIndex);}
         }
         return myNeighbors.stream().mapToInt(i -> i).toArray();
     }
