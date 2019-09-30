@@ -8,7 +8,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -85,7 +84,7 @@ public class GridHandler {
         else{
             triangle.getPoints().addAll(xPos, yPos+cellHeight, xPos+cellWidth/2, yPos, xPos+cellWidth, yPos+cellHeight);
         }
-        triangle.setOnMouseClicked(mouseEvent -> cell.setState(State.BURNING));
+        triangle.setOnMouseClicked(mouseEvent -> cell.setState(cell.getNextStateOnClick(cell.getState())));
         return triangle;
     }
 
@@ -94,7 +93,7 @@ public class GridHandler {
         double xPos = j*cellWidth + xOffset;
         double yPos = i*cellHeight+menuHeight;
         rectangle.getPoints().addAll(xPos, yPos, xPos, yPos+cellHeight, xPos+cellWidth, yPos+cellHeight, xPos+cellWidth, yPos);
-        rectangle.setOnMouseClicked(mouseEvent -> cell.setState(State.BURNING));
+        rectangle.setOnMouseClicked(mouseEvent -> cell.setState(cell.getNextStateOnClick(cell.getState())));
         return rectangle;
     }
 }
