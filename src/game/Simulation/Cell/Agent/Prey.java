@@ -2,7 +2,7 @@ package game.Simulation.Cell.Agent;
 
 import game.Simulation.State;
 
-public class Prey extends Mover {
+public class Prey implements Mover {
     private final int myBreedTime;
     private int clock;
     private boolean living;

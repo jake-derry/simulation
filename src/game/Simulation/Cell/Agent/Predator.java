@@ -2,7 +2,7 @@ package game.Simulation.Cell.Agent;
 
 import game.Simulation.State;
 
-public class Predator extends Mover {
+public class Predator implements Mover {
     private int myEnergy;
     private int myInitialEnergy;
     private int myFoodBoost;
