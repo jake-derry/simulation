@@ -2,53 +2,52 @@
 <Simulation>
     <type>gameOfLife</type>
     <author> Jonah Knapp </author>
-    <rows>100</rows>
-    <columns>100</columns>
-    <highestState>1</highestState>
-    <defaultState>0</defaultState>
-    <cellDistribution>concentration</cellDistribution>
+    <rows>20</rows>
+    <columns>20</columns>
+    <defaultState>empty</defaultState>
+    <cellDistribution>cell</cellDistribution>
     <activeCells>
         <concentration>
-            <state>1</state> <value>50</value>
+            <state>live</state> <value>50</value>
         </concentration>
         <random>
-            <state>1</state> <value>50</value>
+            <state>live</state> <value>50</value>
         </random>
         <cell>
-            <row>9</row> <col>11</col> <state>1</state>
+            <row>9</row> <col>11</col> <state>live</state>
         </cell>
         <cell>
-            <row>13</row> <col>11</col> <state>1</state>
+            <row>13</row> <col>11</col> <state>live</state>
         </cell>
         <cell>
-            <row>9</row> <col>9</col> <state>1</state>
+            <row>9</row> <col>9</col> <state>live</state>
         </cell>
         <cell>
-            <row>10</row> <col>9</col> <state>1</state>
+            <row>10</row> <col>9</col> <state>live</state>
         </cell>
         <cell>
-            <row>11</row> <col>9</col> <state>1</state>
+            <row>11</row> <col>9</col> <state>live</state>
         </cell>
         <cell>
-            <row>12</row> <col>9</col> <state>1</state>
+            <row>12</row> <col>9</col> <state>live</state>
         </cell>
         <cell>
-            <row>13</row> <col>9</col> <state>1</state>
+            <row>13</row> <col>9</col> <state>live</state>
         </cell>
         <cell>
-            <row>9</row> <col>13</col> <state>1</state>
+            <row>9</row> <col>13</col> <state>live</state>
         </cell>
         <cell>
-            <row>10</row> <col>13</col> <state>1</state>
+            <row>10</row> <col>13</col> <state>live</state>
         </cell>
         <cell>
-            <row>11</row> <col>13</col> <state>1</state>
+            <row>11</row> <col>13</col> <state>live</state>
         </cell>
         <cell>
-            <row>12</row> <col>13</col> <state>1</state>
+            <row>12</row> <col>13</col> <state>live</state>
         </cell>
         <cell>
-            <row>13</row> <col>13</col> <state>1</state>
+            <row>13</row> <col>13</col> <state>live</state>
         </cell>
     </activeCells>
     <shape>rectangle</shape>
@@ -59,5 +58,6 @@
     <neighbor> <index>4</index> </neighbor>
     <neighbor> <index>5</index> </neighbor>
     <neighbor> <index>6</index> </neighbor>
+    <neighbor> <index>7</index> </neighbor>
     <Style>Style1.xml</Style>
 </Simulation>

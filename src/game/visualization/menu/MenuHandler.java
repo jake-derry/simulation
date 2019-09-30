@@ -16,9 +16,13 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class MenuHandler {
+
     /**
-     * addTitleTextToDisplayGroup: Adds the Title text to the display group
-    */
+     *
+     * @param group
+     * @param windowSize
+     * @param title
+     */
     public static void addTitleTextToDisplayGroup(Group group, int windowSize, String title){
         int TITLE_X = windowSize/16;
         int TITLE_Y = windowSize*1/10;
@@ -29,9 +33,16 @@ public class MenuHandler {
     }
 
     /**
-     * Creates and returns the specific menu buttons to be displayed and used
-     * @return- an ArrayList<Button> to be added to the display group in CAApp
-     * Assumptions- the functions of these buttons will be set in CAApp before adding them to the display group
+     *
+     * @param stage
+     * @param group
+     * @param sim
+     * @param windowSize
+     * @param delay
+     * @param animation
+     * @param language
+     * @param cellGraph
+     * @param seriesList
      */
     public static void addMenuButtonsToDisplayGroup(Stage stage, Group group, Simulation sim, int windowSize, int delay, Timeline animation, String language, LineChart cellGraph, List seriesList){
         ResourceBundle myResources = ResourceBundle.getBundle(language);
@@ -42,7 +53,7 @@ public class MenuHandler {
         int FASTER_X = windowSize*19/32;
         int BUTTON_Y = windowSize*3/20;
         int BUTTON_HEIGHT = windowSize/30;
-        LoadNewSimButton newSimButton = new LoadNewSimButton(NEW_SIM_X, BUTTON_Y, BUTTON_HEIGHT, myResources, stage, group, sim, windowSize, language, animation);
+        LoadNewSimButton newSimButton = new LoadNewSimButton(NEW_SIM_X, BUTTON_Y, BUTTON_HEIGHT, myResources, stage, sim, language);
         group.getChildren().add(newSimButton.getButton());
         PausePlayButton pausePlayButton = new PausePlayButton(PAUSE_PLAY_X, BUTTON_Y, BUTTON_HEIGHT, myResources, sim);
         group.getChildren().add(pausePlayButton.getButton());

@@ -2,8 +2,7 @@ package game.Simulation.Cell;
 
 import game.Simulation.State;
 
-import java.util.Iterator;
-import java.util.Map;
+import java.util.Arrays;
 import java.util.Random;
 
 import static game.Simulation.State.*;
@@ -18,6 +17,7 @@ public class FireCell extends Cell {
         super(state);
         myProbCatch = probCatch;
         random = new Random();
+        setStateList(Arrays.asList(EMPTY, TREE, BURNING));
     }
 
     @Override
