@@ -16,14 +16,18 @@ public class StepButton extends MenuButton {
     private List seriesList;
 
     /**
-     *
-     * @param xPos
-     * @param yPos
-     * @param height
-     * @param resources
-     * @param sim
-     * @param graph
-     * @param series
+     * @author Matt Harris
+     * This class implements MenuButton and represents a button capable of controlling the simulation and graph to step once ahead
+     * Assumptions: a "step" will always represent a single update to the graph and simulation (cannot step any number of steps forward),
+     * Assumption: "stepping" the simulation will only be allowed while it is paused
+     * Dependencies: Simulation
+     * @param xPos- xPosition in the scene for the button to appear
+     * @param yPos- yPosition in the scene for the button to appear
+     * @param height- height of the button to be created
+     * @param resources- the ResourcesBundle to pull the text from
+     * @param sim- simulation being controlled by the stepButton
+     * @param graph- LineChart being controlled by the stepButton
+     * @param series- the data to be passed to the LineChart to be displayed
      */
     public StepButton(int xPos, int yPos, int height, ResourceBundle resources, Simulation sim, LineChart graph, List series){
         super(xPos, yPos, height, resources);
@@ -35,7 +39,7 @@ public class StepButton extends MenuButton {
     }
 
     @Override
-    public void setButtonAction() {
+    protected void setButtonAction() {
         myButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(final ActionEvent e) {

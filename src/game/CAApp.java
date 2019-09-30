@@ -8,38 +8,32 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
- * CAApp: Main JavaFX application. Calls Configurer to read in XML file and create simulation of proper type, Simulation to calculate and step through
- * states of cells based on the rules, and DisplayHandler to create and position menu assets to be displayed.
- * Assumptions:
- * Dependencies: Display Handler, Configuration, Simulation
- * Use case: this is the top level of the CA simulation. It handles what exactly is being displayed in the window and represents the piece the
- * user can interact with and see
  * @author Matt Harris
+ * CAApp: Main JavaFX application. Maintains a list of active simulations and visualizations and starts the app by calling configurer to read the default
+ * simulatiion file to create the first simulation, calling configurer to read the styling file associated with that sim to create the first visualization,
+ * and setting up the first stage and timeline
+ * Dependencies: Configurer, Simulation, Visualization
  */
 public class CAApp extends Application {
-    private static final Color BACKGROUND_COLOR = Color.LIGHTGRAY;
     private String language = "English";
-
+    private String defaultSimFile = "/simulations/Fire.xml";
     private Group displayGroup;
     private static List<Simulation> mySims;
     private static List<Visualization> myVisualizations;
 
-    private static final String DEFAULT_SIMULATION = "simulations/Foraging.xml";
 
     private Stage myStage;
 
     /**
-     * start: Starts the simulation and animation of the app. Here the display group, display handler, simulation, and animation are all defined and started.
-     * @param stage- stage to display application on
+     * Starts the app by creating the first Simulation and Visualization from the default sim file
+     * @param stage- stage to display the first visualization on
      */
     @Override
     public void start(Stage stage){
@@ -47,7 +41,7 @@ public class CAApp extends Application {
         displayGroup = new Group();
         mySims = new ArrayList<>();
         myVisualizations = new ArrayList<>();
-        mySims.add(Configurer.getSimulation(DEFAULT_SIMULATION));
+        mySims.add(Configurer.getSimulation(defaultSimFile));
         Timeline myAnimation = new Timeline();
         Map stylingMap = Configurer.getStyling(mySims.get(0).getParameterMap().get("StylingFile").toString());
         myVisualizations.add(new Visualization(displayGroup, mySims.get(0), myStage, language, myAnimation, stylingMap));
@@ -61,16 +55,16 @@ public class CAApp extends Application {
     }
 
     /**
-     *
-     * @param sim
+     * Adds a new simulation to the list of active simulations
+     * @param sim- new sim to be added and started
      */
     public static void addSim(Simulation sim){
         mySims.add(sim);
     }
 
     /**
-     *
-     * @param vis
+     * Adds a new visualization to the list of active visualizations
+     * @param vis- new visualization to be added and started
      */
     public static void addVisualization(Visualization vis) { myVisualizations.add(vis); }
 
