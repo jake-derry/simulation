@@ -1,11 +1,9 @@
 package game.Simulation.Cell;
 
-import game.Simulation.Cell.Mover.Mover;
-import game.Simulation.Cell.Mover.Predator;
-import game.Simulation.Cell.Mover.Prey;
+import game.Simulation.Cell.Agent.Mover;
+import game.Simulation.Cell.Agent.Predator;
+import game.Simulation.Cell.Agent.Prey;
 import game.Simulation.State;
-
-import java.util.*;
 
 /**
  * Idk if this works?

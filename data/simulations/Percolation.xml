@@ -5,12 +5,16 @@
         team6
     </author>
     <size>
-        <rows>100</rows>
-        <columns>100</columns>
+        <rows>20</rows>
+        <columns>20</columns>
     </size>
     <defaultState>empty</defaultState>
-    <cellDistribution>cell</cellDistribution>
+    <cellDistribution>random</cellDistribution>
     <activeCells>
+        <concentration><state>wall</state> <value> 40 </value></concentration>
+        <concentration><state>water</state> <value> 2 </value></concentration>
+        <random><state>water</state> <value> 3 </value></random>
+        <random><state>wall</state> <value>170</value></random>
         <cell> <row>1</row> <col>50</col> <state>water</state> </cell>
         <cell> <row>99</row> <col>50</col> <state>water</state> </cell>
     </activeCells>

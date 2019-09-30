@@ -9,6 +9,7 @@ import static game.Simulation.State.*;
 
 public class FireCell extends Cell {
 
+
     private double myProbCatch;
     private Random random;
 

@@ -1,6 +1,6 @@
 package game.visualization;
 
-import game.Simulation.Cell.CellUtils;
+import game.Simulation.Cell.Utils.CellUtils;
 import game.Simulation.CellGrid;
 import game.Simulation.State;
 import javafx.scene.Group;

@@ -4,14 +4,11 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * TODO: Maybe find a way to get these strings from a file
- *
  * Enumerates the states of cells in simulations.
  *
  * EXAMPLE:
  *      Cell.setNextState(State.EMPTY);
  *
- * use a string "EMPTY" to represent an EMPTY state
  */
 public enum State {
     EMPTY("empty"),
@@ -24,7 +21,13 @@ public enum State {
     GROUP_B("b"),
     BURNING("fire"),
     TREE("tree"),
-    BEYOND_EDGE("");
+    ROCK("rock"),
+    PAPER("paper"),
+    SCISSORS("scissors"),
+    ANT("ant"),
+    FOOD("food"),
+    NEST("nest")
+    ;
 
     /**
      * A string representation of the state which is how a state

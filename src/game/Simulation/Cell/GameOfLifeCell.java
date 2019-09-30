@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import static game.Simulation.State.*;
-import static game.Simulation.State.BURNING;
 
 public class GameOfLifeCell extends Cell {
 

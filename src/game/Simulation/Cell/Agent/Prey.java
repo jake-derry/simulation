@@ -1,8 +1,8 @@
-package game.Simulation.Cell.Mover;
+package game.Simulation.Cell.Agent;
 
 import game.Simulation.State;
 
-public class Prey implements Mover {
+public class Prey extends Mover {
     private final int myBreedTime;
     private int clock;
     private boolean living;
