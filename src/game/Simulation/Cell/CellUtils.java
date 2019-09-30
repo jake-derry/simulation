@@ -3,7 +3,6 @@ package game.Simulation.Cell;
 import game.Simulation.State;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class CellUtils {

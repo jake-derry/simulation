@@ -2,6 +2,7 @@ package game.visualization;
 
 import game.Simulation.Cell.Cell;
 import game.Simulation.Cell.CellUtils;
+import game.Simulation.CellGrid;
 import game.Simulation.State;
 import javafx.scene.Group;
 import javafx.scene.chart.*;
@@ -12,6 +13,14 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class GraphHandler {
+
+    /**
+     *
+     * @param group
+     * @param windowHeight
+     * @param language
+     * @return
+     */
     public static LineChart setUpStateGraph(Group group, int windowHeight, String language){
         ResourceBundle resources = ResourceBundle.getBundle(language);
         NumberAxis stepAxis = new NumberAxis();
@@ -30,7 +39,14 @@ public class GraphHandler {
         return stateGraph;
     }
 
-    public static void updateGraph(LineChart stateGraph, List<XYChart.Series> seriesList, Iterable<Cell> cellIterator, int stepCount){
+    /**
+     *
+     * @param stateGraph
+     * @param seriesList
+     * @param cellIterator
+     * @param stepCount
+     */
+    public static void updateGraph(LineChart stateGraph, List<XYChart.Series> seriesList, CellGrid cellIterator, int stepCount){
         Map<State, Integer> stateMap = CellUtils.countMap(cellIterator);
         for (State key:stateMap.keySet()){
             boolean newSeries = true;

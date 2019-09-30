@@ -9,6 +9,14 @@ import java.util.ResourceBundle;
 public class PausePlayButton extends MenuButton {
     private Simulation mySim;
 
+    /**
+     *
+     * @param xPos
+     * @param yPos
+     * @param height
+     * @param resources
+     * @param sim
+     */
     public PausePlayButton(int xPos, int yPos, int height, ResourceBundle resources, Simulation sim) {
         super(xPos, yPos, height, resources);
         mySim = sim;

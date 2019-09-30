@@ -33,6 +33,15 @@ public class Visualization{
     private int windowHeight;
     private Paint myBackGroundColor;
 
+    /**
+     *
+     * @param group
+     * @param sim
+     * @param stage
+     * @param language
+     * @param animation
+     * @param stylingMap
+     */
     public Visualization(Group group, Simulation sim, Stage stage, String language, Timeline animation, Map stylingMap){
         myGroup = group;
         myGroup.getChildren().clear();
@@ -48,20 +57,35 @@ public class Visualization{
         colorMap = (Map) stylingMap.get("colorMap");
         myBackGroundColor = Paint.valueOf(colorMap.get("backgroundColor").toString());
     }
+
+    /**
+     *
+     */
     public void step(){
         visualize();
         mySim.step();
     }
 
+    /**
+     *
+     */
     public void visualize(){
         GridHandler.visualizeCells(polygonList.iterator(), mySim.getGrid().iterator(), (Map)colorMap);
         GraphHandler.updateGraph(cellGraph, seriesList, mySim.getGrid(), mySim.getStepCount());
     }
 
+    /**
+     *
+     * @return
+     */
     public int getDelay(){
         return millisecondDelay;
     }
 
+    /**
+     *
+     * @param stylingMap
+     */
     private void setWindowHeight(Map stylingMap){
         if (stylingMap.containsKey("windowDimension")){
             windowHeight = (int) stylingMap.get("windowDimension");
@@ -71,6 +95,10 @@ public class Visualization{
         }
     }
 
+    /**
+     *
+     * @param stylingMap
+     */
     private void setDelay(Map stylingMap){
         if (stylingMap.containsKey("delay")){
             millisecondDelay = (int) stylingMap.get("delay");
@@ -80,8 +108,12 @@ public class Visualization{
         }
     }
 
+    /**
+     *
+     * @param stylingMap
+     */
     private void setBackgroundColor(Map stylingMap){
-        if (stylingMap.containsKey("bacgroundColor")){
+        if (stylingMap.containsKey("backgroundColor")){
             myBackGroundColor = (Color) stylingMap.get("backgroundColor");
         }
         else{
@@ -89,14 +121,26 @@ public class Visualization{
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public int getWindowHeight(){
         return windowHeight;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getWindowWidth(){
         return windowHeight*2;
     }
 
+    /**
+     *
+     * @return
+     */
     public Paint getBackgroundColor(){
         return myBackGroundColor;
     }

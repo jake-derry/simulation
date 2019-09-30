@@ -21,6 +21,8 @@ abstract public class Cell {
     private State myState;
     private State myNextState;
     private Neighborhood myNeighborhood;
+    private List<Cell> myNeighbors;
+    private List<State> myStateList;
 
     /**
      * Constructor for Cell. Initializes the state of the
@@ -31,7 +33,7 @@ abstract public class Cell {
     public Cell(State state) {
         myState = state;
         myNextState = state;
-
+        myStateList = new ArrayList<>();
     }
 
     public void setNeighborhood(Neighborhood neighborhood) {
@@ -112,6 +114,17 @@ abstract public class Cell {
      */
     protected Map<State, Integer> getCountMap() {
         return CellUtils.countMap(getNeighborhood());
+    }
+
+    public State getNextStateOnClick(State state){
+        if (myStateList.indexOf(state) + 1 == myStateList.size()){
+            return myStateList.get(0);
+        }
+            return myStateList.get(myStateList.indexOf(state) + 1);
+    }
+
+    public void setStateList(List<State> stateList){
+        myStateList = stateList;
     }
 
 }

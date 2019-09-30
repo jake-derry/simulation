@@ -2,10 +2,13 @@ package game.Simulation.Cell;
 
 import game.Simulation.State;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
-import static game.Simulation.State.EMPTY;
-import static game.Simulation.State.LIVE;
+import static game.Simulation.State.*;
+import static game.Simulation.State.BURNING;
 
 public class GameOfLifeCell extends Cell {
 
@@ -17,6 +20,7 @@ public class GameOfLifeCell extends Cell {
      */
     public GameOfLifeCell(State state) {
         super(state);
+        setStateList(Arrays.asList(EMPTY, LIVE));
     }
 
     @Override

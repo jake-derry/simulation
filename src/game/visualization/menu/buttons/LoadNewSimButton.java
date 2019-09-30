@@ -13,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.File;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -23,6 +22,16 @@ public class LoadNewSimButton extends MenuButton {
     private Simulation mySim;
     private String myLanguage;
 
+    /**
+     *
+     * @param xPos
+     * @param yPos
+     * @param height
+     * @param resources
+     * @param stage
+     * @param sim
+     * @param language
+     */
     public LoadNewSimButton(int xPos, int yPos, int height, ResourceBundle resources, Stage stage, Simulation sim, String language){
         super(xPos, yPos, height, resources);
         myButton.setText(resources.getString("LoadNewSim"));
@@ -33,6 +42,9 @@ public class LoadNewSimButton extends MenuButton {
     }
 
     @Override
+    /**
+     *
+     */
     public void setButtonAction() {
         final FileChooser fileChooser = new FileChooser();
         myButton.setOnAction(new EventHandler<ActionEvent>(){

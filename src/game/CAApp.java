@@ -45,7 +45,7 @@ public class CAApp extends Application {
         displayGroup = new Group();
         mySims = new ArrayList<>();
         myVisualizations = new ArrayList<>();
-        mySims.add(Configurer.getSimulation("Percolation.xml"));
+        mySims.add(Configurer.getSimulation("Fire.xml"));
         Timeline myAnimation = new Timeline();
         Map stylingMap = Configurer.getStyling(mySims.get(0).getParameterMap().get("StylingFile").toString());
         myVisualizations.add(new Visualization(displayGroup, mySims.get(0), myStage, language, myAnimation, stylingMap));
@@ -58,11 +58,24 @@ public class CAApp extends Application {
         myAnimation.play();
     }
 
+    /**
+     *
+     * @param sim
+     */
     public static void addSim(Simulation sim){
         mySims.add(sim);
     }
+
+    /**
+     *
+     * @param vis
+     */
     public static void addVisualization(Visualization vis) { myVisualizations.add(vis); }
 
+    /**
+     *
+     * @param args
+     */
     public static void main (String[] args) {
         launch(args);
     }
