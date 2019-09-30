@@ -21,7 +21,7 @@
         <cell> <row>25</row> <col>25</col> <state>fire</state></cell>
     </activeCells>
     <probCatch>50</probCatch>
-    <shape>rectangle</shape>
+    <shape>triangle</shape>
     <neighbor> <index>0</index> </neighbor>
     <neighbor> <index>1</index> </neighbor>
     <neighbor> <index>2</index> </neighbor>

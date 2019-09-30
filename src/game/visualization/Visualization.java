@@ -1,5 +1,6 @@
 package game.visualization;
 
+import game.Simulation.CellShape;
 import game.Simulation.Simulation;
 import game.visualization.menu.MenuHandler;
 import javafx.animation.Timeline;
@@ -53,7 +54,8 @@ public class Visualization{
         seriesList = new ArrayList<XYChart.Series>();
         MenuHandler.addMenuButtonsToDisplayGroup(stage, group, sim, windowHeight, millisecondDelay, animation, language, cellGraph, seriesList);
         MenuHandler.addTitleTextToDisplayGroup(group, windowHeight, sim.getSimTitle());
-        polygonList = GridHandler.setUpPolygons(windowHeight, sim.getGrid().getCellRows(), sim.getGrid().getCellColumns(), myGroup, stylingMap, 6, mySim);
+        int polygonSides = CellShape.matchShape((String) mySim.getParameterMap().get("shape")).getSides();
+        polygonList = GridHandler.setUpPolygons(windowHeight, sim.getGrid().getCellRows(), sim.getGrid().getCellColumns(), myGroup, stylingMap, polygonSides, mySim);
         colorMap = (Map) stylingMap.get("colorMap");
         myBackGroundColor = Paint.valueOf(colorMap.get("backgroundColor").toString());
     }
