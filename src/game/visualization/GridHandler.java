@@ -21,6 +21,7 @@ public class GridHandler {
      */
     public static void visualizeCells(Iterator<Shape> rectangleIterator, Iterator<Cell> cellIterator, Map colorMap){
         while (rectangleIterator.hasNext() && cellIterator.hasNext()){
+            int x =0;
             String stateKey = cellIterator.next().getState().toString();
             String colorVal = colorMap.get(stateKey).toString();
             rectangleIterator.next().setFill(Paint.valueOf(colorVal));
