@@ -39,11 +39,16 @@ New Sim File Chooser inspiration from: https://docs.oracle.com/javafx/2/ui_contr
  * Segregation.xml
  * For Error Checking info, see section in Notes below
 
-####Interesting data files: GameOfLife.xml
+####Interesting data files: Fire.xml
 
 ####Features implemented:
 ##### Configuration: 
 ##### Simulation:
+* implemented a cell grid and rule sets for Fire, Game of Life, Percolation, and RPS
+* simulations run until stopped by user input (Pause MenuButton)
+* simulations have customizable arrangements of neighbors (read in with simulation xml file)
+* simulations can have cell shape specified by simulation xml file (rectangles and triangles implemented)
+
 ##### Visualization: 
 * visualization of the cell grid that can run indefinitely until stopped by user (with specific cell shapes specified in style xml)
 * menu buttons that allow the user to: pause and play the simulation, step forward through simulation, control simulation speed, start a new simulation from xml file in a new window
@@ -53,13 +58,12 @@ New Sim File Chooser inspiration from: https://docs.oracle.com/javafx/2/ui_contr
 * multiple simulations to be run at once using the LoadNewSimulation button
 
 Assumptions or Simplifications:
-* no additional types of CA's can be run besides the five implemented
-* only one CA can be simulated and visualized at once
-* every simulation being run is visualized
-* the color scheme is hard coded
+* new Simulations can only be started in new windows
+* default values (hardcoded) are used when users do not specify needed parameters
+* simulation parameters cannot be changed on the fly once a simulation has been loaded and created
+* 
 
 Known Bugs:
-* the current implementation of the segregation CA seems to be working incorrectly however this will be fixed for the final version
 
 Extra credit:
 
