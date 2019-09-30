@@ -33,6 +33,8 @@ public class CAApp extends Application {
     private static List<Simulation> mySims;
     private static List<Visualization> myVisualizations;
 
+    private static final String DEFAULT_SIMULATION = "GameofLife.xml";
+
     private Stage myStage;
 
     /**
@@ -45,7 +47,7 @@ public class CAApp extends Application {
         displayGroup = new Group();
         mySims = new ArrayList<>();
         myVisualizations = new ArrayList<>();
-        mySims.add(Configurer.getSimulation("Percolation.xml"));
+        mySims.add(Configurer.getSimulation(DEFAULT_SIMULATION));
         Timeline myAnimation = new Timeline();
         Map stylingMap = Configurer.getStyling(mySims.get(0).getParameterMap().get("StylingFile").toString());
         myVisualizations.add(new Visualization(displayGroup, mySims.get(0), myStage, language, myAnimation, stylingMap));

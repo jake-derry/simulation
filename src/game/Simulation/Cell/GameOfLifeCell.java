@@ -24,7 +24,6 @@ public class GameOfLifeCell extends Cell {
 
     @Override
     public void updateNext() {
-        System.out.println("Perc");
         if (getState() == EMPTY) {
             if (getCountMap().containsKey(LIVE) && getCountMap().get(LIVE) == 3) {
                 setNextState(LIVE);
