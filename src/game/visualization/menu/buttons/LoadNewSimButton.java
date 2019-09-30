@@ -18,27 +18,17 @@ import java.io.File;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import static game.CAApp.step;
-import static javafx.scene.paint.Color.BLACK;
-
 public class LoadNewSimButton extends MenuButton {
     private Stage myStage;
     private Simulation mySim;
-    private Visualization myVis;
-    private int WINDOW_SIZE;
-    private Group myGroup;
     private String myLanguage;
-    private Timeline myAnimation;
 
-    public LoadNewSimButton(int xPos, int yPos, int height, ResourceBundle resources, Stage stage, Group group, Simulation sim, int windowSize, String language, Timeline animation){
+    public LoadNewSimButton(int xPos, int yPos, int height, ResourceBundle resources, Stage stage, Simulation sim, String language){
         super(xPos, yPos, height, resources);
         myButton.setText(resources.getString("LoadNewSim"));
         myStage = stage;
         mySim = sim;
-        myGroup = group;
-        WINDOW_SIZE = windowSize;
         myLanguage = language;
-        myAnimation = animation;
         setButtonAction();
     }
 
@@ -53,16 +43,16 @@ public class LoadNewSimButton extends MenuButton {
                     Stage stage = new Stage();
                     Timeline myAnimation = new Timeline();
                     Simulation sim = Configurer.getSimulation(file.getName());
-                    Map stylingMap = Configurer.getStyling(mySim.getParameterMap().get("StylingFile").toString());
+                    Map stylingMap = Configurer.getStyling(sim.getParameterMap().get("StylingFile").toString());
                     Group group = new Group();
                     Visualization vis = new Visualization(group, sim, stage, myLanguage, myAnimation, stylingMap);
                     CAApp.addVisualization(vis);
                     CAApp.addSim(sim);
-                    var frame = new KeyFrame(Duration.millis(vis.getDelay()), f -> step(1));
+                    var frame = new KeyFrame(Duration.millis(vis.getDelay()), f -> vis.step());
                     myAnimation.setCycleCount(Timeline.INDEFINITE);
                     myAnimation.getKeyFrames().add(frame);
                     myAnimation.play();
-                    stage.setScene(new Scene(group, vis.getWindowWidth(), vis.getWindowHeight(), BLACK));
+                    stage.setScene(new Scene(group, vis.getWindowWidth(), vis.getWindowHeight(), vis.getBackgroundColor()));
                     stage.show();
                 }
             }

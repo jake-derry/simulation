@@ -42,7 +42,7 @@ public class MenuHandler {
         int FASTER_X = windowSize*19/32;
         int BUTTON_Y = windowSize*3/20;
         int BUTTON_HEIGHT = windowSize/30;
-        LoadNewSimButton newSimButton = new LoadNewSimButton(NEW_SIM_X, BUTTON_Y, BUTTON_HEIGHT, myResources, stage, group, sim, windowSize, language, animation);
+        LoadNewSimButton newSimButton = new LoadNewSimButton(NEW_SIM_X, BUTTON_Y, BUTTON_HEIGHT, myResources, stage, sim, language);
         group.getChildren().add(newSimButton.getButton());
         PausePlayButton pausePlayButton = new PausePlayButton(PAUSE_PLAY_X, BUTTON_Y, BUTTON_HEIGHT, myResources, sim);
         group.getChildren().add(pausePlayButton.getButton());

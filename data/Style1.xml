@@ -4,6 +4,7 @@
     <color><state>EMPTY</state> <color>BLACK</color></color>
     <color><state>BURNING</state> <color>FIREBRICK</color></color>
     <color><state>TREE</state> <color>FORESTGREEN</color></color>
+    <color><state>backgroundColor</state> <color>LIGHTGREY</color></color>
     <option><type>cellSize</type> <value>10</value></option>
     <option><type>outline</type> <value>1</value></option>
     <option><type>windowDimension</type> <value>400</value></option>
