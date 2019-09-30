@@ -108,6 +108,11 @@ public class Simulation {
         }
     }
 
+    /**
+     * Gets parameter map of the simulation
+     *
+     * @return          A map of the parameters of a simulation
+     */
     public Map<String, Object> getParameterMap(){
         return myParameterMap;
     }

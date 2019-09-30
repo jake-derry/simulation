@@ -7,13 +7,19 @@ import util.Pair;
 import java.util.*;
 
 /**
- * TODO: Come back to this so I can implement foraging cells
+ * An Iterable of cells that denotes a neighborhood of
+ * cells
  */
 public class Neighborhood implements Iterable<Cell> {
     List<Cell> myNeighbors;
     Map<Pair<Integer, Integer>, Cell> myNeighborhoodMap;
     Random random;
 
+    /**
+     * Initializes a neighborhood based on a map of displacement
+     * coordinates to cells
+     * @param neighbors         Map of displacement coordinates to cells
+     */
     public Neighborhood(Map<Pair<Integer, Integer>, Cell> neighbors) {
         myNeighbors = new ArrayList<>(neighbors.values());
         myNeighborhoodMap = neighbors;
@@ -53,18 +59,38 @@ public class Neighborhood implements Iterable<Cell> {
         return acceptableCount;
     }
 
+    /**
+     * Gets cell below
+     *
+     * @return      Cell below
+     */
     public Cell getDown() {
         return myNeighborhoodMap.get(new Pair<Integer, Integer>(0, -1));
     }
 
+    /**
+     * Gets cell above
+     *
+     * @return      Cell above
+     */
     public Cell getRight() {
         return myNeighborhoodMap.get(new Pair<Integer, Integer>(-1, 0));
     }
 
+    /**
+     * Gets cell left
+     *
+     * @return      Cell left
+     */
     public Cell getLeft() {
         return myNeighborhoodMap.get(new Pair<Integer, Integer>(1, 0));
     }
 
+    /**
+     * Gets cell right
+     *
+     * @return      Cell right
+     */
     public Cell getUp() {
         return myNeighborhoodMap.get(new Pair<Integer, Integer>(0, 1));
     }

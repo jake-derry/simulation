@@ -7,14 +7,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * Iterator of cells used in multiple classes
+ */
 public class CellIterator implements Iterator<Cell> {
     private Queue<Cell> myCellQueue;
 
     /**
-     * Constructor of CellIterator that sets the
-     * cell grid of the iterator
+     * Constructor of CellIterator that sets the cell grid
+     * of the iterator
      *
-     * @param cellGrid      grid of cells
+     * @param cellGrid      Grid of cells
      */
     CellIterator(Cell[][] cellGrid) {
         myCellQueue = new LinkedList<>();
@@ -25,6 +28,11 @@ public class CellIterator implements Iterator<Cell> {
         }
     }
 
+    /**
+     * Constructor of CellIterator that sets a list of cells
+     * as the queue of the iterator
+     * @param cells         List of cells
+     */
     CellIterator(List<Cell> cells) {
         myCellQueue = new LinkedList<>(cells);
     }
