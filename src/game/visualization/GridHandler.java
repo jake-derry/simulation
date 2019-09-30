@@ -2,7 +2,6 @@ package game.visualization;
 
 import game.Simulation.Cell.Cell;
 import game.Simulation.Simulation;
-import game.Simulation.State;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -13,32 +12,37 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Matt Harris
+ * This is a static class to control all of the display functions needed to display the grid of cells controlled by the simulation.
+ * Dependencies: Cell, Simulation
+ */
 public class GridHandler {
 
     /**
-     *
-     * @param rectangleIterator
-     * @param cellIterator
-     * @param colorMap
+     * Updates the colors of the polygons in the grid based on the new states of cells maintained by simulation.
+     * @param polygonIterator- iterator to go through all polygons being displayed in grid
+     * @param cellIterator- iterator to go through all cells maintained by simulation to get updated states
+     * @param colorMap- the Map<State, Color> that allows us to know what color to update polygons to
      */
-    public static void visualizeCells(Iterator<Shape> rectangleIterator, Iterator<Cell> cellIterator, Map colorMap){
-        while (rectangleIterator.hasNext() && cellIterator.hasNext()){
+    public static void visualizeCells(Iterator<Shape> polygonIterator, Iterator<Cell> cellIterator, Map colorMap){
+        while (polygonIterator.hasNext() && cellIterator.hasNext()){
             String stateKey = cellIterator.next().getState().toString();
             String colorVal = colorMap.get(stateKey).toString();
-            rectangleIterator.next().setFill(Paint.valueOf(colorVal));
+            polygonIterator.next().setFill(Paint.valueOf(colorVal));
         }
     }
 
     /**
-     *
-     * @param windowSize
-     * @param numRows
-     * @param numCols
-     * @param group
-     * @param stylingMap
-     * @param numSides
-     * @param mySim
-     * @return
+     * This method creates all the polygon objects to be displayed in the grid (based on a number of sides) but does not set their colors.
+     * @param windowSize- size of the display window to be used to calculate positions of the polygons
+     * @param numRows- the number of rows of polygons to create
+     * @param numCols- the number of columns of polygons to create
+     * @param group- the group to add the polygons to
+     * @param stylingMap- the map produced by Configurer reading a styling xml in order to get parameters used in creating polygons
+     * @param numSides- the number of sides of the polygons to be created
+     * @param mySim- the simulation to get the cells from in order to link them to polygons to increment states on polygon click event
+     * @return- list of all polygons created
      */
     public static List setUpPolygons(int windowSize, int numRows, int numCols, Group group, Map stylingMap, int numSides, Simulation mySim){
         boolean colOdd = true;
@@ -84,16 +88,16 @@ public class GridHandler {
     }
 
     /**
-     *
-     * @param i
-     * @param j
-     * @param cellWidth
-     * @param cellHeight
-     * @param menuHeight
-     * @param xOffset
-     * @param odd
-     * @param cell
-     * @return
+     * This method creates triangles in the case that the specified number of sides was 3.
+     * @param i- the row index
+     * @param j- the column index
+     * @param cellWidth- width of the Cells
+     * @param cellHeight- height of the Cells
+     * @param menuHeight- the height of the Menu
+     * @param xOffset- the offset to shift the triangles away from the left side of the window
+     * @param odd- used to determine when to flip a triangle to effectively tile the screen
+     * @param cell- the cell to link to the triangle so on click, the cell's state is incremented
+     * @return- the created triangle
      */
     private static Polygon createTriangle(int i, int j, double cellWidth, double cellHeight, double menuHeight, double xOffset, boolean odd, Cell cell){
         Polygon triangle = new Polygon();
@@ -110,16 +114,17 @@ public class GridHandler {
     }
 
     /**
-     *
-     * @param i
-     * @param j
-     * @param cellWidth
-     * @param cellHeight
-     * @param menuHeight
-     * @param xOffset
-     * @param cell
-     * @return
-     */
+     This method creates rectangles in the case that the specified number of sides was 4.
+     * @param i- the row index
+     * @param j- the column index
+     * @param cellWidth- width of the Cells
+     * @param cellHeight- height of the Cells
+     * @param menuHeight- the height of the Menu
+     * @param xOffset- the offset to shift the rectangles away from the left side of the window
+     * @param cell- the cell to link to the rectangle so on click, the cell's state is incremented
+     * @return- the created rectangle
+     **/
+
     private static Polygon createRectangle(int i, int j, double cellWidth, double cellHeight, double menuHeight, double xOffset, Cell cell){
         Polygon rectangle = new Polygon();
         double xPos = j*cellWidth + xOffset;

@@ -12,7 +12,7 @@ Jonah Knapp jk366
 
 Start Date: Sept 15
 
-Finish Date: Sept 23
+Finish Date: Sept 30
 
 Hours Spent: 44 hours between members
 
@@ -25,29 +25,45 @@ Visualization and Display: Matt Harris
 Configuration: Jonah Knapp
 
 ### Resources Used
-Button images obtained from: http://clipart-library.com/clip-art/play-pause-button-transparent-3.htm
 New Sim File Chooser inspiration from: https://docs.oracle.com/javafx/2/ui_controls/file-chooser.htm
 
 ### Running the Program
 
-Main class: CAApp.java 
+####Main class: CAApp.java 
 
-Data files needed: (needed for running simulations of each type) Fire.xml, GameOfLife.xml, Percolation.xml, PredatorPrey.xml, Segregation.xml
+####Data files needed (needed for running simulations of each type):
+ * Fire.xml
+ * GameOfLife.xml 
+ * Percolation.xml 
+ * PredatorPrey.xml 
+ * Segregation.xml
+ * For Error Checking info, see section in Notes below
 
-Interesting data files: GameOfLife.xml
+####Interesting data files: Fire.xml
 
-Features implemented: Simulations for 5 different cellular automata configured with an xml file and visualized in a display controlled 
-by a play/resume button, step button, increase and decrease simulation speed buttons, and a New Sim button capable of loading
-a new config file for a new simulation on the fly.
+####Features implemented:
+##### Configuration: 
+##### Simulation:
+* implemented a cell grid and rule sets for Fire, Game of Life, Percolation, and RPS
+* simulations run until stopped by user input (Pause MenuButton)
+* simulations have customizable arrangements of neighbors (read in with simulation xml file)
+* simulations can have cell shape specified by simulation xml file (rectangles and triangles implemented)
+
+##### Visualization: 
+* visualization of the cell grid that can run indefinitely until stopped by user (with specific cell shapes specified in style xml)
+* menu buttons that allow the user to: pause and play the simulation, step forward through simulation, control simulation speed, start a new simulation from xml file in a new window
+* all display text read from a properties file specified by language choice
+* visualization of the states of cells over time shown in a LineChart
+* ability for user to change cell states by clicking on cell locations
+* multiple simulations to be run at once using the LoadNewSimulation button
 
 Assumptions or Simplifications:
-* no additional types of CA's can be run besides the five implemented
-* only one CA can be simulated and visualized at once
-* every simulation being run is visualized
-* the color scheme is hard coded
+* new Simulations can only be started in new windows
+* default values (hardcoded) are used when users do not specify needed parameters
+* simulation parameters cannot be changed on the fly once a simulation has been loaded and created
+* 
 
 Known Bugs:
-* the current implementation of the segregation CA seems to be working incorrectly however this will be fixed for the final version
 
 Extra credit:
 

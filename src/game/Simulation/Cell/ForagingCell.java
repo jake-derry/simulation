@@ -28,7 +28,7 @@ public class ForagingCell extends Cell {
     public ForagingCell(State state, int foragingPheromones, int returningPheromones, double birthProbability) {
         super(state);
         pheromones = 0;
-        Random random = new Random();
+        random = new Random();
 
         if (getState() == State.ANT) {
             ant = new Ant(foragingPheromones, returningPheromones);

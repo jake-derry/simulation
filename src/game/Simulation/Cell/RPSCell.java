@@ -29,7 +29,7 @@ public class RPSCell extends Cell{
     public void updateNext() {
         RPSState state = RPSState.find(getState());
 
-        if (getCountMap().get(state.beatBy()) >= myThreshold) {
+        if (getCountMap().containsKey(state.beatBy()) && getCountMap().get(state.beatBy()) > myThreshold) {
             setNextState(state.beatBy());
         }
     }

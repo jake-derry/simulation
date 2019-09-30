@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Simulation>
-    <type>Fire</type>
+    <type>RPS</type>
     <author>
         Jonah Knapp
     </author>
@@ -8,19 +8,20 @@
         <rows>100</rows>
         <columns>100</columns>
     </size>
-    <highestState>2</highestState>
-    <defaultState>tree</defaultState>
-    <cellDistribution>random</cellDistribution>
+    <defaultState>rock</defaultState>
+    <cellDistribution>concentration</cellDistribution>
     <activeCells>
         <concentration>
-            <state>fire</state> <value> 1 </value>
+            <state>rock</state> <value> 33 </value>
         </concentration>
-        <random>
-            <state>fire</state> <value>10</value>
-        </random>
-        <cell> <row>25</row> <col>25</col> <state>fire</state></cell>
+        <concentration>
+            <state>paper</state> <value> 33 </value>
+        </concentration>
+        <concentration>
+            <state>scissors</state> <value> 33 </value>
+        </concentration>
     </activeCells>
-    <probCatch>25</probCatch>
+    <threshold>3</threshold>
     <shape>rectangle</shape>
     <neighbor> <index>0</index> </neighbor>
     <neighbor> <index>1</index> </neighbor>

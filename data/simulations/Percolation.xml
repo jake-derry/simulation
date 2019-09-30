@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Simulation>
-    <type>percolation</type>
+    <type>Percolation</type>
     <author>
         team6
     </author>
@@ -26,5 +26,6 @@
     <neighbor> <index>4</index> </neighbor>
     <neighbor> <index>5</index> </neighbor>
     <neighbor> <index>6</index> </neighbor>
-    <Style>Style1.xml</Style>
+    <neighbor> <index>7</index> </neighbor>
+    <Style>styles/Style1.xml</Style>
 </Simulation>

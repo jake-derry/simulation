@@ -12,7 +12,8 @@ import static game.Configurer.XMLReaders.getFirstElementInteger;
 
 /**
  * This class handles loading in style parameters from the XML file. It contains default values for each of the parameters,
- * which is set when the specified values in the XML are not supported.
+ * which is set when the specified values in the XML are not supported. It depends on XMLReaders.java to read
+ * integers/strings from the nodes in the main XML element and to do error checking on the parsing of these values.
  *
  * @author Jonah Knapp
  */
