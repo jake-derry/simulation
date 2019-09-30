@@ -48,11 +48,11 @@ public class CAApp extends Application {
         mySims.add(Configurer.getSimulation("Fire.xml"));
         Timeline myAnimation = new Timeline();
         Map stylingMap = Configurer.getStyling(mySims.get(0).getParameterMap().get("StylingFile").toString());
-        myVisualizations.add(new Visualization(displayGroup, mySims.get(0), myStage, language, myAnimation, stylingMap));
+        myVisualizations.add(new Visualization(displayGroup, mySims.get(0), myStage, language, myAnimation, stylingMap, 0));
         myStage.setScene(new Scene(displayGroup, myVisualizations.get(0).getWindowWidth(), myVisualizations.get(0).getWindowHeight(), BACKGROUND_COLOR));
         myStage.show();
         int millisecondDelay = myVisualizations.get(0).getDelay();
-        var frame = new KeyFrame(Duration.millis(millisecondDelay), e -> step(0));
+        var frame = new KeyFrame(Duration.millis(millisecondDelay), e -> myVisualizations.get(0).step());
         myAnimation.setCycleCount(Timeline.INDEFINITE);
         myAnimation.getKeyFrames().add(frame);
         myAnimation.play();
@@ -62,14 +62,6 @@ public class CAApp extends Application {
         mySims.add(sim);
     }
     public static void addVisualization(Visualization vis) { myVisualizations.add(vis); }
-
-    /**
-     * step: calls the simulation to step through calculating and updating states according to the pace of the current timeline
-     */
-    public static void step(int index){
-        myVisualizations.get(index).visualize();
-        mySims.get(index).step();
-    }
 
     public static void main (String[] args) {
         launch(args);

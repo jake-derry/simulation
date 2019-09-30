@@ -28,19 +28,25 @@ public class Visualization{
     private List polygonList;
     private List seriesList;
     private int windowHeight;
+    private int myIndex;
 
-    public Visualization(Group group, Simulation sim, Stage stage, String language, Timeline animation, Map stylingMap){
+    public Visualization(Group group, Simulation sim, Stage stage, String language, Timeline animation, Map stylingMap, int visIndex){
         myGroup = group;
         myGroup.getChildren().clear();
         mySim = sim;
+        myIndex = visIndex;
         setDelay(stylingMap);
         setWindowHeight(stylingMap);
         cellGraph = GraphHandler.setUpStateGraph(group, windowHeight, language);
         seriesList = new ArrayList<XYChart.Series>();
-        MenuHandler.addMenuButtonsToDisplayGroup(stage, group, sim, windowHeight, millisecondDelay, animation, language, cellGraph, seriesList);
+        MenuHandler.addMenuButtonsToDisplayGroup(stage, group, sim, windowHeight, millisecondDelay, animation, language, cellGraph, seriesList, myIndex);
         MenuHandler.addTitleTextToDisplayGroup(group, windowHeight, sim.getSimTitle());
         polygonList = GridHandler.setUpPolygons(windowHeight, sim.getGrid().getCellRows(), sim.getGrid().getCellColumns(), myGroup, stylingMap, 6);
         colorMap = stylingMap.get("colorMap");
+    }
+    public void step(){
+        visualize();
+        mySim.step();
     }
 
     public void visualize(){
