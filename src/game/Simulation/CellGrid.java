@@ -20,9 +20,9 @@ public class CellGrid implements Iterable<Cell> {
      * @param cellGrid
      */
     public CellGrid(Map<String, Object> parameterMap, String[][] cellGrid) {
+        myParameterMap = parameterMap;
         createCellGrid(cellGrid);
         connectGrid(cellGrid);
-        myParameterMap = parameterMap;
     }
 
     /**
