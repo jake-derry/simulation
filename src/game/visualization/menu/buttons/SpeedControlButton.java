@@ -13,6 +13,17 @@ public class SpeedControlButton extends MenuButton {
     private int millisecondDelay;
     private Timeline myAnimation;
 
+    /**
+     *
+     * @param xPos
+     * @param yPos
+     * @param height
+     * @param resources
+     * @param sim
+     * @param delay
+     * @param animation
+     * @param speed
+     */
     public SpeedControlButton(int xPos, int yPos, int height, ResourceBundle resources, Simulation sim, int delay, Timeline animation, double speed){
         super(xPos, yPos, height, resources);
         multiplier = speed;

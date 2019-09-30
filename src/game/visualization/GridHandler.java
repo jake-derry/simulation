@@ -16,8 +16,10 @@ import java.util.Map;
 public class GridHandler {
 
     /**
-     * visualize: step through cells and update colors accordingly
-     * Assumptions: N/A
+     *
+     * @param rectangleIterator
+     * @param cellIterator
+     * @param colorMap
      */
     public static void visualizeCells(Iterator<Shape> rectangleIterator, Iterator<Cell> cellIterator, Map colorMap){
         while (rectangleIterator.hasNext() && cellIterator.hasNext()){
@@ -28,8 +30,15 @@ public class GridHandler {
     }
 
     /**
-     * setUpRectangles: sets width, height, x, and y coordinates of rectangles for cells
-     * Assumptions: constant cellWidth / height
+     *
+     * @param windowSize
+     * @param numRows
+     * @param numCols
+     * @param group
+     * @param stylingMap
+     * @param numSides
+     * @param mySim
+     * @return
      */
     public static List setUpPolygons(int windowSize, int numRows, int numCols, Group group, Map stylingMap, int numSides, Simulation mySim){
         boolean colOdd = true;
@@ -74,6 +83,18 @@ public class GridHandler {
         return polygonList;
     }
 
+    /**
+     *
+     * @param i
+     * @param j
+     * @param cellWidth
+     * @param cellHeight
+     * @param menuHeight
+     * @param xOffset
+     * @param odd
+     * @param cell
+     * @return
+     */
     private static Polygon createTriangle(int i, int j, double cellWidth, double cellHeight, double menuHeight, double xOffset, boolean odd, Cell cell){
         Polygon triangle = new Polygon();
         Double xPos = j*cellWidth/2 + xOffset*2;
@@ -88,6 +109,17 @@ public class GridHandler {
         return triangle;
     }
 
+    /**
+     *
+     * @param i
+     * @param j
+     * @param cellWidth
+     * @param cellHeight
+     * @param menuHeight
+     * @param xOffset
+     * @param cell
+     * @return
+     */
     private static Polygon createRectangle(int i, int j, double cellWidth, double cellHeight, double menuHeight, double xOffset, Cell cell){
         Polygon rectangle = new Polygon();
         double xPos = j*cellWidth + xOffset;

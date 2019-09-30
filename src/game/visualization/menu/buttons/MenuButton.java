@@ -7,6 +7,13 @@ import java.util.ResourceBundle;
 abstract public class MenuButton {
     protected Button myButton;
 
+    /**
+     *
+     * @param xPos
+     * @param yPos
+     * @param height
+     * @param resources
+     */
     public MenuButton(int xPos, int yPos, int height, ResourceBundle resources){
         myButton = new Button();
         myButton.setLayoutX(xPos);
@@ -15,9 +22,16 @@ abstract public class MenuButton {
         myButton.setPrefWidth(height*5);
     }
 
+    /**
+     *
+     * @return
+     */
     public Button getButton(){
         return myButton;
     }
 
+    /**
+     *
+     */
     protected abstract void setButtonAction();
 }

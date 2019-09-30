@@ -12,6 +12,14 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class GraphHandler {
+
+    /**
+     *
+     * @param group
+     * @param windowHeight
+     * @param language
+     * @return
+     */
     public static LineChart setUpStateGraph(Group group, int windowHeight, String language){
         ResourceBundle resources = ResourceBundle.getBundle(language);
         NumberAxis stepAxis = new NumberAxis();
@@ -30,6 +38,13 @@ public class GraphHandler {
         return stateGraph;
     }
 
+    /**
+     *
+     * @param stateGraph
+     * @param seriesList
+     * @param cellIterator
+     * @param stepCount
+     */
     public static void updateGraph(LineChart stateGraph, List<XYChart.Series> seriesList, Iterator<Cell> cellIterator, int stepCount){
         Map<State, Integer> stateMap = CellUtils.countMap(cellIterator);
         for (State key:stateMap.keySet()){

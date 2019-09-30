@@ -58,11 +58,24 @@ public class CAApp extends Application {
         myAnimation.play();
     }
 
+    /**
+     *
+     * @param sim
+     */
     public static void addSim(Simulation sim){
         mySims.add(sim);
     }
+
+    /**
+     *
+     * @param vis
+     */
     public static void addVisualization(Visualization vis) { myVisualizations.add(vis); }
 
+    /**
+     *
+     * @param args
+     */
     public static void main (String[] args) {
         launch(args);
     }

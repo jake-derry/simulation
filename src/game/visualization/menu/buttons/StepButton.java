@@ -14,6 +14,17 @@ public class StepButton extends MenuButton {
     private Simulation mySim;
     private LineChart cellGraph;
     private List seriesList;
+
+    /**
+     *
+     * @param xPos
+     * @param yPos
+     * @param height
+     * @param resources
+     * @param sim
+     * @param graph
+     * @param series
+     */
     public StepButton(int xPos, int yPos, int height, ResourceBundle resources, Simulation sim, LineChart graph, List series){
         super(xPos, yPos, height, resources);
         mySim = sim;
