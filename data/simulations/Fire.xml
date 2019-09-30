@@ -20,7 +20,7 @@
         </random>
         <cell> <row>25</row> <col>25</col> <state>fire</state></cell>
     </activeCells>
-    <probCatch>35</probCatch>
+    <probCatch>25</probCatch>
     <shape>rectangle</shape>
     <neighbor> <index>0</index> </neighbor>
     <neighbor> <index>1</index> </neighbor>
