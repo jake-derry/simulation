@@ -44,7 +44,7 @@ public class Visualization{
         seriesList = new ArrayList<XYChart.Series>();
         MenuHandler.addMenuButtonsToDisplayGroup(stage, group, sim, windowHeight, millisecondDelay, animation, language, cellGraph, seriesList);
         MenuHandler.addTitleTextToDisplayGroup(group, windowHeight, sim.getSimTitle());
-        polygonList = GridHandler.setUpPolygons(windowHeight, sim.getGrid().getCellRows(), sim.getGrid().getCellColumns(), myGroup, stylingMap, 6, mySim);
+        polygonList = GridHandler.setUpPolygons(windowHeight, sim.getGrid().getCellRows(), sim.getGrid().getCellColumns(), myGroup, stylingMap, 3, mySim);
         colorMap = (Map) stylingMap.get("colorMap");
         myBackGroundColor = Paint.valueOf(colorMap.get("backgroundColor").toString());
     }
