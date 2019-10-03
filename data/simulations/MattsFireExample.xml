@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<Simulation>
+    <type>Fire</type>
+    <author>
+        Matt Harris
+    </author>
+    <size>
+        <rows>100</rows>
+        <columns>100</columns>
+    </size>
+    <highestState>2</highestState>
+    <defaultState>tree</defaultState>
+    <cellDistribution>cell</cellDistribution>
+    <activeCells>
+        <cell> <row>50</row> <col>50</col> <state>fire</state></cell>
+    </activeCells>
+    <probCatch>70</probCatch>
+    <shape>rectangle</shape>
+    <neighbor> <index>0</index> </neighbor>
+    <neighbor> <index>1</index> </neighbor>
+    <neighbor> <index>2</index> </neighbor>
+    <neighbor> <index>3</index> </neighbor>
+    <neighbor> <index>4</index> </neighbor>
+    <neighbor> <index>5</index> </neighbor>
+    <neighbor> <index>6</index> </neighbor>
+    <neighbor> <index>7</index> </neighbor>
+    <Style>styles/Style1.xml</Style>
+</Simulation>
