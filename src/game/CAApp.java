@@ -52,19 +52,6 @@ public class CAApp extends Application {
         myAnimation.play();
     }
 
-    /**
-     * Adds a new simulation to the list of active simulations
-     * @param sim- new sim to be added and started
-     */
-    public static void addSim(Simulation sim){
-        mySims.add(sim);
-    }
-
-    /**
-     * Adds a new visualization to the list of active visualizations
-     * @param vis- new visualization to be added and started
-     */
-    public static void addVisualization(Visualization vis) { myVisualizations.add(vis); }
 
     /**
      *

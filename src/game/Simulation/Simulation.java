@@ -99,7 +99,6 @@ public class Simulation {
      * to true.
      */
     public void update() {
-        int x = 0;
         for (Cell cell : grid) {
             cell.updateNext();
         }

@@ -102,7 +102,7 @@ public class Visualization{
     }
 
     private void visualize(){
-        GridHandler.visualizeCells(polygonList.iterator(), mySim.getGrid().iterator(), (Map)colorMap);
+        GridHandler.visualizeCells(polygonList.iterator(), mySim.getGrid().iterator(), colorMap);
         GraphHandler.updateGraph(cellGraph, seriesList, mySim.getGrid(), mySim.getStepCount());
     }
 

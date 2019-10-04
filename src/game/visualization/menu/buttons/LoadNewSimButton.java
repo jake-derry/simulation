@@ -60,8 +60,6 @@ public class LoadNewSimButton extends MenuButton {
                     Map stylingMap = Configurer.getStyling(sim.getParameterMap().get("StylingFile").toString());
                     Group group = new Group();
                     Visualization vis = new Visualization(group, sim, stage, myLanguage, myAnimation, stylingMap);
-                    CAApp.addVisualization(vis);
-                    CAApp.addSim(sim);
                     var frame = new KeyFrame(Duration.millis(vis.getDelay()), f -> vis.step());
                     myAnimation.setCycleCount(Timeline.INDEFINITE);
                     myAnimation.getKeyFrames().add(frame);
