@@ -2,53 +2,39 @@
 <Simulation>
     <type>Game of life</type>
     <author> Jonah Knapp </author>
-    <rows>20</rows>
-    <columns>20</columns>
+    <rows>30</rows>
+    <columns>30</columns>
     <defaultState>empty</defaultState>
     <cellDistribution>cell</cellDistribution>
     <activeCells>
-        <concentration>
-            <state>live</state> <value>50</value>
-        </concentration>
-        <random>
-            <state>live</state> <value>50</value>
-        </random>
-        <cell>
-            <row>9</row> <col>11</col> <state>live</state>
-        </cell>
-        <cell>
-            <row>13</row> <col>11</col> <state>live</state>
-        </cell>
-        <cell>
-            <row>9</row> <col>9</col> <state>live</state>
-        </cell>
-        <cell>
-            <row>10</row> <col>9</col> <state>live</state>
-        </cell>
-        <cell>
-            <row>11</row> <col>9</col> <state>live</state>
-        </cell>
-        <cell>
-            <row>12</row> <col>9</col> <state>live</state>
-        </cell>
-        <cell>
-            <row>13</row> <col>9</col> <state>live</state>
-        </cell>
-        <cell>
-            <row>9</row> <col>13</col> <state>live</state>
-        </cell>
-        <cell>
-            <row>10</row> <col>13</col> <state>live</state>
-        </cell>
-        <cell>
-            <row>11</row> <col>13</col> <state>live</state>
-        </cell>
-        <cell>
-            <row>12</row> <col>13</col> <state>live</state>
-        </cell>
-        <cell>
-            <row>13</row> <col>13</col> <state>live</state>
-        </cell>
+        <cell><row>30</row> <col>15</col> <state>live</state></cell>
+        <cell><row>30</row> <col>16</col> <state>live</state></cell>
+        <cell><row>29</row> <col>15</col> <state>live</state></cell>
+        <cell><row>29</row> <col>16</col> <state>live</state></cell>
+        <cell><row>27</row> <col>15</col> <state>live</state></cell>
+        <cell><row>27</row> <col>16</col> <state>live</state></cell>
+        <cell><row>27</row> <col>14</col> <state>live</state></cell>
+        <cell><row>27</row> <col>17</col> <state>live</state></cell>
+        <cell><row>26</row> <col>14</col> <state>live</state></cell>
+        <cell><row>26</row> <col>17</col> <state>live</state></cell>
+        <cell><row>26</row> <col>13</col> <state>live</state></cell>
+        <cell><row>26</row> <col>18</col> <state>live</state></cell>
+        <cell><row>25</row> <col>12</col> <state>live</state></cell>
+        <cell><row>25</row> <col>19</col> <state>live</state></cell>
+        <cell><row>23</row> <col>12</col> <state>live</state></cell>
+        <cell><row>23</row> <col>19</col> <state>live</state></cell>
+        <cell><row>22</row> <col>12</col> <state>live</state></cell>
+        <cell><row>22</row> <col>19</col> <state>live</state></cell>
+        <cell><row>22</row> <col>14</col> <state>live</state></cell>
+        <cell><row>22</row> <col>17</col> <state>live</state></cell>
+        <cell><row>21</row> <col>15</col> <state>live</state></cell>
+        <cell><row>21</row> <col>16</col> <state>live</state></cell>
+        <cell><row>20</row> <col>15</col> <state>live</state></cell>
+        <cell><row>20</row> <col>16</col> <state>live</state></cell>
+        <cell><row>19</row> <col>14</col> <state>live</state></cell>
+        <cell><row>19</row> <col>17</col> <state>live</state></cell>
+        <cell><row>19</row> <col>13</col> <state>live</state></cell>
+        <cell><row>19</row> <col>18</col> <state>live</state></cell>
     </activeCells>
     <shape>rectangle</shape>
     <neighbor> <index>0</index> </neighbor>
@@ -59,5 +45,5 @@
     <neighbor> <index>5</index> </neighbor>
     <neighbor> <index>6</index> </neighbor>
     <neighbor> <index>7</index> </neighbor>
-    <Style>styles/Style1.xml</Style>
+    <Style>styles/Style2.xml</Style>
 </Simulation>

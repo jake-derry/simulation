@@ -14,6 +14,12 @@ import static game.Configurer.XMLReaders.getFirstElementString;
 import static game.Configurer.XMLReaders.getFirstElementInteger;
 
 /**
+ * Masterpiece Code: This portion of the project is the ParameterLoader, which is relied on by Configurer to load
+ * in relevant information from the XML file. It is included in a separate class because it is solely responsible for
+ * the extraction. It also specifies default values for certain types of parameters. Finally, the only methods that
+ * it makes public are those that are necessary and directly relied upon by the Configuration class.
+ *
+ *
  * This class handles loading in parameters from the XML file. It contains default values for each of the parameters,
  * which is set when the specified values in the XML are not supported. It depends on XMLReaders.java to read
  * integers/strings from the nodes in the main XML element and to do error checking on the parsing of these values.

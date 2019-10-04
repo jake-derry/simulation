@@ -1,10 +1,9 @@
 <?xml version="1.0"?>
 <Style>
     <author> Jonah Knapp </author>
-    <color><state>EMPTY</state> <color>BLACK</color></color>
-    <color><state>BURNING</state> <color>FIREBRICK</color></color>
-    <color><state>TREE</state> <color>FORESTGREEN</color></color>
-    <color><state>backgroundColor</state> <color>LIGHTGREY</color></color>
+    <color><state>LIVE</state> <color>LIGHTSTEELBLUE</color></color>
+    <color><state>EMPTY</state> <color>CORAL</color></color>
+    <color><state>backgroundColor</state> <color>PURPLE</color></color>
     <option><type>outline</type> <value>0</value></option>
     <option><type>windowDimension</type> <value>400</value></option>
     <option><type>delay</type> <value>500</value></option>

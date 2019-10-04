@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Style>
+    <author> Jonah Knapp </author>
+    <color><state>LIVE</state> <color>MOCCASIN</color></color>
+    <color><state>EMPTY</state> <color>CORNFLOWERBLUE</color></color>
+    <color><state>backgroundColor</state> <color>KHAKI</color></color>
+    <option><type>outline</type> <value>1</value></option>
+    <option><type>windowDimension</type> <value>400</value></option>
+    <option><type>delay</type> <value>500</value></option>
+</Style>
