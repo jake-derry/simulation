@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<Simulation>
+    <type>RPS</type>
+    <author>
+        Jake Derry
+    </author>
+    <size>
+        <rows>200</rows>
+        <columns>200</columns>
+    </size>
+    <defaultState>rock</defaultState>
+    <cellDistribution>concentration</cellDistribution>
+    <activeCells>
+        <concentration>
+            <state>rock</state> <value> 33 </value>
+        </concentration>
+        <concentration>
+            <state>paper</state> <value> 33 </value>
+        </concentration>
+        <concentration>
+            <state>scissors</state> <value> 33 </value>
+        </concentration>
+    </activeCells>
+    <threshold>2</threshold>
+    <shape>triangle</shape>
+    <neighbor> <index>0</index> </neighbor>
+    <neighbor> <index>1</index> </neighbor>
+    <neighbor> <index>5</index> </neighbor>
+    <neighbor> <index>6</index> </neighbor>
+    <neighbor> <index>7</index> </neighbor>
+    <neighbor> <index>8</index> </neighbor>
+    <neighbor> <index>9</index> </neighbor>
+    <neighbor> <index>10</index> </neighbor>
+    <neighbor> <index>11</index> </neighbor>
+    <Style>styles/RPSStyle.xml</Style>
+</Simulation>
