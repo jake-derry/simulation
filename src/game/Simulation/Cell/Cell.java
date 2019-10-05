@@ -15,7 +15,6 @@ import java.util.*;
  * DEPENDENCIES:
  *      Neighborhood
  *
- *
  * @author Jake Derry
  */
 abstract public class Cell {
