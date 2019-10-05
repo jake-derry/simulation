@@ -23,8 +23,7 @@ abstract public class Cell {
     private State myState;
     private State myNextState;
     private Neighborhood myNeighborhood;
-    private List<Cell> myNeighbors;
-    private List<State> myStateList;
+    private static List<State> myStateList;
 
     /**
      * Constructor for Cell. Initializes the state of the

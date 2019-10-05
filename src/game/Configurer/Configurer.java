@@ -6,7 +6,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import game.Configurer.ExceptionHandlers.ErrorThrow;
 import game.Configurer.ExceptionHandlers.XMLSimulationException;
-import game.Simulation.Cell.Cell;
 import game.Simulation.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
